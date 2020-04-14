@@ -1,0 +1,33 @@
+<!--Affichage des mineures -->
+
+<section class="list">
+    <?php //var_dump($jobs);?>
+
+    <a href="professionsAdd.php" class="add-button">Ajouter une profession</a>
+        <table>
+            <caption>Liste des professions</caption>
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Nom</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!--On crée dynamiquement le tableau-->
+                <!--FOREACH ligne récupérée de la bdd  on écrit une tr -->   
+                <?php foreach($jobs as $job): ?>
+                    
+                    <tr>
+                        <td><?= $job["minor_code"] ?></td>
+                        <td><?= $job["name"] ?></td> 
+                        <td>
+                            <a href="professionsUpdate.php?id=<?=$job["id"];?>"><span class="fas fa-pencil-alt"></span></a>
+                            <a href="professionsDelete.php?id=<?=$job["id"];?>"><span class="fa fa-trash"></span></a>
+                        </td>    
+                    </tr>
+
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+</section>        

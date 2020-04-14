@@ -1,0 +1,33 @@
+<!--Affichage des dominantes -->
+
+<section class="list">
+    <?php //var_dump($majors);?>
+
+    <a href="majorAdd.php" class="add-button">Ajouter une dominante</a>
+        <table>
+            <caption>Liste des dominantes</caption>
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Nom</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!--On crée dynamiquement le tableau-->
+                <!--FOREACH ligne récupérée de la bdd  on écrit une tr -->   
+                <?php foreach($majors as $major): ?>
+                    
+                    <tr>
+                        <td><?= $major["code"] ?></td>
+                        <td><?= $major["name"] ?></td> 
+                        <td>
+                            <a href="majorUpdate.php?id=<?=$major["id"];?>"><span class="fas fa-pencil-alt"></span></a>
+                            <a href="majorDelete.php?id=<?=$major["id"];?>"><span class="fa fa-trash"></span></a>
+                        </td>    
+                    </tr>
+
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+</section>

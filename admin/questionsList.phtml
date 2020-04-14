@@ -1,0 +1,33 @@
+<!--Affichage des mineures -->
+
+<section class="list">
+    <?php //var_dump($questions);?>
+
+    <a href="questionsAdd.php" class="add-button">Ajouter une question</a>
+        <table>
+            <caption>Liste des questions</caption>
+            <thead>
+                <tr>
+                    <th>Numéro</th>
+                    <th>Question</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!--On crée dynamiquement le tableau-->
+                <!--FOREACH ligne récupérée de la bdd  on écrit une tr -->   
+                <?php foreach($questions as $question): ?>
+                    
+                    <tr>
+                        <td><?= $question["number"] ?></td>
+                        <td><?= $question["question"] ?></td>
+                        <td>
+                            <a href="questionsUpdate.php?id=<?=$question["id"];?>"><span class="fas fa-pencil-alt"></span></a>
+                            <a href="questionsDelete.php?id=<?=$question["id"];?>"><span class="fa fa-trash"></span></a>
+                        </td>    
+                    </tr>
+
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+</section>

@@ -1,0 +1,24 @@
+<section class="presentation">
+    <h2>Questionnaire de J.Holland</h2>
+    <div>
+        <h3>PARTIE 2: Activités professionnelles</h3>
+        <img src="img/questionnaires/questions2-working.png" alt="Personne au travail">
+        <p>Faites une croix dans les cases qui se rapportent aux professions qui vous conviendraient.<br> Ne vous préoccupez pas de savoir si vous pouvez réussir dans tel métier ou dans telle profession, ni de votre préparation actuelle.<br>Ne songez ni au salaire, ni à l’avancement mais demandez-vous si le travail en
+        question est susceptible de vous plaire.</p>  
+    </div>
+</section>
+        
+<form class="questionnaire" data-mode="checkbox" method="post" action="#">
+    <?php foreach($questionsActivities as $questionsArray):?>
+        <section>
+            <?php foreach($questionsArray as $question): ?>
+                <input type="checkbox" class="<?= $question["class"] ?>" id="Q<?= $question["number"] ?>" name="Q<?= $question["number"] ?>"><label for="Q<?= $question["number"] ?>"><?= $question["question"] ?></label><br> 
+            <?php endforeach; ?>
+        </section>
+    <?php endforeach;?> 
+
+    <div class="validation">
+        <input type="checkbox" class="confirmation" id="ok2" name="ok2"><label for="ok2">J'ai bien relu mes réponses et je confirme mes choix</label>
+    </div>    
+    <a class="btn_link nextButton" href="questions3-aptitudes.php" >Suivant</a>
+</form>    

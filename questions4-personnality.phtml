@@ -1,0 +1,26 @@
+<section class="presentation">
+    <h2>Questionnaire de J.Holland</h2>
+    <div>
+        <h3>PARTIE 4: Personnalité</h3>
+        <img src="img/questionnaires/questions4-bigfive.png" alt="Les 5 axes du test de personnalité Big Five">
+        <p>Voici une liste de traits de caractère, d’attitudes, de tendances personnelles.<br> Faites une croix dans la case correspondant aux énoncés qui s’appliquent à vous, qui décrivent le plus honnêtement possible votre façon d’agir.</p>  
+    </div>
+</section>
+        
+<form class="questionnaire" data-mode="checkbox" method="post" action="results.php">
+    <?php foreach($questionsPersonality as $questionsArray):?>
+        <section>
+            <?php foreach($questionsArray as $question): ?>
+                <input type="checkbox" class="<?= $question["class"] ?>" id="Q<?= $question["number"] ?>" name="Q<?= $question["number"] ?>"><label for="Q<?= $question["number"] ?>"><?= $question["question"] ?></label><br> 
+            <?php endforeach; ?>
+        </section>
+    <?php endforeach;?>
+
+    <div class="validation">
+        <input type="checkbox" id="ok4" name="ok4"><label for="ok4">J'ai bien relu mes réponses et je confirme mes choix</label>
+        <input type="hidden" id="major" name="major" value="0">
+        <input type="hidden" id="minor1" name="minor1" value="0">
+        <input type="hidden" id="minor2" name="minor2" value="0">
+    </div>
+    <button id="submitButtonPage4" class="btn_link nextButton" type="submit" >Résultats</button>
+</form>  

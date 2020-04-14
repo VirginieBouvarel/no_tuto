@@ -1,0 +1,47 @@
+        <section class="results container">
+            <div>
+                <img src="img/logo/logo_results.png" alt="logo riasec">
+                <p class="code">Votre code :<span> <?php echo $_POST["major"]; ?> . <?php echo $_POST["minor1"]; ?> . <?php echo $_POST["minor2"]; ?></span></p>
+            </div>
+           
+            <section class="major">
+                <h2>Vous avez un profil <?= $majorData[0]["name"]; ?></h2>
+                <h3><i class="fas fa-address-card"></i>Principales caractéristiques</h3>
+                    <p><?= $majorData[0]["features"]; ?></p>
+                <h3><i class="fas fa-edit"></i>Principales compétences</h3>
+                    <p><?= $majorData[0]["skills"]; ?></p>
+                <h3><i class="fas fa-user-plus"></i>Points forts</h3>
+                    <p>Nous listons ici les points forts des personnes à dominante réaliste.<br>
+                    Cette liste peut notamment servir de grille de préparation à un entretien d’embauche ou de sélection à une formation.</p>
+                    <p class="strongPoints"><?= nl2br($majorData[0]["strongPoints"]); ?></p>
+                <h3><i class="fas fa-user-minus"></i>Points faibles</h3>
+                    <p><?= $majorData[0]["weakPoints"]; ?></p>
+                <h3><i class="fas fa-users"></i>Modes de communication avec les autres</h3>
+                    <p><?= $majorData[0]["communication"]; ?></p>
+                <h3><i class="fas fa-briefcase"></i>Types d'environnements professionnels conseillés</h3>
+                    <p><?= $majorData[0]["contexts"]; ?></p>
+            </section>   
+            <section class="minors">
+                <h3><i class="fas fa-project-diagram"></i>Association avec les deux composantes mineures du profil</h3> 
+                <p>Deux autres composantes ont été mesurées par le test comme importantes dans votre personnalité. Elles viennent affiner votre profil et vous permettre de cibler plus précisément les carrières qui vous conviendront le mieux.</p>
+                <article>
+                    <h3><i class="fas fa-arrow-right"></i><?= $minorsData[0]["name"]; ?></h3>
+                     <p><?= $minorsData[0]["description"]; ?></p>
+                </article>
+                <article>
+                    <h3><i class="fas fa-arrow-right"></i><?= $minorsData[1]["name"]; ?></h3>
+                     <p><?= $minorsData[1]["description"]; ?></p>
+                </article>
+            </section> 
+            <section class="jobs"> 
+                <h3><i class="fas fa-user-tie"></i>Métiers qui peuvent vous correspondre:</h3>
+                    <ul>
+                        <?php foreach($jobs as $job): ?>
+                            <li><?= $job["name"];?></li>
+                        <?php endforeach; ?>    
+                    </ul>
+                <h3>Vous êtes <?= $majorData[0]["name"]; ?> à votre manière !</h3>
+                    <p>Ces métiers ne sont que des suggestions correspondants au profil général du type <?= $majorData[0]["name"]; ?>, associé aux deux mineures qui vous concernent. <span>Vous êtes une personne unique</span>, ces métiers peuvent ne pas vous correspondre pleinement. Cela veux seulement dire que vous seriez compétent(e)s dans ces domaines mais que vos goûts ou  vos projets de vie vous feront privilégier d’autres voies, qui pourront correspondre aussi au profil <?= $majorData[0]["name"]; ?>. Il existe des dizaines de métiers correspondant à votre profil. Affiner l’analyse de vos résultats avec un(e) conseiller(ère) vous permettra de  préciser votre projet.</p>
+            </section> 
+        </section>
+   

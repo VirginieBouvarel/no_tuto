@@ -1,0 +1,43 @@
+<!-- Formulaire d'ajout d'une dominante-->
+
+<section class = "formAdmin">
+
+    <h2>Modifier une dominante</h2>
+
+    <form method="post" action="majorUpdate.php">
+        <div>
+            <label for="code">Code:</label>
+            <input type="text" name="code" id="code" value="<?= $major["code"];?>">
+        </div>
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" name="name" id="name" value="<?= $major["name"];?>">
+        </div>
+        <div>
+            <label for="features">Principales caractéristiques:</label>
+            <textarea id="features" name="features" rows="10" cols="75"><?= $major["features"]; ?></textarea>
+        </div>
+        <div>
+            <label for="skills">Principales compétences:</label>
+            <textarea id="skills" name="skills" rows="10" cols="75"><?= $major["skills"]; ?></textarea>
+        </div>
+        <div>
+            <label for="strongPoints">Points forts:</label>
+            <textarea id="strongPoints" name="strongPoints" rows="10" cols="75"><?= $major["strongPoints"]; ?></textarea>
+        </div>
+        <div>
+            <label for="weakPoints">Points faibles:</label>
+            <textarea id="weakPoints" name="weakPoints" rows="10" cols="75"><?= $major["weakPoints"]; ?></textarea>
+        </div>
+        <div>
+            <label for="communication">Communication avec les autres:</label>
+            <textarea id="communication" name="communication" rows="10" cols="75"><?= $major["communication"]; ?></textarea>
+        </div>
+        <div>
+            <label for="context">Environnements professionnels conseillés:</label>
+            <textarea id="context" name="context" rows="10" cols="75"><?= $major["contexts"]; ?></textarea>
+        </div>
+        <input type="hidden" name="id" value="<?= $major["id"]; ?>">
+        <button type="submit" class="submit-button">Modifier la dominante</button>
+    </form>
+</section>

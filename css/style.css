@@ -1,0 +1,382 @@
+/*NORMALIZE CSS*/
+
+/*GLOBAL*/
+:root{
+    /*font-family:*/
+    --open:'Open Sans', sans-serif;
+    /*color:*/
+    --white:#FFF;
+    --lightGrey:#D3D3D3;
+    --mediumGrey:#A9A9A9;
+    --darkGrey:#41454e;
+    --green:#00a933;/*green riasec*/
+}
+
+html{
+	font-size:62.5%;
+    box-sizing:border-box;
+}
+
+*, *:before, *:after{
+    box-sizing:inherit;
+    /*margin:0;*/
+    padding:0;
+}
+
+body{
+	font-family: var(--open);
+	color:var(--mediumGrey);
+    font-size: 1.6rem;
+}
+h2, h3, .code span{
+    color:var(--green);
+}
+h2{
+    text-align:center;
+    font-size:3rem;
+    margin:8rem 0;
+}
+h3{
+    font-size:2rem;
+    margin:2rem 0;
+}
+p{
+    font-size:1.4rem;
+    margin:2rem 0;
+    text-align:justify;
+    line-height:1.5;
+}
+img{
+	max-width:100%;
+}
+a{
+	text-decoration:none;
+}
+.flex{
+    display:flex;
+	flex-wrap:wrap;
+	/*tailler les enfants*/
+}
+.container{
+    max-width:1000px;
+    margin:0 auto;
+}
+.btn_link{
+    background-color:var(--green);
+    border:2px solid var(--green);
+    padding:2rem;
+    border-radius:0.6rem;
+    color:var(--white);
+    font-weight:bold;
+}
+.btn_link:hover{
+    background-color:var(--white);
+    color:var(--green); 
+}
+
+/*HEADER*/
+
+header div img:first-child{
+    width:10%;
+    float:left;
+    margin-left:5rem;
+}
+header div img:last-child{
+    width:10%;
+    float:right;
+    margin-right:5rem;;
+}
+header section{
+    clear:both;
+    background-color:var(--green);
+    color:var(--white);
+    text-align:center;
+    padding:2rem 0;
+}
+header h1{
+    font-size:5rem;  
+}
+header p{
+    font-size:3rem;
+    margin-bottom:2rem;
+    text-align:center;
+}
+
+/*MAIN*/
+/*ACCUEIL*/
+main{
+    text-align:center;
+}
+main div{
+    transition:all .3s;
+}
+main img:nth-child(1){
+    margin:10rem 0;
+}
+.about_btn{
+    margin-right:1rem;
+}
+.test_btn{
+    padding: 2rem 5rem;
+}
+main img:nth-child(3){
+    width:60%;
+    margin:10rem 0;
+}
+
+/*ABOUT*/
+.about, .results{
+    padding:4rem;
+    margin-bottom:5rem;
+    text-align:left;
+}
+.about section{
+    padding:1rem;
+}
+
+.origins img{
+    float:left;
+    margin-right: 2rem;
+    margin-bottom:2rem;
+}
+.theorie{
+    clear:both;
+}
+.summaries{
+    margin-bottom:5rem;
+}
+.summaries article{
+    padding:2rem 0;
+}
+.summaries article h4{
+    color:var(--darkGrey);
+    font-size:1.6rem;
+    margin-bottom:2rem;
+}
+.summaries article:nth-child(odd){
+    text-align:right;
+}
+.summaries article img{
+    width:25%;
+}
+.summaries article:nth-child(odd) img{
+    float:right;
+    margin: 1rem 0 1rem 2rem;
+}
+.summaries article:nth-child(even) img{
+    float:left;
+    margin:1rem 2rem 1rem 0;
+}
+.summaries p{
+    margin-top:4rem;
+}
+.about .btn_bottom{
+    display:block;
+    margin:0 auto;
+    width:23%;
+}
+/*QUESTIONNAIRE*/
+/*PART1*/
+.presentation{
+    padding:0 20rem;
+}
+.presentation h2{
+    margin-bottom:3rem;
+}
+.presentation h3{
+    margin:5rem auto;
+    text-align:center;
+    position:relative;
+}
+.presentation h3:after{
+    content:url("../src/questionnaire-astronaute.png");
+    position: absolute;
+    top:6rem;
+    left:36rem;
+}
+.presentation section p{
+    padding-right:12rem;
+    margin:5rem 0;
+}
+.questionnaire section{
+    font-size:1.4rem;
+    padding:5rem 20rem;
+    text-align:justify;
+    line-height:2.2;
+    position:relative;
+}
+.questionnaire section:first-child{
+    margin-top:5rem;
+}
+.questionnaire section:nth-child(odd){
+    background-color:var(--green);
+    color:var(--white);
+}
+.questionnaire section:before{
+    font-size:20rem;
+    font-family:arial;
+    position: absolute;
+    right:20rem;
+    top:50%;
+    bottom:50%;
+    line-height:0;
+}
+.questionnaire section:nth-child(odd):before{
+    color:var(--white);
+}
+.questionnaire section:nth-child(even):before{
+    color:var(--green);
+}
+.questionnaire section:nth-child(1):before{
+    content:"R";
+}
+.questionnaire section:nth-child(2):before{
+    content:"I";
+}
+.questionnaire section:nth-child(3):before{
+    content:"A";
+}
+.questionnaire section:nth-child(4):before{
+    content:"S";
+}
+.questionnaire section:nth-child(5):before{
+    content:"E";
+}
+.questionnaire section:nth-child(6):before{
+    content:"C";
+}
+.questionnaire input[type="checkbox"]{
+    margin-right:1rem;
+}
+.groupRadio label{
+    margin-right:0.5rem;
+}
+.groupRadio input[type="radio"]{
+    margin-right:1rem;
+}
+.groupRadio p {
+    display:inline;
+    margin-left:1rem;
+}
+.questionnaire div.validation{
+    background-color:var(--white);
+    color:var(--mediumGrey);
+    text-align:center;
+    margin:10rem auto;
+}
+.nextButton{
+    padding:2rem 5rem;
+}
+
+/*RESULTS*/
+.results div{
+    margin-bottom:3rem;
+    overflow:hidden;
+}
+.results div img{
+    width:16%;
+    margin:0;
+    float:left;
+}
+.results div p{
+    float:right;
+    font-size:3rem;
+    margin-top:5rem;
+    text-transform:uppercase;
+}
+.major{
+    clear:both;
+}
+.results p.strongPoints{
+    margin-left:4rem;
+}
+.results .fas{
+    margin-right:2rem;
+    font-size:3rem;
+}
+.results h3{
+    margin-top:4rem;
+}
+.minors article{
+    margin-left:4rem;
+}
+.minors span{
+    text-decoration:underline;
+}
+.jobs ul {
+    list-style-type:none;
+    line-height:1.5;
+    text-align:left;
+    font-size:1.4rem;
+}
+.jobs ul li{
+    margin-left:4rem;
+}
+
+/*FOOTER*/
+
+footer{
+    background-color:var(--green);
+    color:var(--white);
+    text-align:center;
+    padding:5rem;
+    margin-top:10rem;
+}
+footer nav{
+    width:50%;
+    padding:2rem;
+    margin:0 auto;
+}
+footer nav h3{
+    font-size:2rem;
+    font-weight:bold;
+    margin-bottom:2rem;
+}
+footer nav a{
+    display:block;
+    margin-bottom:1rem;
+}
+footer p{
+    width:100%;
+    margin: 5rem;
+    text-align:center;
+}
+
+
+/*VERSION TABLETTE*/
+@media screen and (max-width:780px){
+    header div img:first-child, header div img:last-child{
+        width:15%;
+    }
+    
+}
+
+/*VERSION MOBILE*/
+@media screen and (max-width:380px){
+    header div img:first-child, header div img:last-child{
+        width:25%;
+    }
+    header p{
+        font-size:2rem;  
+    }  
+    main img:nth-child(1){
+        width:80%;
+        margin:3rem 0;
+    }
+    .about, .test{
+        display:block;
+        width:80%;
+        margin:2rem auto;
+    }
+    main div{
+        margin-bottom:10rem;
+    }
+    main img:nth-child(3){
+        display:none;
+    }
+
+    footer nav{
+        flex-direction:column;
+        width:100%;
+    }
+}

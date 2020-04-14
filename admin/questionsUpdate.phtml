@@ -1,0 +1,27 @@
+<!-- Formulaire d'ajout d'une question-->
+
+<section class = "formAdmin">
+
+    <h2>Modifier une question</h2>
+
+    <form method="post" action="questionsUpdate.php">
+        <div>
+            <label for="number">Numéro:</label>
+            <input type="text" name="number" id="number" value="<?= $questionData["number"];?>">
+        </div>
+        <div>
+            <label for="type">Type:</label>
+            <input type="text" name="type" id="type" value="<?= $questionData["type"];?>">
+        </div>
+        <div>
+            <label for="class">Classe:</label>
+            <input type="text" name="class" id="class" value="<?= $questionData["class"];?>">
+        </div>
+        <div>
+            <label for="question">Question:</label>
+            <input type="text" name="question" id="question" value="<?= $questionData["question"];?>">
+        </div>
+        <input type="hidden" name="id" value="<?= $questionData["id"]; ?>">
+        <button type="submit" class="submit-button">Modifier la question</button>
+    </form>
+</section>
