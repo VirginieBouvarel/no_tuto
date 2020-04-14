@@ -75,16 +75,17 @@ a{
 }
 
 /*HEADER*/
-
+header div{
+    padding:2rem 1rem;
+}
 header div img:first-child{
-    width:10%;
+    width:8%;
     float:left;
-    margin-left:5rem;
+    margin-bottom:1rem;
 }
 header div img:last-child{
     width:10%;
     float:right;
-    margin-right:5rem;;
 }
 header section{
     clear:both;
@@ -103,15 +104,15 @@ header p{
 }
 
 /*MAIN*/
-/*ACCUEIL*/
-main{
+/*HOME*/
+.home{
     text-align:center;
 }
-main div{
-    transition:all .3s;
-}
-main img:nth-child(1){
+.home img:nth-child(1){
     margin:10rem 0;
+}
+.home div{
+    transition:all .3s;
 }
 .about_btn{
     margin-right:1rem;
@@ -119,7 +120,7 @@ main img:nth-child(1){
 .test_btn{
     padding: 2rem 5rem;
 }
-main img:nth-child(3){
+.home img:nth-child(3){
     width:60%;
     margin:10rem 0;
 }
@@ -321,62 +322,63 @@ footer{
     text-align:center;
     padding:5rem;
     margin-top:10rem;
-}
-footer nav{
-    width:50%;
-    padding:2rem;
-    margin:0 auto;
-}
-footer nav h3{
-    font-size:2rem;
-    font-weight:bold;
-    margin-bottom:2rem;
-}
-footer nav a{
-    display:block;
-    margin-bottom:1rem;
-}
-footer p{
-    width:100%;
-    margin: 5rem;
     text-align:center;
 }
 
+footer a i{
+    color:var(--white);
+}
 
+footer p{
+    margin-top:8rem;
+    text-align:center;
+}
+
+/*VERSION LAPTOP*/
+@media screen and (max-width:1025px){
+    header div img:first-child, header div img:last-child{
+        width:12%;
+    }
+}
 /*VERSION TABLETTE*/
-@media screen and (max-width:780px){
+@media screen and (max-width:770px){
     header div img:first-child, header div img:last-child{
         width:15%;
     }
-    
+    .home img:nth-child(3){
+        width:80%;
+        margin:10rem 0;
+    }
 }
-
 /*VERSION MOBILE*/
-@media screen and (max-width:380px){
+@media screen and (max-width:578px){
     header div img:first-child, header div img:last-child{
         width:25%;
     }
     header p{
         font-size:2rem;  
     }  
-    main img:nth-child(1){
+    .home img:nth-child(1){
         width:80%;
-        margin:3rem 0;
+        margin:6rem 0;
     }
-    .about, .test{
+    .about_btn, .test_btn{
         display:block;
         width:80%;
         margin:2rem auto;
     }
-    main div{
+    .home div{
         margin-bottom:10rem;
     }
-    main img:nth-child(3){
+    .home img:nth-child(3){
         display:none;
     }
 
     footer nav{
         flex-direction:column;
         width:100%;
+    }
+    footer p{
+        font-size:1.2rem;
     }
 }
