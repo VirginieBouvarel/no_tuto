@@ -105,13 +105,42 @@ function radioByLetter(letter){
 /**
  * setProfile()
  * Fonction qui détermine les lettres du profil en fonction des scores
- * - elle récupère les valeurs des propriétés dans un tableau
- * - elle trie le tableau dans l'ordre descendant
+ * - elle trie l'objet scores en ordre descendant
  * - elle récupère les 3 premières valeurs, et associe les clés correspondantes aux 3 variables de profil
  * - elle retourne les 3 variables de profil
  */
 
 function setProfile(){
-    scoresTab = scores.values();
-    console.log(scoresTab);
+    //On trie l'objet scores dans l'ordre descendant des valeurs
+    scoresSorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+    console.log(scoresSorted);
+    //On détermine la valeur des variables de profil 
+    var major = scoresSorted[0][0];
+    var minor1 = scoresSorted[1][0];
+    var minor2 = scoresSorted[2][0] ;
+
+    console.log("profile =");
+    console.log(major, minor1, minor2);
+
+    sendAndReset(major, minor1, minor2);
 }
+
+/**
+ * sendAndReset()
+ * Fonction qui envoie les valeurs des variables de profil au html et qui remet à zéro les scores sauvegardés
+ * - elle insère chaque valeur dans l'input hidden coorespondant
+ * - elle supprime l'objet "SCORES_SAVED" du localStorage
+ * - elle ne retourne rien
+ */
+function sendAndReset(major, minor1, minor2){
+
+    //On stocke les valeurs des variables de profil dans les champs cachés du html
+    document.getElementById("major").value = major;
+    document.getElementById("minor1").value = minor1;
+    document.getElementById("minor2").value = minor2;
+    
+    //On remet à zero le localStorage
+    localStorage.removeItem("SCORES_SAVED");
+}
+
+

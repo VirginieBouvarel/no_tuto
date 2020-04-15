@@ -32,7 +32,7 @@ ALORS on crée un tableau score qu'on initialise a 0
                 On recupère la valeur du groupname
                 return compteur +=
     //On met à jour les scores sauvegardés à partir des scores calculés
-    
+
 3/ On détermine si on est sur la dernière page
 last = ($queryselector("bouton")= "ok4")
 
@@ -64,3 +64,5 @@ major = property = letter(string)
     input hidden "major" prend pour valeur $major
     input hidden "major" prend pour valeur $major
     input hidden "major" prend pour valeur $major
+
+5/ On remet le localStorage à zero pour un prochain usage

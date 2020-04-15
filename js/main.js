@@ -23,6 +23,12 @@
     document.querySelector(".confirmation").addEventListener("click", setScores);
 
 /*
-3/ Au clic sur le bouton submit, on détermine les lettres du profil en fonction des scores
+3/ Au clic sur le bouton submit:
+- on détermine les lettres du profil en fonction des scores 
+- on passe leur valeurs au html
+- on reset le localStorage
 */
     document.querySelector(".validation").addEventListener("click", setProfile);
+
+
+
