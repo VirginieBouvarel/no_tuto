@@ -20,7 +20,10 @@
 /*
 2/ Au clic sur la case de validation des réponses, on calcule les scores pour la page en cours et on met à jour l'objet scores en ajoutant les valeurs trouvées aux valeurs déjà sauvegardées pour chaque propriété
 */
-    document.querySelector(".confirmation").addEventListener("click", setScores);
+    if(document.querySelector(".confirmation")){
+        document.querySelector(".confirmation").addEventListener("click", setScores);
+    }
+
 
 /*
 3/ Au clic sur le bouton submit:
@@ -28,7 +31,10 @@
 - on passe leur valeurs au html
 - on reset le localStorage
 */
-    document.querySelector(".validation").addEventListener("click", setProfile);
+    if(document.querySelector(".validation")){
+        document.querySelector(".validation").addEventListener("click", setProfile);
+    }
+    
 
 
 
