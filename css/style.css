@@ -177,7 +177,7 @@ header p{
     width:23%;
 }
 /*QUESTIONNAIRE*/
-/*PART1*/
+
 .presentation{
     padding:0 20rem;
 }
@@ -259,11 +259,19 @@ header p{
     display:inline;
     margin-left:1rem;
 }
-.questionnaire div.validation{
+.questionnaire div.validation-block{
     background-color:var(--white);
     color:var(--mediumGrey);
     text-align:center;
     margin:10rem auto;
+}
+.validation{
+    margin-top:5rem;
+}
+.validation + label{
+    color:var(--green);
+    font-size:2rem;
+    font-weight:bold;
 }
 .nextButton{
     padding:2rem 5rem;

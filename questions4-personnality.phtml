@@ -16,11 +16,16 @@
         </section>
     <?php endforeach;?>
 
-    <div class="validation">
-        <input type="checkbox" id="ok4" name="ok4"><label for="ok4">J'ai bien relu mes réponses et je confirme mes choix</label>
+    <div class="validation-block">
+        <div>
+        <input type="checkbox" class="confirmation"><label >J'ai bien relu mes réponses et je confirme mes choix</label>
+        </div>
+        <div>
+        <input type="checkbox" class="validation"><label >Je valide mon questionnaire</label>
+        </div>
         <input type="hidden" id="major" name="major" value="0">
         <input type="hidden" id="minor1" name="minor1" value="0">
         <input type="hidden" id="minor2" name="minor2" value="0">
     </div>
-    <button id="submitButtonPage4" class="btn_link nextButton" type="submit" >Résultats</button>
+    <button class="btn_link nextButton" type="submit" >Résultats</button>
 </form>  

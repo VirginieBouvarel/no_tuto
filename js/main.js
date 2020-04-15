@@ -1,49 +1,28 @@
-"use strict";
+/*
+1/ On vérifie si on est sur la première page, c'est à dire si il y a déjà du contenu sauvegardé dans le localStorage ou non. SI oui on le récupère et on l'assigne à notre objet scores, SINON on crée un objet scores avec chaque valeur à 0.
+*/
+    //Test pour voir si avec un localStorage déjà rempli, on récupère bien les valeurs dans scores
+    // let scoresTest = {r:12, i:6, a:34, s:2, e:15, c:7};
+    // localStorage.setItem("SCORES_SAVED", JSON.stringify(scoresTest));
 
-/**
- * DONNEES
- */
-var result = [
-  {"letter":"r", "score":0},
-  {"letter":"i", "score":0},
-  {"letter":"a", "score":0},
-  {"letter":"s", "score":0},
-  {"letter":"e", "score":0},
-  {"letter":"c", "score":0},
-];
+    //Reset manuel de localStorage
+    // let scoresReset = {r:0, i:0, a:0, s:2, e:0, c:0};
+    // localStorage.setItem("SCORES_SAVED", JSON.stringify(scoresReset));
 
+    let scoresStorage = localStorage.getItem("SCORES_SAVED");
+    if(scoresStorage){
+        scores = JSON.parse(scoresStorage);
+    }else{
+        scores = {r:0, i:0, a:0, s:0, e:0, c:0};
+    }
+    console.log(scores);
 
-var resultStorage = localStorage.getItem("RESULT_ARRAY");
-if(resultStorage){
-    result = JSON.parse(resultStorage);
-}
+/*
+2/ Au clic sur la case de validation des réponses, on calcule les scores pour la page en cours et on met à jour l'objet scores en ajoutant les valeurs trouvées aux valeurs déjà sauvegardées pour chaque propriété
+*/
+    document.querySelector(".confirmation").addEventListener("click", setScores);
 
-var major = "r";
-var minor1 = "r";
-var minor2 = "r";
-
-
-
-/**
- * CODE PRINCIPAL
- */ 
-
-
-//Gestionnaire d'évènements conditionnel
-
-if (document.getElementById("ok3")){
-    document.querySelector("#ok3").addEventListener("click", calculScores);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
+/*
+3/ Au clic sur le bouton submit, on détermine les lettres du profil en fonction des scores
+*/
+    document.querySelector(".validation").addEventListener("click", setProfile);
