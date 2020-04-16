@@ -36,5 +36,9 @@
     }
     
 
-
+/*
+4/ Au clic sur les boutons de profils dans la page resultsDouble.phtml on affiche un profil ou l'autre
+*/
+    toggleProfile();
+    
 

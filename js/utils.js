@@ -107,7 +107,9 @@ function radioByLetter(letter){
  * Fonction qui détermine les lettres du profil en fonction des scores
  * - elle trie l'objet scores en ordre descendant
  * - elle récupère les 3 premières valeurs, et associe les clés correspondantes aux 3 variables de profil
- * - elle retourne les 3 variables de profil
+ * - elle verifie si 2 dominantes sont ex aequo
+ * - elle appelle la fonction sendAndreset avec les variables de profil en paramètres
+ * - elle ne retourne rien
  */
 
 function setProfile(){
@@ -118,11 +120,17 @@ function setProfile(){
     var major = scoresSorted[0][0];
     var minor1 = scoresSorted[1][0];
     var minor2 = scoresSorted[2][0] ;
-
     console.log("profile =");
     console.log(major, minor1, minor2);
-
-    sendAndReset(major, minor1, minor2);
+    //On vérifie si le profil est mixte
+    var double = "false";
+    if(scoresSorted[0][1] === scoresSorted[1][1]){
+        double = "true";
+    }
+    console.log("double =");
+    console.log(double);
+    //On envoie les infos au html et on vide le localStorage
+    sendAndReset(major, minor1, minor2, double);
 }
 
 /**
@@ -132,15 +140,44 @@ function setProfile(){
  * - elle supprime l'objet "SCORES_SAVED" du localStorage
  * - elle ne retourne rien
  */
-function sendAndReset(major, minor1, minor2){
+function sendAndReset(major, minor1, minor2, double){
 
     //On stocke les valeurs des variables de profil dans les champs cachés du html
     document.getElementById("major").value = major;
     document.getElementById("minor1").value = minor1;
     document.getElementById("minor2").value = minor2;
-    
+    document.getElementById("double").value = double;
+
     //On remet à zero le localStorage
     localStorage.removeItem("SCORES_SAVED");
 }
+
+/**
+ * toggleProfile()
+ * Fonction qui permet d'alterner l'affichage des deux profils sur la page resultsDouble.phtml
+ * - elle récupère depuis le DOM les 2 boutons et les 2 sections
+ * - elle écoute les clics sur les boutons
+ * - elle ajoute ou enlève la classe hidden sur l'élément concerné
+ * - elle ne retourne rien
+ */
+function toggleProfile(){
+    var btnProfile1 = document.querySelector("#profil-1");
+    var btnProfile2 = document.querySelector("#profil-2");
+    var sectionProfile1 = document.querySelector(".profil-1");
+    var sectionProfile2 = document.querySelector(".profil-2");
+
+    if(btnProfile1){
+        btnProfile1.addEventListener("click", ()=>{
+            sectionProfile1.classList.remove("hidden");
+            sectionProfile2.classList.add("hidden");
+        });
+        btnProfile2.addEventListener("click", ()=>{
+           sectionProfile1.classList.add("hidden");
+           sectionProfile2.classList.remove("hidden");
+        });
+    }
+}
+
+
 
 
