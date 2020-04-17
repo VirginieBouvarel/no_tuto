@@ -9,15 +9,17 @@
         
 <form class="questionnaire" data-mode="radio" method="post" action="#">
     <?php foreach($questionsAptitudes as $questionsArray):?>
-        <section>
-            <?php foreach($questionsArray as $question): ?>
-                <div class="<?= $question["class"] ?> groupRadio">
-                    <label for="Q<?= $question["number"] ?>-1">1</label><input type="radio" id="Q<?= $question["number"] ?>-1" name="Q<?= $question["number"] ?>" value="1" checked>
-                    <label for="Q<?= $question["number"] ?>-2">2</label><input type="radio" id="Q<?= $question["number"] ?>-2" name="Q<?= $question["number"] ?>" value="2" >
-                    <label for="Q<?= $question["number"] ?>-3">3</label><input type="radio" id="Q<?= $question["number"] ?>-3" name="Q<?= $question["number"] ?>" value="3" >
-                    <p><?= $question["question"] ?></p>
-                </div>
-            <?php endforeach; ?>
+        <section class="section-radio">
+            <div class="container">
+                <?php foreach($questionsArray as $question): ?>
+                    <div class="<?= $question["class"] ?> groupRadio">
+                        <label for="Q<?= $question["number"] ?>-1">1</label><input type="radio" id="Q<?= $question["number"] ?>-1" name="Q<?= $question["number"] ?>" value="1" checked>
+                        <label for="Q<?= $question["number"] ?>-2">2</label><input type="radio" id="Q<?= $question["number"] ?>-2" name="Q<?= $question["number"] ?>" value="2" >
+                        <label for="Q<?= $question["number"] ?>-3">3</label><input type="radio" id="Q<?= $question["number"] ?>-3" name="Q<?= $question["number"] ?>" value="3" >
+                        <p><?= $question["question"] ?></p>
+                    </div>
+                <?php endforeach; ?>
+            </div>
         </section>
     <?php endforeach;?>
 

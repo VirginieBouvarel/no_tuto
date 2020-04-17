@@ -2,7 +2,7 @@
             <div>
                 <p class="code">Votre code :<span> <?php echo $_POST["major"]; ?>.<?php echo $_POST["minor1"]; ?>.<?php echo $_POST["minor2"]; ?></span> /<span> <?php echo $_POST["minor1"]; ?>.<?php echo $_POST["major"]; ?>.<?php echo $_POST["minor2"]; ?></span></p>
             </div>
-            <h3 class="mixte-title">Vous avez un profil mixte !</h3>
+            <h3 class="mixte-title">Votre profil est mixte !</h3>
             <p>C'est une chose assez rare. Cela signifie que votre personnalité est très équilibrée entre deux composantes mesurées par le test, ou bien que selon les situations de vie une composante sera mise en avant par rapport à l'autre et vice versa. Quoi qu'il en soit, ces deux descriptions vous correspondent et vous permettront de vous orienter.Visualisez les deux profils associés pour voir dans lequel vous vous reconnaissez le mieux.</p>
             <div class="toggle-profile">
                 <button id="profil-1" class="btn_link">Profil 1</button>
@@ -21,13 +21,13 @@
                         <p class="strongPoints"><?= nl2br($majorData[0]["strongPoints"]); ?></p>
                     <h3><i class="fas fa-user-minus"></i>Points faibles</h3>
                         <p><?= $majorData[0]["weakPoints"]; ?></p>
-                    <h3><i class="fas fa-users"></i>Modes de communication avec les autres</h3>
+                    <h3><i class="fas fa-users"></i>Modes de communication</h3>
                         <p><?= $majorData[0]["communication"]; ?></p>
-                    <h3><i class="fas fa-briefcase"></i>Types d'environnements professionnels conseillés</h3>
+                    <h3><i class="fas fa-briefcase"></i>Types d'environnements préférés</h3>
                         <p><?= $majorData[0]["contexts"]; ?></p>
                 </section>   
                 <section class="minors">
-                    <h3><i class="fas fa-project-diagram"></i>Association avec les deux composantes mineures du profil</h3> 
+                    <h3><i class="fas fa-project-diagram"></i>Association avec les mineures</h3> 
                     <p>Deux autres composantes ont été mesurées par le test comme importantes dans votre personnalité. Elles viennent affiner votre profil et vous permettre de cibler plus précisément les carrières qui vous conviendront le mieux.</p>
                     <article>
                         <h3><i class="fas fa-arrow-right"></i><?= $minorsData[0]["name"]; ?></h3>
@@ -39,7 +39,7 @@
                     </article>
                 </section> 
                 <section class="jobs"> 
-                    <h3><i class="fas fa-user-tie"></i>Métiers qui peuvent vous correspondre:</h3>
+                    <h3><i class="fas fa-user-tie"></i>Métiers suggérés:</h3>
                         <ul>
                             <?php foreach($jobs as $job): ?>
                                 <li><?= $job["name"];?></li>

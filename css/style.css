@@ -58,7 +58,7 @@ a{
 	/*tailler les enfants*/
 }
 .container{
-    max-width:1000px;
+    max-width:90%;
     margin:0 auto;
 }
 .btn_link{
@@ -95,7 +95,7 @@ header section{
     padding:2rem 0;
 }
 header h1{
-    font-size:5rem;  
+    font-size:4.5rem;  
 }
 header p{
     font-size:3rem;
@@ -179,7 +179,7 @@ header p{
 /*QUESTIONNAIRE*/
 
 .presentation{
-    padding:0 20rem;
+    padding:0 15%;
 }
 .presentation h2{
     margin-bottom:3rem;
@@ -189,11 +189,9 @@ header p{
     text-align:center;
     position:relative;
 }
-.presentation h3:after{
-    content:url("../img/questionnaires/questions1-astronaute.png") no-repeat;
-    position: absolute;
-    top:6rem;
-    left:36rem;
+.presentation img{
+    display:block;
+    margin:0 auto;
 }
 .presentation section p{
     padding-right:12rem;
@@ -201,8 +199,8 @@ header p{
 }
 .questionnaire section{
     font-size:1.4rem;
-    padding:5rem 20rem;
-    text-align:justify;
+    padding:5rem;
+    text-align:left;
     line-height:2.2;
     position:relative;
 }
@@ -214,10 +212,10 @@ header p{
     color:var(--white);
 }
 .questionnaire section:before{
-    font-size:20rem;
+    font-size:860%;
     font-family:arial;
     position: absolute;
-    right:20rem;
+    right:10%;
     top:50%;
     bottom:50%;
     line-height:0;
@@ -275,6 +273,10 @@ header p{
 }
 .nextButton{
     padding:2rem 5rem;
+    display:block;
+    width:20rem;
+    margin:0 auto;
+    text-align:center;
 }
 
 /*RESULTS*/
@@ -299,6 +301,9 @@ margin-left:auto;
 }
 #profil-1, #profil-2{
     padding:1rem 2rem;
+}
+#profil-1:focus, #profil-2:focus{
+    outline:none;
 }
 .hidden{
     display:none;
@@ -357,6 +362,14 @@ footer p{
     header div img:first-child, header div img:last-child{
         width:12%;
     }
+    .questionnaire section{
+        padding:5rem 28rem 5rem 5rem;
+    }
+    .questionnaire .section-radio{
+        padding:7rem 20rem 7rem 2rem;
+    }
+
+    
 }
 /*VERSION TABLETTE*/
 @media screen and (max-width:770px){
@@ -367,14 +380,44 @@ footer p{
         width:80%;
         margin:10rem 0;
     }
+    .about .btn_bottom{
+        width:30%;
+        text-align:center;
+    }
+    .questionnaire section{
+       padding:15rem 10rem 5rem 5rem;
+    }
+    .questionnaire section:before{
+        font-size:600%;
+        left:10%;
+        top:12%;
+    }
+    .questionnaire .section-radio{
+        padding:15rem 2rem 7rem 2rem;
+    }
+    .questionnaire .section-radio:before{
+         font-size:600%;
+         left:7%;
+         top:14%;
+    }
+    .toggle-profile{
+        margin-top:3rem;
+    }
+    .results h2{
+        margin-top:5rem;
+    }
 }
 /*VERSION MOBILE*/
 @media screen and (max-width:578px){
+    body, .presentation p, label, groupRadio label, p{
+        font-size:1.2rem;
+    } 
     header div img:first-child, header div img:last-child{
         width:25%;
     }
     header p{
-        font-size:2rem;  
+        font-size:2rem; 
+        padding:2rem; 
     }  
     .home img:nth-child(1){
         width:80%;
@@ -391,12 +434,95 @@ footer p{
     .home img:nth-child(3){
         display:none;
     }
-
+    /*ABOUT*/
+    .origins img{
+        /* float:left;
+        margin-right: 2rem;
+        margin-bottom:2rem; */
+        width:100%;
+    }
+    .summaries article:nth-child(odd){
+        text-align:left;
+    }
+    .summaries article img{
+        width:100%;
+    }
+    .about .btn_bottom{
+        width:85%;
+    }
+    /*QUESTIONNAIRE*/
+    .presentation{
+        padding:7%;
+    }
+    .presentation img{
+        width:80%;
+    }
+    .questionnaire section{
+        padding:15rem 1rem 5rem;
+        font-size:1.2rem;
+    }
+    .questionnaire section:before{
+        font-size:500%;
+        left:8%;
+        top:13%;
+    }
+    .questionnaire .section-radio:before{
+        font-size:500%;
+        left:9%;
+        top:14%;
+    } 
+    .groupRadio label{
+        margin-right:0.2rem;
+    }
+    .groupRadio{
+        margin-bottom:0.7rem;
+    }
+    .groupRadio input[type="radio"]{
+        margin-right:0;
+        position: relative;
+        top:0.2rem;
+    }
+    .groupRadio p {
+        display:inline;
+        margin-left:0.4rem;
+    }
+    .validation-block{
+        padding:3rem;
+    }
+    .validation-block div+div label{
+        font-size:1.6rem;
+    }
+    /*RESULTS*/
+    
+    .results{
+        padding:0;
+    }
+    .results h2{
+        font-size:2.5rem;
+        margin:4rem 0;
+    }
+    .results div p{
+        font-size:2rem;
+    }
+    .results .fas{
+        font-size:2rem;
+    }
+    .jobs ul{
+        font-size:1.2rem;
+    }
+    /*FOOTER*/
     footer nav{
         flex-direction:column;
         width:100%;
     }
     footer p{
         font-size:1.2rem;
+    }
+}
+
+/*VERSION MINI MOBILES*/
+@media screen and (max-width:330px){
+    .results h3, .results .fas{
+        font-size:1.6rem;
     }
 }
