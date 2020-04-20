@@ -78,12 +78,12 @@ a{
 header div{
     padding:2rem 1rem;
 }
-header div img:first-child{
+header div>a{
     width:8%;
     float:left;
     margin-bottom:1rem;
 }
-header div img:last-child{
+header div>img{
     width:10%;
     float:right;
 }
@@ -368,7 +368,7 @@ footer p{
 
 /*VERSION LAPTOP*/
 @media screen and (max-width:1025px){
-    header div img:first-child, header div img:last-child{
+    header div>a, header div>img{
         width:12%;
     }
     .questionnaire section{
@@ -391,7 +391,7 @@ footer p{
 }
 /*VERSION TABLETTE*/
 @media screen and (max-width:770px){
-    header div img:first-child, header div img:last-child{
+    header div>a, header div>img{
         width:15%;
     }
     .home img:nth-child(3){
@@ -436,7 +436,7 @@ footer p{
     body, .presentation p, label, groupRadio label, p{
         font-size:1.2rem;
     } 
-    header div img:first-child, header div img:last-child{
+    header div>a, header div>img{
         width:25%;
     }
     header p{
