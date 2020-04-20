@@ -174,12 +174,6 @@ header p{
 .summaries article p{
     margin-top:2.5rem;
 }
-/* .summaries article:nth-child(odd) p{
-    padding-left:100rem;
-}
-.summaries article:nth-child(even) p{
-    padding-right:100rem;
-} */
 .about .btn_bottom{
     display:block;
     margin:0 auto;
@@ -221,37 +215,42 @@ header p{
     background-color:var(--green);
     color:var(--white);
 }
-.questionnaire section:before{
+.profile-letter{
+    width:5rem;
+    height:5rem;
+    position:absolute;
+    top:50%;
+    bottom:50%;
+    right:10%;
+}
+.profile-letter:before{
     font-size:860%;
     font-family:arial;
     position: absolute;
-    right:10%;
-    top:50%;
-    bottom:50%;
     line-height:0;
 }
-.questionnaire section:nth-child(odd):before{
+.questionnaire section:nth-child(odd) .profile-letter:before{
     color:var(--white);
 }
-.questionnaire section:nth-child(even):before{
+.questionnaire section:nth-child(even) .profile-letter:before{
     color:var(--green);
 }
-.questionnaire section:nth-child(1):before{
+.questionnaire section:nth-child(1) .profile-letter:before{
     content:"R";
 }
-.questionnaire section:nth-child(2):before{
+.questionnaire section:nth-child(2) .profile-letter:before{
     content:"I";
 }
-.questionnaire section:nth-child(3):before{
+.questionnaire section:nth-child(3) .profile-letter:before{
     content:"A";
 }
-.questionnaire section:nth-child(4):before{
+.questionnaire section:nth-child(4) .profile-letter:before{
     content:"S";
 }
-.questionnaire section:nth-child(5):before{
+.questionnaire section:nth-child(5) .profile-letter:before{
     content:"E";
 }
-.questionnaire section:nth-child(6):before{
+.questionnaire section:nth-child(6) .profile-letter:before{
     content:"C";
 }
 .questionnaire input[type="checkbox"]{
@@ -375,6 +374,9 @@ footer p{
     .questionnaire section{
         padding:5rem 28rem 5rem 5rem;
     }
+    .profile-letter:before{
+        font-size:700%;
+    }
     .questionnaire .section-radio{
         padding:7rem 20rem 7rem 2rem;
     }
@@ -401,19 +403,25 @@ footer p{
         text-align:center;
     }
     .questionnaire section{
-       padding:15rem 10rem 5rem 5rem;
+       padding:10rem 10rem 5rem 5rem;
     }
-    .questionnaire section:before{
+    .profile-letter{
+        position:relative;
+        top:0;
+        left:0;
+        margin-bottom:2rem;
+    }
+    .questionnaire section .profile-letter:before{
         font-size:600%;
-        left:10%;
-        top:12%;
+        left:51%;
+        top:15%;
     }
     .questionnaire .section-radio{
-        padding:15rem 2rem 7rem 2rem;
+        padding:7rem 2rem 7rem 2rem;
     }
-    .questionnaire .section-radio:before{
+    .questionnaire .section-radio .profile-letter:before{
          font-size:600%;
-         left:7%;
+         left:58%;
          top:14%;
     }
     .toggle-profile{
@@ -455,9 +463,6 @@ footer p{
         padding:0;
     }
     .origins img{
-        /* float:left;
-        margin-right: 2rem;
-        margin-bottom:2rem; */
         width:100%;
     }
     .summaries article:nth-child(odd){
@@ -477,17 +482,17 @@ footer p{
         width:80%;
     }
     .questionnaire section{
-        padding:15rem 1rem 5rem;
+        padding:3rem 1rem 5rem;
         font-size:1.2rem;
     }
-    .questionnaire section:before{
+    .questionnaire section .profile-letter:before{
         font-size:500%;
-        left:8%;
-        top:13%;
+        left:26%;
+        top:53%;
     }
-    .questionnaire .section-radio:before{
+    .questionnaire .section-radio .profile-letter:before{
         font-size:500%;
-        left:9%;
+        left:28%;
         top:14%;
     } 
     .groupRadio label{
@@ -541,7 +546,11 @@ footer p{
 
 /*VERSION MINI MOBILES*/
 @media screen and (max-width:330px){
-    .questionnaire .section-radio:before{
+    .profil-letter{
+        width:10%;
+        height:auto;
+    }
+    .questionnaire .section-radio .profile-letter:before{
         top:11%;
     }
     .results h3, .results .fas{

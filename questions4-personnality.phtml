@@ -10,6 +10,7 @@
 <form class="questionnaire" data-mode="checkbox" method="post" action="results.php">
     <?php foreach($questionsPersonality as $questionsArray):?>
         <section>
+            <div class="profile-letter"></div>
             <div class="container">
                 <?php foreach($questionsArray as $question): ?>
                     <input type="checkbox" class="<?= $question["class"] ?>" id="Q<?= $question["number"] ?>" name="Q<?= $question["number"] ?>"><label for="Q<?= $question["number"] ?>"><?= $question["question"] ?></label><br> 

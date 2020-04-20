@@ -45,7 +45,6 @@ function sliceArray($array, $slice){
 
     //Hachage du tableau $questions pour obtenir un tableau multidimensionnel
     $questions = sliceArray($questions, $slice);
-
     return $questions;
  }
 

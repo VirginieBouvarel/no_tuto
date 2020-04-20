@@ -10,6 +10,7 @@
 <form class="questionnaire" data-mode="radio" method="post" action="#">
     <?php foreach($questionsAptitudes as $questionsArray):?>
         <section class="section-radio">
+            <div class="profile-letter"></div>
             <div class="container">
                 <?php foreach($questionsArray as $question): ?>
                     <div class="<?= $question["class"] ?> groupRadio">
