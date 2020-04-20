@@ -2,7 +2,7 @@
             <div>
                 <p class="code">Votre code :<span> <?php echo $_POST["major"]; ?>.<?php echo $_POST["minor1"]; ?>.<?php echo $_POST["minor2"]; ?></span> /<span> <?php echo $_POST["minor1"]; ?>.<?php echo $_POST["major"]; ?>.<?php echo $_POST["minor2"]; ?></span></p>
             </div>
-            <h3 class="mixte-title">Votre profil est mixte !</h3>
+            <h3 class="mixte-title">Votre profil est mixte</h3>
             <p>C'est une chose assez rare. Cela signifie que votre personnalité est très équilibrée entre deux composantes mesurées par le test, ou bien que selon les situations de vie une composante sera mise en avant par rapport à l'autre et vice versa. Quoi qu'il en soit, ces deux descriptions vous correspondent et vous permettront de vous orienter.Visualisez les deux profils associés pour voir dans lequel vous vous reconnaissez le mieux.</p>
             <div class="toggle-profile">
                 <button id="profil-1" class="btn_link">Profil 1</button>
@@ -16,7 +16,7 @@
                     <h3><i class="fas fa-edit"></i>Principales compétences</h3>
                         <p><?= $majorData[0]["skills"]; ?></p>
                     <h3><i class="fas fa-user-plus"></i>Points forts</h3>
-                        <p>Nous listons ici les points forts des personnes à dominante réaliste.<br>
+                        <p>Nous listons ici les points forts des personnes à dominante <?= $majorData2[0]["name"]; ?>.<br>
                         Cette liste peut notamment servir de grille de préparation à un entretien d’embauche ou de sélection à une formation.</p>
                         <p class="strongPoints"><?= nl2br($majorData[0]["strongPoints"]); ?></p>
                     <h3><i class="fas fa-user-minus"></i>Points faibles</h3>
@@ -57,18 +57,18 @@
                     <h3><i class="fas fa-edit"></i>Principales compétences</h3>
                         <p><?= $majorData2[0]["skills"]; ?></p>
                     <h3><i class="fas fa-user-plus"></i>Points forts</h3>
-                        <p>Nous listons ici les points forts des personnes à dominante réaliste.<br>
+                        <p>Nous listons ici les points forts des personnes à dominante <?= $majorData2[0]["name"]; ?>.<br>
                         Cette liste peut notamment servir de grille de préparation à un entretien d’embauche ou de sélection à une formation.</p>
                         <p class="strongPoints"><?= nl2br($majorData2[0]["strongPoints"]); ?></p>
                     <h3><i class="fas fa-user-minus"></i>Points faibles</h3>
                         <p><?= $majorData2[0]["weakPoints"]; ?></p>
-                    <h3><i class="fas fa-users"></i>Modes de communication avec les autres</h3>
+                    <h3><i class="fas fa-users"></i>Modes de communication</h3>
                         <p><?= $majorData2[0]["communication"]; ?></p>
-                    <h3><i class="fas fa-briefcase"></i>Types d'environnements professionnels conseillés</h3>
+                    <h3><i class="fas fa-briefcase"></i>Types d'environnements péférés</h3>
                         <p><?= $majorData2[0]["contexts"]; ?></p>
                 </section>   
                 <section class="minors">
-                    <h3><i class="fas fa-project-diagram"></i>Association avec les deux composantes mineures du profil</h3> 
+                    <h3><i class="fas fa-project-diagram"></i>Association avec les deux composantes mineures</h3> 
                     <p>Deux autres composantes ont été mesurées par le test comme importantes dans votre personnalité. Elles viennent affiner votre profil et vous permettre de cibler plus précisément les carrières qui vous conviendront le mieux.</p>
                     <article>
                         <h3><i class="fas fa-arrow-right"></i><?= $minorsData2[0]["name"]; ?></h3>
@@ -86,7 +86,7 @@
                                 <li><?= $job["name"];?></li>
                             <?php endforeach; ?>    
                         </ul>
-                    <h3>Vous êtes <?= $majorData2[0]["name"]; ?> à votre manière !</h3>
+                    <h3>Vous êtes <?= $majorData2[0]["name"]; ?> à votre manière</h3>
                         <p>Ces métiers ne sont que des suggestions correspondants au profil général du type <?= $majorData2[0]["name"]; ?>, associé aux deux mineures qui vous concernent. <span>Vous êtes une personne unique</span>, ces métiers peuvent ne pas vous correspondre pleinement. Cela veux seulement dire que vous seriez compétent(e)s dans ces domaines mais que vos goûts ou  vos projets de vie vous feront privilégier d’autres voies, qui pourront correspondre aussi au profil <?= $majorData2[0]["name"]; ?>. Il existe des dizaines de métiers correspondant à votre profil. Affiner l’analyse de vos résultats avec un(e) conseiller(ère) vous permettra de  préciser votre projet.</p>
                 </section> 
             </section>
