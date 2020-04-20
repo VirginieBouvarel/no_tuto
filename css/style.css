@@ -147,7 +147,10 @@ header p{
     margin-bottom:5rem;
 }
 .summaries article{
+    width:50%;
+    margin:0 auto;
     padding:2rem 0;
+    overflow:hidden;
 }
 .summaries article h4{
     color:var(--darkGrey);
@@ -168,13 +171,20 @@ header p{
     float:left;
     margin:1rem 2rem 1rem 0;
 }
-.summaries p{
-    margin-top:4rem;
+.summaries article p{
+    margin-top:2.5rem;
 }
+/* .summaries article:nth-child(odd) p{
+    padding-left:100rem;
+}
+.summaries article:nth-child(even) p{
+    padding-right:100rem;
+} */
 .about .btn_bottom{
     display:block;
     margin:0 auto;
     width:23%;
+    text-align:center;
 }
 /*QUESTIONNAIRE*/
 
@@ -368,7 +378,13 @@ footer p{
     .questionnaire .section-radio{
         padding:7rem 20rem 7rem 2rem;
     }
-
+    .summaries article{
+        width:100%;
+    }
+    .about .btn_bottom{
+        width:25%;
+        text-align:center;
+    }
     
 }
 /*VERSION TABLETTE*/
@@ -381,7 +397,7 @@ footer p{
         margin:10rem 0;
     }
     .about .btn_bottom{
-        width:30%;
+        width:35%;
         text-align:center;
     }
     .questionnaire section{
@@ -435,6 +451,9 @@ footer p{
         display:none;
     }
     /*ABOUT*/
+    .about{
+        padding:0;
+    }
     .origins img{
         /* float:left;
         margin-right: 2rem;
@@ -522,6 +541,9 @@ footer p{
 
 /*VERSION MINI MOBILES*/
 @media screen and (max-width:330px){
+    .questionnaire .section-radio:before{
+        top:11%;
+    }
     .results h3, .results .fas{
         font-size:1.6rem;
     }
