@@ -73,6 +73,12 @@ a{
     background-color:var(--white);
     color:var(--green); 
 }
+a.disabled, button.disabled{
+    pointer-events:none;
+    cursor:default;
+    background-color:var(--mediumGrey);
+    border:2px solid var(--mediumGrey);
+}
 
 /*HEADER*/
 header div{
