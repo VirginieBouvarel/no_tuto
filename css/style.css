@@ -489,6 +489,9 @@ footer p{
         width:85%;
     }
     /*QUESTIONNAIRE*/
+    .confirmation + label:after{
+        top:23rem;
+    }
     .presentation{
         padding:7%;
     }
