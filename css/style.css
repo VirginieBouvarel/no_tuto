@@ -79,6 +79,14 @@ a.disabled, button.disabled{
     background-color:var(--mediumGrey);
     border:2px solid var(--mediumGrey);
 }
+.confirmation + label:after{
+    content:"Merci de confirmer vos réponses pour passer aux questions suivantes";
+    color:var(--green);
+    display:block;
+    width:100%;
+    position:relative;
+    top:19rem;
+}
 
 /*HEADER*/
 header div{
@@ -276,10 +284,10 @@ header p{
     background-color:var(--white);
     color:var(--mediumGrey);
     text-align:center;
-    margin:10rem auto;
+    margin:10rem auto 5rem;
 }
 .validation{
-    margin-top:5rem;
+    margin-top:2rem;
 }
 .validation + label{
     color:var(--green);
@@ -359,7 +367,7 @@ footer{
     color:var(--white);
     text-align:center;
     padding:5rem;
-    margin-top:10rem;
+    margin-top:15rem;
     text-align:center;
 }
 

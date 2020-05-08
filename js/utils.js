@@ -192,7 +192,7 @@ function answersValidation(){
     let validation = document.querySelector(".validation");
     let next = document.querySelector("#next");
     let results = document.querySelector("#results");
-
+    
 
     if(confirmation && validation){//Nous sommes sur la page de validation
         validation.addEventListener("change", function(){
@@ -207,6 +207,7 @@ function answersValidation(){
         confirmation.addEventListener("change", function(){
             if(confirmation.checked === true){
                 next.classList.remove('disabled');
+
             }else{
                 next.classList.add('disabled');
             }
