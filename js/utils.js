@@ -178,6 +178,41 @@ function toggleProfile(){
     }
 }
 
+/**
+ * answersValidation()
+ * Fonction qui active/désactive le lien suivant ou le bouton réultats en fonction de l'état des cases de confirmation et de validation
+ * - elle verifie si on est sur la page de validation du questionnaire ou sur une page précédente
+ * - elle récupère l'état des checkbox
+ * - elle ajoute ou enlève la classe "disabled" du lien suivant ou du bouton résultat en fonction de cette information
+ * - elle ne retourne rien
+ */
 
+function answersValidation(){
+    let confirmation = document.querySelector(".confirmation");
+    let validation = document.querySelector(".validation");
+    let next = document.querySelector("#next");
+    let results = document.querySelector("#results");
+
+
+    if(confirmation && validation){//Nous sommes sur la page de validation
+        validation.addEventListener("change", function(){
+            if(confirmation.checked === true && validation.checked === true){
+                results.classList.remove('disabled');
+            }else{
+                results.classList.add('disabled');
+            }
+        });
+        
+    }else if(confirmation){//Nous sommes sur une page précédente
+        confirmation.addEventListener("change", function(){
+            if(confirmation.checked === true){
+                next.classList.remove('disabled');
+            }else{
+                next.classList.add('disabled');
+            }
+        });
+        
+    }
+}
 
 

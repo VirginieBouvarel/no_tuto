@@ -19,19 +19,13 @@
 
 /*
 2/ Au clic sur la case de confirmation des réponses, on calcule les scores pour la page en cours et on met à jour l'objet scores en ajoutant les valeurs trouvées aux valeurs déjà sauvegardées pour chaque propriété. 
-En fonction de l'état cochée/décochée de la case on active/désactive le bouton pour passer au questionnaire suivant.
 */
-    let confirmation = document.querySelector(".confirmation");
-    let buttonNext = document.querySelector("#next");
     
-    if(confirmation){
-        confirmation.addEventListener("click", setScores);
-        confirmation.addEventListener("change", function(){
-                if(buttonNext){
-                    buttonNext.classList.toggle("disabled");
-                }
-            });
-        }
+    
+    if(document.querySelector(".confirmation")){
+        document.querySelector(".confirmation").addEventListener("click", setScores);
+        
+    }
 
 
 /*
@@ -39,25 +33,17 @@ En fonction de l'état cochée/décochée de la case on active/désactive le bou
 - on détermine les lettres du profil en fonction des scores 
 - on passe leur valeurs au html
 - on reset le localStorage
-En fonction de l'état cochée/décochée de la case on active/désactive le bouton submit.
 */
-    let validation = document.querySelector(".validation");
-    let buttonResults = document.querySelector("#results");
-    if(validation){
-        validation.addEventListener("click", setProfile);
-        validation.addEventListener("change", function(){
-            buttonResults.classList.toggle("disabled");
-        })
+
+    if(document.querySelector(".validation")){
+        document.querySelector(".validation").addEventListener("click", setProfile);
     }
-    
-// /*
-// 4/ Au clic sur les boutons next ou results désactivés, on affiche un message pour indiquer que les cases de confirmation/validation ne sont pas cochées
-// */
-//     let disabled = document.querySelector(".disabled");
-//     console.log(disabled);
-//     disabled.addEventListener("mouseover", function(){
-//         console.log("ajoute un div message d'erreur");
-//     });
+
+/*
+4/ On écoute l'état des cases de confirmation/validation pour activer/désactiver les boutons d'action suivant et résultats.
+*/
+
+    answersValidation();
 
 /*
 5/ Au clic sur les boutons de profils dans la page resultsDouble.phtml on affiche un profil ou l'autre
