@@ -80,7 +80,7 @@ a.disabled, button.disabled{
     border:2px solid var(--mediumGrey);
 }
 .confirmation + label:after{
-    content:"Merci de confirmer vos réponses pour passer aux questions suivantes";
+    content:"Merci de confirmer vos réponses pour continuer";
     color:var(--green);
     display:block;
     width:100%;
