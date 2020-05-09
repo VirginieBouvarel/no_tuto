@@ -180,40 +180,60 @@ function toggleProfile(){
 
 /**
  * answersValidation()
- * Fonction qui active/désactive le lien suivant ou le bouton réultats en fonction de l'état des cases de confirmation et de validation
- * - elle verifie si on est sur la page de validation du questionnaire ou sur une page précédente
- * - elle récupère l'état des checkbox
- * - elle ajoute ou enlève la classe "disabled" du lien suivant ou du bouton résultat en fonction de cette information
+ * Fonction qui active/désactive le lien suivant, la case de validation ou le bouton réultats en fonction de l'état des cases de confirmation et de validation
+ * - elle récupère les différents éléments du DOM
+ * - au clic sur la case de confirmation elle active le lien suivant
+ * - au clic sur la case de confirmation de la dernière page elle active la case de validation
+ * - au clic sur la case de validation elle active le bouton résultats
+ * - elle masque les messages d'alerte quand les différentes cases sont cochées
  * - elle ne retourne rien
  */
-
 function answersValidation(){
-    let confirmation = document.querySelector(".confirmation");
-    let validation = document.querySelector(".validation");
-    let next = document.querySelector("#next");
-    let results = document.querySelector("#results");
+    let confirmNextCheckbox = document.querySelector(".confirm-next");
+    let confirmResultsCheckbox = document.querySelector(".confirm-results");
+    let validForm = document.querySelector("#valid-form");
+    let validCheckbox = document.querySelector(".validation");
+    let nextBtn = document.querySelector("#next");
+    let resultsBtn = document.querySelector("#results");
+    let alert = document.querySelector(".alert");
+
+/*Au clic sur la case de confirmation on active le lien suivant et on masque le message d'alerte*/
+
+    if(confirmNextCheckbox){
+        confirmNextCheckbox.addEventListener("change", function(){
+            if(confirmNextCheckbox.checked === true){
+                nextBtn.classList.remove('disabled');
+                alert.classList.add('white');
+            }else{
+                nextBtn.classList.add('disabled');
+                alert.classList.remove('white');
+            }
+        });
+    }
     
+/*Au clic sur la case de confirmation de la dernière page du questionnaire, on affiche la case de validation du questionnaire*/
 
-    if(confirmation && validation){//Nous sommes sur la page de validation
-        validation.addEventListener("change", function(){
-            if(confirmation.checked === true && validation.checked === true){
-                results.classList.remove('disabled');
+    if(confirmResultsCheckbox){
+        confirmResultsCheckbox.addEventListener("change", function(){
+            if(confirmResultsCheckbox.checked === true){
+                validForm.classList.remove('hidden');
             }else{
-                results.classList.add('disabled');
+                validForm.classList.add('hidden');
             }
         });
-        
-    }else if(confirmation){//Nous sommes sur une page précédente
-        confirmation.addEventListener("change", function(){
-            if(confirmation.checked === true){
-                next.classList.remove('disabled');
+    }    
 
+/*Au clic sur la case de validation du questionnaire on active le bouton résultats et on masque le message d'alerte*/
+
+    if(validCheckbox){
+        validCheckbox.addEventListener("change", function(){
+            if(validCheckbox.checked === true){
+                resultsBtn.classList.remove('disabled');
+                alert.classList.add('white');
             }else{
-                next.classList.add('disabled');
+                resultsBtn.classList.add('disabled');
+                alert.classList.remove('white');
             }
         });
-        
     }
 }
-
-

@@ -29,7 +29,7 @@
 
 
 /*
-3/ Au clic sur case de validation du questionnaire:
+3/ Au clic sur la de case de validation du questionnaire:
 - on détermine les lettres du profil en fonction des scores 
 - on passe leur valeurs au html
 - on reset le localStorage

@@ -79,15 +79,16 @@ a.disabled, button.disabled{
     background-color:var(--mediumGrey);
     border:2px solid var(--mediumGrey);
 }
-.confirmation + label:after{
-    content:"Merci de confirmer vos réponses pour continuer";
+.alert{
     color:var(--green);
-    display:block;
-    width:100%;
-    position:relative;
-    top:19rem;
+    text-align:center;
 }
-
+.hidden{
+    visibility:hidden;
+}
+.white{
+    color:var(--white);
+}
 /*HEADER*/
 header div{
     padding:2rem 1rem;
