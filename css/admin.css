@@ -61,6 +61,19 @@ h1, h3{
     margin-top:3rem;
 }
 /*HEADER*/
+.admin-heading{
+    color:var(--lightGrey);
+    display:block;
+    width:50%;
+    margin:0 auto;
+    position:relative;
+    top:20rem;
+    left:15rem;
+    margin-bottom:80rem;
+}
+.admin-heading span{
+    color:var(--green);
+}
 header{
     background-color:var(--lightGrey);
     padding:2rem;
