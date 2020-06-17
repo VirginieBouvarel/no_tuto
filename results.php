@@ -13,7 +13,7 @@ require("bdd.php");
         $minor2 = $_POST["minor2"];
         $minor1Code = $_POST["major"].$_POST["minor1"];
         $minor2Code = $_POST["major"].$_POST["minor2"];
-        $double = $_POST["double"];
+        $double = ($_POST["double"]);
         //var_dump($major, $minor1, $minor2, $minor1Code, $minor2Code,$double);
 
     //Récupération des infos de la dominante 

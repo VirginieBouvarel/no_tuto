@@ -2,3 +2,4 @@ AuthName "Accès sécurisé"
 AuthType Basic
 AuthUserFile "C:\xampp\htdocs\portfolio\riasec\admin\.htpasswd"
 Require valid-user
+Options -Indexes
