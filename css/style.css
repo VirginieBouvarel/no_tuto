@@ -1,6 +1,9 @@
-/**
-* GLOBALS
-*/
+/*normalize*/
+/*globals*/
+@font-face {
+	font-family: "Digi";
+	src: url("../font/ds-digib.ttf");
+}
 
 html{
 	font-size:62.5%;
@@ -9,16 +12,64 @@ html{
 
 *, *:before, *:after{
 	box-sizing:inherit;
+	margin:0;
+	padding:0;
 }
 
 body{
 	font-family: Arial, sans-serif;
 	font-size:14px;
+	display:flex;
+	justify-content:center;
 }
-img{
-	max-width:100%;
+
+/*custom styles*/
+.chrono{
+	background-color:#000;
+	width:30rem;
+	display:flex;
+	flex-flow:column;
+	justify-content:center;
+	align-items:center;
+	padding:3rem 0 0 0;
+	border-radius:20px;
+	margin-top:10rem;
 }
-a{
-	text-decoration:none;
+.timing{
+	background:#00FF55;
+	width:80%;
+	padding:4rem 2rem;
+	border-radius:20px;
+	text-align:center;
 }
+.timing > p{
+	font-family:"Digi";
+	font-size:6rem;
+}
+.buttons{
+	width:80%;
+	display:flex;
+	align-items:center;
+	padding:3rem 0;
+}
+.btn{
+	padding:1rem;
+	border-radius:50%;
+	color:#fff;
+	margin-right:1rem;
+}
+.btn-start{
+	background: #00FF55;
+}
+.btn-pause{
+	background: grey;
+	margin-right:auto;
+}
+.btn-split{
+	background: blue;
+}
+.btn-reset{
+	background: firebrick;
+}
+
 
