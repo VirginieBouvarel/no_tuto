@@ -10,9 +10,9 @@ const splitsArray = [];
 
 let minutes = 0;
 let seconds = 0;
-let centiseconds = 0;
+let milliseconds = 0;
 let intervalID;
-let diff = 0;
+let gap = "xxx";
 
 init();
 
@@ -66,7 +66,47 @@ function splitChrono(){
   displayTimer(li);
   splits.appendChild(li);
   const span = document.createElement('span');
-  span.textContent = ` (+ ${diff})`;
   li.appendChild(span);
+  calculateGap(li);
 }
+function calculateGap(currentSplit){
+  if(splits.children.length > 2){
+    const current = currentSplit.firstElementChild.textContent;
+    const previous = currentSplit.previousElementSibling.firstElementChild.textContent;
+
+    const currentTime = {
+      minutes: parseInt(current.slice(0,2)),
+      seconds: parseInt(current.slice(3,5)),
+      centiseconds: parseInt(current.slice(6))
+    }
+    const previousTime = {
+      minutes: parseInt(previous.slice(0,2)),
+      seconds: parseInt(previous.slice(3,5)),
+      centiseconds: parseInt(previous.slice(6))
+    }
+    console.log(currentTime);
+    console.log(previousTime);
+
+    const substractTime = {
+      minutes: calculateMinutes(),
+      seconds: calculateSeconds(),
+      centiseconds : calculateCentiseconds(currentTime.centiseconds, previousTime.centiseconds)
+    }
+    currentSplit.lastElementChild.textContent = `${substractTime.minutes}:${substractTime.seconds}:${substractTime.centiseconds}`;
+
+ }else{
+   currentSplit.lastElementChild.textContent = currentSplit.firstElementChild.textContent ;
+ }
+}
+
+function calculateCentiseconds(current, previous){
+  if (current > previous){
+    return current - previous;
+  }else{
+    current += 100;
+    substractTime.seconds += 1;
+    return current - previous
+  }
+}
+
 
