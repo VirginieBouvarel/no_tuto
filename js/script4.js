@@ -16,6 +16,8 @@ const previousTime = {
     centiseconds:0
 }
 let intervalID;
+const centisecondsCeil = 99;
+const secondsCeil = 59;
 
 //Initialisation du timer
 displayTime(time, timer);
@@ -54,12 +56,11 @@ function startChrono() {
         //On ajoute un centième de seconde à chaque interval
         time.centiseconds ++;
         //On met a jour les valeurs de time 
-        const centisecondsCeil = 99; 
         if (time.centiseconds > centisecondsCeil) {
             time.seconds ++ ;
             time.centiseconds = 0;
         }
-        const secondsCeil = 59;
+        
         if(time.seconds > secondsCeil) {
             time.minutes ++;
             time.seconds = 0;
@@ -80,6 +81,7 @@ function resetChrono() {
     time.centiseconds = 0;
     //On rafraîchit l'affichage
     displayTime(time, timer);
+    updatePreviousTime();
 }
 function splitChrono() {
     //On crée un li pour contenir la valeur courante de time
@@ -115,10 +117,10 @@ function calculateDuration(currentTime, previousTime) {
         centiseconds: durationInCentiseconds
     }
     //On met à jour les valeurs de duration
-    while(duration.centiseconds > 99){
+    while(duration.centiseconds > centisecondsCeil){
       duration.centiseconds -= 100;
       duration.seconds ++;
-      while(duration.seconds > 59){
+      while(duration.seconds > secondsCeil){
         duration.seconds -= 60;
         duration.minutes ++;
       }
