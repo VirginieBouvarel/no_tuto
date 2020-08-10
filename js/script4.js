@@ -28,10 +28,10 @@ splitButton.addEventListener('click', splitChrono);
 
 
 /*FONCTIONS*/
-function displayTime(timeToDisplay, place){
+function displayTime(timeToDisplay, place) {
     place.textContent = formatTime(timeToDisplay);
 }
-function formatTime(timeToFormat){
+function formatTime(timeToFormat) {
     let min = timeToFormat.minutes;
     let sec = timeToFormat.seconds;
     let cs = timeToFormat.centiseconds;
@@ -49,16 +49,18 @@ function formatTime(timeToFormat){
 }
 
 
-function startChrono(){
+function startChrono() {
     intervalID = setInterval(function(){
         //On ajoute un centième de seconde à chaque interval
         time.centiseconds ++;
         //On met a jour les valeurs de time 
-        if (time.centiseconds > 99) {
+        const centisecondsCeil = 99; 
+        if (time.centiseconds > centisecondsCeil) {
             time.seconds ++ ;
             time.centiseconds = 0;
         }
-        if(time.seconds > 59){
+        const secondsCeil = 59;
+        if(time.seconds > secondsCeil) {
             time.minutes ++;
             time.seconds = 0;
         }
@@ -66,10 +68,10 @@ function startChrono(){
         displayTime(time, timer);
     }, 10);
 }
-function stopChrono(){
+function stopChrono() {
     clearInterval(intervalID);
 }
-function resetChrono(){
+function resetChrono() {
     stopChrono();
     //On vide la liste de splits et on remet les valeurs de time à zéro
     splits.innerHTML = '<h3><i class="fas fa-user-clock"></i></h3>';
@@ -79,7 +81,7 @@ function resetChrono(){
     //On rafraîchit l'affichage
     displayTime(time, timer);
 }
-function splitChrono(){
+function splitChrono() {
     //On crée un li pour contenir la valeur courante de time
     const li = document.createElement('li');
     li.textContent = formatTime(time);
@@ -93,12 +95,12 @@ function splitChrono(){
     updatePreviousTime();
 }
 
-function updatePreviousTime(){
+function updatePreviousTime() {
     previousTime.minutes = time.minutes;
     previousTime.seconds = time.seconds;
     previousTime.centiseconds = time.centiseconds;
 }
-function calculateDuration(currentTime, previousTime){
+function calculateDuration(currentTime, previousTime) {
     //On convertit les temps en centièmes de secondes
     const currentInCentiseconds = currentTime.centiseconds + (currentTime.seconds * 100) + ((currentTime.minutes*60)*100);
     const previousInCentiseconds = previousTime.centiseconds + (previousTime.seconds * 100) + ((previousTime.minutes*60)*100);
