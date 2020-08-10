@@ -10,8 +10,9 @@ const resetButton = document.querySelector('.btn-reset');
 
 let minutes = 0;
 let seconds = 0;
-let milliseconds = 0;
+let centiseconds = 0;
 let intervalID;
+
 
 
 
@@ -23,40 +24,38 @@ splitButton.addEventListener('click', splitChrono);
 
 
 
+
 /*FONCTIONS*/
-function formatTimer(){
-  const time = {
-    minutes: minutes,
-    seconds: seconds,
-    milliseconds: milliseconds
-  }
-  if(minutes < 10){
-    time.minutes = "0" + minutes;
-  }
-  if(seconds < 10){
-    time.seconds = "0" + seconds;
-  }
-  if(milliseconds < 10){
-    time.milliseconds = "0" + milliseconds;
-  }
-  return `<p id="time">${time.minutes}:${time.seconds}.${time.milliseconds}</p>`;
+
+function formatTimer(min, sec, cs){
+    if(min < 10){
+      min = "0" + min;
+    }
+    if(sec < 10){
+      sec = "0" + sec;
+    }
+    if(cs < 10){
+      cs = "0" + cs;
+    }
+    return `${min}:${sec}.${cs}`;
 }
 
 function startChrono(){
   intervalID = setInterval(function(){
-    milliseconds ++;
-    if (milliseconds > 99) {
+    centiseconds ++;
+    if (centiseconds > 99) {
       seconds ++ ;
-      milliseconds = 0;
+      centiseconds = 0;
     }
     if(seconds > 59){
       minutes ++;
       seconds = 0;
     }
-    chrono.innerHTML = formatTimer();
+    chrono.innerHTML = `<p id="time">${formatTimer(minutes, seconds, centiseconds)}</p>`;
   }, 10);
   
 }
+
 function stopChrono(){
   clearInterval(intervalID);
 }
@@ -65,18 +64,19 @@ function resetChrono(){
   splits.innerHTML = '<h3><i class="fas fa-user-clock"></i></h3>';
   minutes = 0;
   seconds = 0;
-  milliseconds = 0;
-  chrono.innerHTML = formatTimer();
+  centiseconds = 0;
+  chrono.innerHTML = `<p id="time">${formatTimer(minutes, seconds, centiseconds)}</p>`;
 }
 function splitChrono(){
   const li = document.createElement('li');
-  li.innerHTML = formatTimer();
+  li.innerHTML = formatTimer(minutes, seconds, centiseconds);
   splits.appendChild(li);
   const span = document.createElement('span');
   li.appendChild(span);
   calculateGap(li);
 }
 function calculateGap(currentSplit){
+    console.log(currentSplit);
   if(splits.children.length > 2){
     //Récupération des  2 temps en string
     const currentTime = currentSplit.firstElementChild.textContent;
@@ -85,29 +85,29 @@ function calculateGap(currentSplit){
     const current = {
       minutes: parseInt(currentTime.slice(0,2)),
       seconds: parseInt(currentTime.slice(3,5)),
-      milliseconds: parseInt(currentTime.slice(6))
+      centiseconds: parseInt(currentTime.slice(6))
     }
     const previous = {
       minutes: parseInt(previousTime.slice(0,2)),
       seconds: parseInt(previousTime.slice(3,5)),
-      milliseconds: parseInt(previousTime.slice(6))
+      centiseconds: parseInt(previousTime.slice(6))
     }
     //conversion en milliseconds
-    const currentInMs = current.milliseconds + (current.seconds * 1000) + ((current.minutes*60)*1000);
-    const previousInMs = previous.milliseconds + (previous.seconds * 1000) + ((previous.minutes*60)*1000);
+    const currentInCentiseconds = current.centiseconds + (current.seconds * 100) + ((current.minutes*60)*100);
+    const previousInCentiseconds = previous.centiseconds + (previous.seconds * 100) + ((previous.minutes*60)*100);
     //Calcul de la différence en ms
-    const deltaInMs = currentInMs - previousInMs;
+    const deltaInCentiseconds = currentInCentiseconds - previousInCentiseconds;
     //conversion des ms en minutes, seconds, milliseconds
-    console.log(deltaInMs);
+    console.log(deltaInCentiseconds);
     //On met les millisecondes dans deltaTime
     const deltaTime = {
       minutes: 0,
       seconds: 0,
-      milliseconds: deltaInMs
+      centiseconds: deltaInCentiseconds
     }
     //on convertit les millisecondes en minutes/secondes/millisecondes
-    while(deltaTime.milliseconds > 999){
-      deltaTime.milliseconds -= 1000;
+    while(deltaTime.centiseconds > 99){
+      deltaTime.centiseconds -= 100;
       deltaTime.seconds ++;
       while(deltaTime.seconds > 59){
         deltaTime.seconds -= 60;
@@ -116,7 +116,7 @@ function calculateGap(currentSplit){
     }
     console.log(deltaTime);
 
-    currentSplit.lastElementChild.textContent = `(+ ${deltaTime.minutes}:${deltaTime.seconds}:${deltaTime.milliseconds})`;
+    currentSplit.lastElementChild.textContent = `(+ ${formatTimer(deltaTime.minutes,deltaTime.seconds, deltaTime.centiseconds)})`;
 
  }else{
    currentSplit.lastElementChild.textContent = `(+ ${currentSplit.firstElementChild.textContent})`;

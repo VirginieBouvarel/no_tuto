@@ -6,7 +6,7 @@ const startButton = document.querySelector('.btn-start');
 const pauseButton = document.querySelector('.btn-pause');
 const splitButton = document.querySelector('.btn-split');
 const resetButton = document.querySelector('.btn-reset');
-const splitsArray = [];
+
 
 let minutes = 0;
 let seconds = 0;
@@ -23,10 +23,10 @@ splitButton.addEventListener('click', splitChrono);
 
 
 function init(){
-  displayTimer(chrono);
+  formatTimer(chrono);
 }
 
-function displayTimer(location){
+function formatTimer(location){
   const time = {
     minutes: minutes < 10 ? "0" + minutes : minutes,
     seconds: seconds < 10 ? "0" + seconds : seconds,
@@ -46,7 +46,7 @@ function startChrono(){
       minutes ++;
       seconds = 0;
     }
-    displayTimer(chrono);
+    formatTimer(chrono);
   }, 10);
   
 }
@@ -59,11 +59,11 @@ function resetChrono(){
   minutes = 0;
   seconds = 0;
   centiseconds = 0;
-  displayTimer(chrono);
+  formatTimer(chrono);
 }
 function splitChrono(){
   const li = document.createElement('li');
-  displayTimer(li);
+  formatTimer(li);
   splits.appendChild(li);
   const span = document.createElement('span');
   li.appendChild(span);
