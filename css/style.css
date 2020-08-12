@@ -76,6 +76,7 @@ body{
 .splits{
 	border:2px solid #000;
 	width:30rem;
+	height:30rem;
 	border-radius:20px;
 	padding:3rem 1rem 3rem 5rem;
 	margin-left:3rem;
@@ -102,3 +103,12 @@ body{
 }
 
 
+@media screen and (max-width:650px) {
+	body{
+		flex-direction:column;
+		align-items:center;
+	}
+	.splits{
+		margin-left:0;
+	}
+}
