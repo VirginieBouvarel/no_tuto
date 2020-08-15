@@ -1,0 +1,24 @@
+/**
+* GLOBALS
+*/
+
+html{
+	font-size:62.5%;
+	box-sizing:border-box;
+}
+
+*, *:before, *:after{
+	box-sizing:inherit;
+}
+
+body{
+	font-family: Arial, sans-serif;
+	font-size:14px;
+}
+img{
+	max-width:100%;
+}
+a{
+	text-decoration:none;
+}
+
