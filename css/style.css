@@ -1,6 +1,7 @@
 /**
 * GLOBALS
 */
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 
 html{
 	font-size:62.5%;
@@ -14,11 +15,128 @@ html{
 body{
 	font-family: Arial, sans-serif;
 	font-size:14px;
+	padding:0;
 }
-img{
-	max-width:100%;
+
+/**
+* CUSTOM STYLES
+*/
+.background{
+	background-color: rgb(154,205,50, 0.6);
+	width:400px;
+	margin:0 auto;
+	margin-top:8rem;
+	border-radius:10px;
+	padding-bottom:4rem;
 }
-a{
-	text-decoration:none;
+h1{
+	text-align:center;
+	padding:4rem;
 }
+h1 span{
+    font-family: 'Pacifico', cursive;
+	color:#C71585;
+	font-style:italic;
+}
+.calculator{
+	width:300px;
+	margin:0 auto;
+	font-weight:bold;
+}
+.screen{
+	border:2px solid black;
+	text-align:right;
+	padding:1rem;
+	background-color:#000;
+	color:#fff;
+	border-radius:10px 10px 0 0;
+}
+.grid-4{
+	display:flex;
+	flex-flow:column wrap;
+	border:2px solid #ddd;
+	background-color: #fff;
+    border-radius:0 0 10px 10px;
+    height:250px;
+}
+.grid-4 > *{
+    width:calc(100% / 4);
+    height:calc(100% / 5);
+	border:1px solid #ddd;
+	padding:1rem 0;
+}
+.grid-item-double{
+    background-color: #C71585;
+    height:calc(40%);
+}
+.key{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.key-grey{
+	background-color: #eee;
+}
+
+/* ordre viduel des touches*/
+.ac{
+    order:1;
+}
+.one{
+    order:4;
+}
+.two{
+    order:9;
+}
+.three{
+    order:14;
+}
+.four{
+    order:3;
+}
+.five{
+    order:8;
+}
+.six{
+    order:13;
+}
+.seven{
+    order:2;
+}
+.eight{
+    order:7;
+}
+.nine{
+    order:12;
+}
+.zero{
+    order:10;
+}
+.dot{
+    order:15;
+}
+.plus{
+    order:18;
+}
+.minus{
+    order:17;
+}
+.multiply{
+    order:11;
+}
+.devide{
+    order:6;
+}
+.percent{
+    order:5;
+    border-radius:0 0 0 10px;
+}
+.erase{
+    order:16;
+}
+.equal{
+    order:19;
+    border-radius:0 0 10px 0;
+}
+
 
