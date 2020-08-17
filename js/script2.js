@@ -2,7 +2,7 @@
 const display = document.querySelector('#display');
 const allkeys = document.querySelector('#all-keys');
 const keys = Array.from(document.querySelectorAll('.key'));
-const [ac,one, two, three,four,five,six,seven,eight,nine,zero,dot,plus,minus,multiply,devide,percent,erase,equal] = keys;
+const [ac,one, two, three,four,five,six,seven,eight,nine,zero,dot,plus,minus,multiply,divide,percent,erase,equal] = keys;
 
 
 /*Affichage des caractères sur l'écran en fonction des touches cliquées*/
@@ -42,14 +42,48 @@ equal.addEventListener('click', event => {
 });
 
 function calculate(){
-    const elements = display.textContent.split(" ").map(item => {
-        if (item === "x") return "*";
-        if (item === "÷") return "/";
-        if (item === "%") return "/100";
-        return item;
-    });
-    const result = eval(elements.reduce((operation, item) => operation + item));
-    return result; 
+    const elements = display.textContent.split(" ");
+    const hasPercent = elements.indexOf('%') > -1;
+    const hasDivide = elements.indexOf('÷') > -1;
+    const hasMultiply = elements.indexOf('x') > -1;
+    const hasSubstract = elements.indexOf('-') > -1;
+    const hasAdd = elements.indexOf('+') > -1;
+    const percent = elements.indexOf('%');
+    const divide = elements.indexOf('÷');
+    const multiply = elements.indexOf('x');
+    const substract = elements.indexOf('-');
+    const add = elements.indexOf('+');
+
+    while(elements.length > 1){
+        let calc = 0;
+
+        if(hasPercent){
+            calc = elements[percent - 1] / 100;
+            elements.splice(elements[percent - 1], 2, calc);
+        }
+        if(hasDivide){
+            calc = elements[divide - 1] / elements[divide + 1];
+            elements.splice(elements[divide - 1], 3, calc);
+        }
+        if(hasMultiply){
+            calc = elements[multiply - 1] * elements[multiply + 1];
+            elements.splice(elements[multiply - 1], 3, calc);
+        }
+        if(hasSubstract){
+            calc = elements[substract - 1] - elements[substract + 1];
+            elements.splice(elements[substract - 1], 3, calc);
+        }
+        if(hasAdd){
+            calc = elements[add - 1] + elements[add + 1];
+            elements.splice(elements[add - 1], 3, calc);
+        }
+    }
+    
+    console.log(elements[0]) ;
+
+        
+
 }
+
 
 
