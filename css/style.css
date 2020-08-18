@@ -58,7 +58,7 @@ h1 span{
 	border:2px solid #ddd;
 	background-color: #fff;
     border-radius:0 0 10px 10px;
-    height:250px;
+	height:250px;
 }
 .grid-4 > *{
     width:calc(100% / 4);

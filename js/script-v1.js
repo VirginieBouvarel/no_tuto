@@ -1,3 +1,11 @@
+/**
+ * Première version
+ * Utilisation de la fonction native eval()
+ */
+
+
+
+
 /*Récupération des éléments du DOM*/
 const display = document.querySelector('#display');
 const allkeys = document.querySelector('#all-keys');

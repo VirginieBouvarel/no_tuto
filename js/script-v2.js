@@ -1,3 +1,10 @@
+/**
+ * Deuxième version
+ * Remplacement de la fonction native eval() car non recommandée par MDN
+ */
+
+
+
 /*Récupération des éléments du DOM*/
 const display = document.querySelector('#display');
 const allkeys = document.querySelector('#all-keys');
@@ -59,31 +66,26 @@ function calculate(){
 
         if(hasPercent){
             calc = elements[percent - 1] / 100;
-            elements.splice(elements[percent - 1], 2, calc);
+            elements.splice((percent - 1), 2, calc);
         }
         if(hasDivide){
             calc = elements[divide - 1] / elements[divide + 1];
-            elements.splice(elements[divide - 1], 3, calc);
+            elements.splice((divide - 1), 3, calc);
         }
         if(hasMultiply){
             calc = elements[multiply - 1] * elements[multiply + 1];
-            elements.splice(elements[multiply - 1], 3, calc);
+            elements.splice((multiply - 1), 3, calc);
         }
         if(hasSubstract){
             calc = elements[substract - 1] - elements[substract + 1];
-            elements.splice(elements[substract - 1], 3, calc);
+            elements.splice((substract - 1), 3, calc);
         }
         if(hasAdd){
             calc = elements[add - 1] + elements[add + 1];
-            elements.splice(elements[add - 1], 3, calc);
+            elements.splice((add - 1), 3, calc);
         }
     }
     
-    console.log(elements[0]) ;
-
-        
-
+   return elements[0];
 }
-
-
 
