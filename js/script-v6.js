@@ -11,12 +11,13 @@ const keys = Array.from(document.querySelectorAll('.key'));
 const [ac,one, two, three,four,five,six,seven,eight,nine,zero,dot,plus,minus,multiply,divide,percent,erase,equal] = keys;
 
 
-const operatorsArray = ["%", "/", "*", "-", "+"]
-let previousKey = ".";
+const operatorsList = ["%", "÷", "x", "-", "+"];
+const strictOperatorsList = ["÷", "x", "-", "+"];//sans les %
+let previousKey = "";
 
 
 /*Affichage des caractères sur l'écran en fonction des touches cliquées*/
-allkeys.addEventListener('click', verifyDisplay);
+allkeys.addEventListener('click', event => verifyDisplay(event));
 
 /*Suppression du dernier caractère affiché*/
 erase.addEventListener('click', event => {
@@ -33,8 +34,7 @@ ac.addEventListener('click', event => {
 /*Execution du calcul au clic sur la touche égal*/
 equal.addEventListener('click', event => {
     event.stopPropagation();
-    const result = calculate();
-    display.textContent = result;
+    display.textContent = calculate();
 });
 
 
@@ -45,29 +45,60 @@ function verifyDisplay(event) {
                          event.target.textContent === "÷");
     const isAPercent = event.target.textContent === "%";
     const isADot = event.target.textContent === ".";
+    const isANumber = event.target.textContent.match(/[0-9]/);
 
-    if (isADot && previousKey === "."){
-        display.textContent += "";
+    switch (true) {
+        case (isADot && previousKey === "."):
+        case (isADot && previousKey === "%"):
+        case (isAPercent && previousKey === "%"):
+        case (isAPercent && strictOperatorsList.includes(previousKey)):
+        case (isANumber && previousKey === "%"):
+            display.textContent += "";
+            break;
+
+        case (isAPercent && previousKey === "."):
+        case (isAnOperator && previousKey === "."):
+            display.textContent += `0 ${event.target.textContent} `;
+            previousKey = event.target.textContent;
+            break;
+
+        case (isADot && operatorsList.includes(previousKey)):
+            display.textContent += `0${event.target.textContent} `;
+            previousKey = event.target.textContent;
+            break;
+
+        case (isAnOperator && strictOperatorsList.includes(previousKey)):
+            display.textContent = display.textContent.slice(0,-3);//-3 --> espace + opérateur précédent + espace
+            display.textContent += ` ${event.target.textContent} `;
+            previousKey = event.target.textContent;
+            break;
+
+        case (isAnOperator):
+            display.textContent += ` ${event.target.textContent} `;
+            previousKey = event.target.textContent;
+            break;
+        
+        case (isAPercent):
+            display.textContent +=` ${event.target.textContent}`;
+            previousKey = event.target.textContent;
+            break;
+        
+        default://is a Number or a dot 
+            display.textContent += `${event.target.textContent}`;
+            previousKey = event.target.textContent;
     }
-    if (isAnOperator) {
-       display.textContent += ` ${event.target.textContent} `;
-    }else if (isAPercent){
-        display.textContent +=` ${event.target.textContent}`;
-    }else{//is a  Number
-       display.textContent += `${event.target.textContent}`;
-    }
-    previousKey = event.target.textContent;
+    
 }
+
+
 
 function calculate() {
     const elementsToCalculate = display.textContent.split(" ").map(item => {
-        if (item === "x") return "*";
-        if (item === "÷") return "/";
-        if (item === "+" || item === '-' || item === "%") return item;
+        if (operatorsList.includes(item)) return item;
         return parseFloat(item);
     });
     while(elementsToCalculate.length > 1){
-        operatorsArray.forEach(operator => {
+        operatorsList.forEach(operator => {
             while(hasOperator(operator, elementsToCalculate)) {
                 calculateByOperator(operator, getOperatorIndex(operator, elementsToCalculate), elementsToCalculate);
             } 
@@ -93,10 +124,10 @@ function calculateByOperator(operator, operatorIndex, elementsToCalculate) {
             calc = elementsToCalculate[operatorIndex - 1] / 100;
             numberToDelete = 2;//Pourcent et nombre d'avant
             break;
-        case "/":
+        case "÷":
             calc = elementsToCalculate[operatorIndex - 1] / elementsToCalculate[operatorIndex + 1]; 
             break;
-        case "*":
+        case "x":
             calc = elementsToCalculate[operatorIndex - 1] * elementsToCalculate[operatorIndex + 1];
             break;
         case "-":
