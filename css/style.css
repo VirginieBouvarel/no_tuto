@@ -73,7 +73,7 @@ h1 span{
 .key{
     display:flex;
     justify-content:center;
-    align-items:center;
+	align-items:center;
 }
 .key-grey{
 	background-color: #eee;

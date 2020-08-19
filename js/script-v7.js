@@ -19,6 +19,7 @@ const strictOperatorsList = ["÷", "x", "-", "+"];//sans les %
 /*Affichage des caractères sur l'écran en fonction des touches cliquées*/
 allkeys.addEventListener('click', event => verifyDisplay(event));
 
+
 /*Suppression du dernier caractère affiché*/
 erase.addEventListener('click', event => {
     event.stopPropagation();
@@ -40,7 +41,6 @@ equal.addEventListener('click', event => {
 
 function verifyDisplay(event) {
     let previousKey = verifyPreviousKey();
-    console.log(previousKey);
     const isAnOperator = (event.target.textContent === "+" || 
                          event.target.textContent === "-" || 
                          event.target.textContent === "x" || 
