@@ -13,7 +13,7 @@ const [ac,one, two, three,four,five,six,seven,eight,nine,zero,dot,plus,minus,mul
 
 const operatorsList = ["%", "÷", "x", "-", "+"];
 const strictOperatorsList = ["÷", "x", "-", "+"];//sans les %
-let previousKey = "";
+
 
 
 /*Affichage des caractères sur l'écran en fonction des touches cliquées*/
@@ -39,6 +39,8 @@ equal.addEventListener('click', event => {
 
 
 function verifyDisplay(event) {
+    let previousKey = verifyPreviousKey();
+    console.log(previousKey);
     const isAnOperator = (event.target.textContent === "+" || 
                          event.target.textContent === "-" || 
                          event.target.textContent === "x" || 
@@ -59,39 +61,39 @@ function verifyDisplay(event) {
         case (isAPercent && previousKey === "."):
         case (isAnOperator && previousKey === "."):
             display.textContent += `0 ${event.target.textContent} `;
-            previousKey = event.target.textContent;
             break;
 
         case (isADot && operatorsList.includes(previousKey)):
             display.textContent += `0${event.target.textContent} `;
-            previousKey = event.target.textContent;
             break;
 
         case (isAnOperator && strictOperatorsList.includes(previousKey)):
             display.textContent = display.textContent.slice(0,-3);//-3 --> espace + opérateur précédent + espace
             display.textContent += ` ${event.target.textContent} `;
-            previousKey = event.target.textContent;
             break;
 
         case (isAnOperator):
             display.textContent += ` ${event.target.textContent} `;
-            previousKey = event.target.textContent;
             break;
         
         case (isAPercent):
             display.textContent +=` ${event.target.textContent}`;
-            previousKey = event.target.textContent;
             break;
         
         default://is a Number or a dot 
             display.textContent += `${event.target.textContent}`;
-            previousKey = event.target.textContent;
     }
     
 }
 
-
-
+function verifyPreviousKey() {
+    let lastKeyDisplayed = "" || display.textContent[display.textContent.length -1];//""--> si première saisie
+    if (lastKeyDisplayed === " "){
+        return display.textContent[display.textContent.length -2];
+    }else{
+        return lastKeyDisplayed;
+    }
+}
 function calculate() {
     const elementsToCalculate = display.textContent.split(" ").map(item => {
         if (operatorsList.includes(item)) return item;
@@ -117,12 +119,12 @@ function getOperatorIndex(operator, elementsToCalculate) {
 
 function calculateByOperator(operator, operatorIndex, elementsToCalculate) {
     let calc;
-    let numberToDelete = 3;//Operateur, nombre d'avant et nombre d'après 
+    let numberToDelete = 3;//nombre avant opérateur, opérateur, nombre après opérateur
 
     switch(operator) {
         case "%":
             calc = elementsToCalculate[operatorIndex - 1] / 100;
-            numberToDelete = 2;//Pourcent et nombre d'avant
+            numberToDelete = 2;//symbole % et nombre avant symbole
             break;
         case "÷":
             calc = elementsToCalculate[operatorIndex - 1] / elementsToCalculate[operatorIndex + 1]; 
