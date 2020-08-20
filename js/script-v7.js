@@ -1,9 +1,3 @@
-/**
- * Troisième version
- * Refactoring
- */
-
-
 /*Récupération des éléments du DOM*/
 const display = document.querySelector('#display');
 const allkeys = document.querySelector('#all-keys');
@@ -40,7 +34,8 @@ equal.addEventListener('click', event => {
 
 
 function verifyDisplay(event) {
-    let previousKey = verifyPreviousKey();
+    let previousKey = getLastKey();
+    console.log(event.target.textContent);
     const isAnOperator = (event.target.textContent === "+" || 
                          event.target.textContent === "-" || 
                          event.target.textContent === "x" || 
@@ -48,8 +43,11 @@ function verifyDisplay(event) {
     const isAPercent = event.target.textContent === "%";
     const isADot = event.target.textContent === ".";
     const isANumber = event.target.textContent.search(/[0-9]/) > -1;
-
+    const isAMultiSelect = event.target.textContent === "\n                AC\n                1\n                2\n                3\n                4\n                5\n                6\n                7\n                8\n                9\n                0\n                . \n                +\n                -\n                x\n                ÷\n                %\n                ❮\n                =\n            ";//16 espaces de tabulation entre chaque div dans le html
+   
+                        
     switch (true) {
+        case (isAMultiSelect):
         case (isADot && previousKey === "."):
         case (isADot && previousKey === "%"):
         case (isAPercent && previousKey === "%"):
@@ -83,10 +81,10 @@ function verifyDisplay(event) {
         default://is a Number or a dot 
             display.textContent += `${event.target.textContent}`;
     }
-    
 }
 
-function verifyPreviousKey() {
+
+function getLastKey() {
     let lastKeyDisplayed = "" || display.textContent[display.textContent.length -1];//""--> si première saisie
     if (lastKeyDisplayed === " "){
         return display.textContent[display.textContent.length -2];
@@ -94,6 +92,7 @@ function verifyPreviousKey() {
         return lastKeyDisplayed;
     }
 }
+
 function calculate() {
     const elementsToCalculate = display.textContent.split(" ").map(item => {
         if (operatorsList.includes(item)) return item;
