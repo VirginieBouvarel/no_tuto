@@ -35,7 +35,6 @@ equal.addEventListener('click', event => {
 
 function verifyDisplay(event) {
     let previousKey = getLastKey();
-    console.log(event.target.textContent);
     const isAnOperator = (event.target.textContent === "+" || 
                          event.target.textContent === "-" || 
                          event.target.textContent === "x" || 
@@ -43,10 +42,10 @@ function verifyDisplay(event) {
     const isAPercent = event.target.textContent === "%";
     const isADot = event.target.textContent === ".";
     const isANumber = event.target.textContent.search(/[0-9]/) > -1;
-    const isAMultiSelect = event.target.textContent === "\n                AC\n                1\n                2\n                3\n                4\n                5\n                6\n                7\n                8\n                9\n                0\n                . \n                +\n                -\n                x\n                ÷\n                %\n                ❮\n                =\n            ";//16 espaces de tabulation entre chaque div dans le html
-   
+    const isAMultiSelect = event.target.textContent.replace(/\s*/gi, "") === "AC1234567890.+-x÷%❮=";//fix d'un bug lors d'une sélection à la souris de plusieurs cases
                         
     switch (true) {
+        //Verrouillage de saisies non autorisées
         case (isAMultiSelect):
         case (isADot && previousKey === "."):
         case (isADot && previousKey === "%"):
@@ -56,6 +55,7 @@ function verifyDisplay(event) {
             display.textContent += "";
             break;
 
+        //Formatage de l'affichage
         case (isAPercent && previousKey === "."):
         case (isAnOperator && previousKey === "."):
             display.textContent += `0 ${event.target.textContent} `;
@@ -78,7 +78,7 @@ function verifyDisplay(event) {
             display.textContent +=` ${event.target.textContent}`;
             break;
         
-        default://is a Number or a dot 
+        default:
             display.textContent += `${event.target.textContent}`;
     }
 }
