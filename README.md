@@ -17,7 +17,9 @@ Gestion des additions/soustractions de pourcentages | ✔️
 Gestion des opérations sur nombres négatifs |
 
 
-Annexe: | use cases
---------|-----------
-previouskey/Key | number | dot | % | + | - | x | ÷ |
+Annexe: Use cases
+-------------------
+
+previouskey\Key | number | dot | % | + | - | x | ÷ |
+----------------|--------|-----|---|---|---|---|---|
 undefined | X | "" | "" | "" | X | "" | ""
