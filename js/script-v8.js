@@ -8,7 +8,7 @@ const operatorsList = ["%", "÷", "x", "-", "+"];
 const strictOperatorsList = ["÷", "x", "-", "+"];//sans les %
 
 /*Affichage des caractères sur l'écran en fonction des touches cliquées*/
-allkeys.addEventListener('click', event => verifyDisplay(event));
+allkeys.addEventListener('click', event => formatDisplay(event));
 
 /*Suppression du dernier caractère affiché*/
 erase.addEventListener('click', event => {
@@ -29,7 +29,7 @@ equal.addEventListener('click', event => {
 });
 
 
-function verifyDisplay(event) {
+function formatDisplay(event) {
     let previousKey = getLastKey();
     let penultimateKey = getPenultimateKey();
 

@@ -71,21 +71,21 @@ function verifyDisplay(event) {
             display.textContent += `${event.target.textContent}`;
     }
 }
+ 
 
 
-
-
+ 
 
 
 
 
 
 function getLastKey() {
-    let lastKeyDisplayed = "" || display.textContent[display.textContent.length -1];//""--> si première saisie
+    let lastKeyDisplayed = display.textContent[display.textContent.length -1];
     if (lastKeyDisplayed === " "){
-        return display.textContent[display.textContent.length -2];
+        console.log(display.textContent[display.textContent.length -2]);
     }else{
-        return lastKeyDisplayed;
+        console.log(lastKeyDisplayed);
     }
 }
 function calculate() {
