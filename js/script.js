@@ -41,8 +41,9 @@ function formatDisplay(event) {
     const isANumber = key => key.search(/[0-9]/) > -1;
     const isADot = key => key === ".";
     const isAPercent = key => key === "%";
+    const isNotAPercent = key => key !== "%";
     const isAnOperator = key => strictOperatorsList.includes(key);    
-    // const isAMultiSelect = currentKey.replace(/\s*/gi, "") === "AC1234567890.+-x÷%❮=";//fix d'un bug lors d'une sélection à la souris de plusieurs cases
+
     
     //Gestion conditionnel de l'affichage
     /**
@@ -52,8 +53,8 @@ function formatDisplay(event) {
      * un signe négatif (c'est-à-dire un "-" qui suit un "x" ou un "÷", ou qui débute la saisie)
      * on affiche la clé
      */
-        if ((isANumber(currentKey) && !isAPercent(ultimateKey)) ||
-            (isADot(currentkey) && isANumber(ultimateKey)) ||
+        if ((isANumber(currentKey) && isNotAPercent(ultimateKey)) ||
+            (isADot(currentKey) && isANumber(ultimateKey)) ||
             (currentKey === "-" && ultimateKey === undefined || penultimateKey === "x" || penultimateKey ==="÷")
         ) {
             return currentKey;
@@ -62,7 +63,7 @@ function formatDisplay(event) {
      * Si la clé a afficher est un opérateur, et que l'on a un nombre ou un % juste avant, 
      * on affiche la clé avec un espace avant et après
     */
-        if (isAnOperator(currentKey) && isANumber(ultimateKey) || isAPercent(ultimateKey)) {
+        if (isAnOperator(currentKey) && (isANumber(ultimateKey) || isAPercent(ultimateKey))) {
             return ` ${currentKey} `;
         }
 
