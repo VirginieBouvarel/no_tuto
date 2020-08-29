@@ -4,6 +4,7 @@ const allkeys = document.querySelector('#all-keys');
 const keys = Array.from(document.querySelectorAll('.key'));
 const [ac,one, two, three,four,five,six,seven,eight,nine,zero,dot,plus,minus,multiply,divide,percent,erase,equal] = keys;
 
+
 const operatorsList = ["%", "÷", "x", "-", "+"];
 const strictOperatorsList = ["÷", "x", "-", "+"];//sans les %
 
@@ -15,7 +16,14 @@ allkeys.addEventListener('click', event => {
 /*Suppression du dernier caractère affiché*/
 erase.addEventListener('click', event => {
     event.stopPropagation();
-    display.textContent = display.textContent.slice(0,-1);
+    //Si le dernier caractère est un espace, alors la dernière touche saisie était un opérateur, 
+    //on enlève donc espace + operateur + espace
+    if (display.textContent[display.textContent.length -1] === " "){
+        display.textContent = display.textContent.slice(0,-3);
+    }else{
+        display.textContent = display.textContent.slice(0,-1);
+    }
+    
 });
 
 /*Reset complet de l'affichage*/
@@ -32,18 +40,20 @@ equal.addEventListener('click', event => {
 
 
 function formatDisplay(event) {
-    //Récupération du contenu des touches saisies
+    //Récupération du contenu des touches cliquées
     const currentKey = event.target.textContent;
     const ultimateKey = display.textContent[display.textContent.length -1];
     const penultimateKey = display.textContent[display.textContent.length -2];
-    
-    //Récupération du type des touches saisies
-    const isANumber = key => key.search(/[0-9]/) > -1;
+
+    //Identification du type des touches cliquées
+    const isANumber = key => {
+        if (key === undefined) return false;
+        return key.search(/[0-9]/) > -1;
+    }
     const isADot = key => key === ".";
     const isAPercent = key => key === "%";
     const isNotAPercent = key => key !== "%";
-    const isAnOperator = key => strictOperatorsList.includes(key);    
-
+    const isAnOperator = key => strictOperatorsList.includes(key);   
     
     //Gestion conditionnel de l'affichage
     /**
@@ -55,7 +65,7 @@ function formatDisplay(event) {
      */
         if ((isANumber(currentKey) && isNotAPercent(ultimateKey)) ||
             (isADot(currentKey) && isANumber(ultimateKey)) ||
-            (currentKey === "-" && ultimateKey === undefined || penultimateKey === "x" || penultimateKey ==="÷")
+            (currentKey === "-" && (ultimateKey === undefined || penultimateKey === "x" || penultimateKey ==="÷"))
         ) {
             return currentKey;
         } 

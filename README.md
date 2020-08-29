@@ -13,5 +13,5 @@ Suppression du dernier caractère saisi | ✔️
 Remise à zéro de l'affichage | ✔️
 Gestion des opérations successives | ✔️
 Gestion de la précédence des opérateurs | ✔️
-Gestion des additions/soustractions de pourcentages | ✔️ 
-Gestion des opérations sur nombres négatifs |
+Gestion des nombres relatifs |
+Majorations et minorations en pourcentages | ✔️
