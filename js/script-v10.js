@@ -8,21 +8,16 @@ const [ac,one, two, three,four,five,six,seven,eight,nine,zero,dot,plus,minus,mul
 const operatorsList = ["%", "÷", "x", "-", "+"];
 const strictOperatorsList = ["÷", "x", "-", "+"];//sans les %
 
+
 /*Affichage des caractères sur l'écran en fonction des touches cliquées*/
-allkeys.addEventListener('click', event => displayKey(event));
+allkeys.addEventListener('click', event => {
+    display.textContent += formatDisplay(event);
+});
 
 /*Suppression du dernier caractère affiché*/
 erase.addEventListener('click', event => {
     event.stopPropagation();
-    
-    if (display.textContent[display.textContent.length -1] === " ") {//Si le dernier caractère est un espace, alors la dernière touche saisie était un opérateur, on enlève "esp+operateur+esp "
-        display.textContent = display.textContent.slice(0,-3);
-    } else if (display.textContent[display.textContent.length -1] === "%") {//Si le dernier caractère est un %, on enlève "esp+%"
-        display.textContent = display.textContent.slice(0,-2);
-    } else {
-        display.textContent = display.textContent.slice(0,-1);
-    }
-    
+    display.textContent = display.textContent.slice(0,-1);
 });
 
 /*Reset complet de l'affichage*/
@@ -34,30 +29,24 @@ ac.addEventListener('click', event => {
 /*Execution du calcul au clic sur la touche égal*/
 equal.addEventListener('click', event => {
     event.stopPropagation();
-    if (display.textContent === "error") return;
     display.textContent = calculate();
 });
 
 
-function formatDisplay(currentKey, ultimateKey, penultimateKey) {
+function formatDisplay(event) {
+    //Récupération du contenu des touches cliquées
+    const currentKey = event.target.textContent;
+    const ultimateKey = display.textContent[display.textContent.length -1];
+    const penultimateKey = display.textContent[display.textContent.length -2];
 
-    const isANumber = key => {
-        if (key === undefined) return false;
-        return key.search(/[0-9]/) > -1;
-    }
+    //Identification du type des touches cliquées
+    const isANumber = key => key.search(/[0-9]/) > -1;
     const isADot = key => key === ".";
     const isAPercent = key => key === "%";
     const isNotAPercent = key => key !== "%";
     const isAnOperator = key => strictOperatorsList.includes(key);   
-    const isAMultiSelect = key => key.replace(/\s*/gi, "") === "AC1234567890.+-x÷%❮=";//fix d'un bug lors d'une sélection à la souris de plusieurs cases
-
+    
     //Gestion conditionnel de l'affichage
-    /**
-     * Si l'utilisateur à séléctionné plusieurs touches en même temps au lieu d'une 
-     * on n'autorise pas la saisie
-     */
-        if (isAMultiSelect(currentKey)) return "";
-
     /**
      * Si la clé a afficher est :
      * un nombre qui suit tout sauf un pourcent OU
@@ -67,7 +56,7 @@ function formatDisplay(currentKey, ultimateKey, penultimateKey) {
      */
         if ((isANumber(currentKey) && isNotAPercent(ultimateKey)) ||
             (isADot(currentKey) && isANumber(ultimateKey)) ||
-            (currentKey === "-" && (ultimateKey === undefined || penultimateKey === "x" || penultimateKey ==="÷"))
+            (currentKey === "-" && ultimateKey === undefined || penultimateKey === "x" || penultimateKey ==="÷")
         ) {
             return currentKey;
         } 
@@ -112,7 +101,27 @@ function formatDisplay(currentKey, ultimateKey, penultimateKey) {
         if (isAPercent(currentKey) && isADot(ultimateKey)) {
             return `0 ${currentKey}`;
         }
-    
+
+    /**
+     * Si la clé a afficher est un "-" qui suit un "+", 
+     * on supprime la dernière saisie: " + " et
+     * on la remplace par " - "
+    */
+        if (currentKey === "-" && penultimateKey === "+") {
+            display.textContent = display.textContent.slice(0,-3);//-3 --> espace + opérateur précédent + espace
+            return " - ";
+        }   
+
+    /**
+     * Si la clé a afficher est un "-" qui suit un "-", 
+     * on supprime la dernière saisie: " - " et
+     * on la remplace par " + "
+    */
+        if (currentKey === "-" && penultimateKey === "-") {
+            display.textContent = display.textContent.slice(0,-3);//-3 --> espace + opérateur précédent + espace
+            return " + ";
+        }
+
     /**
      * Dans tous les autres cas la saisie n'est pas autorisée et
      * on affiche rien de plus
@@ -181,30 +190,3 @@ function calculateByOperator(operator, operatorIndex, elementsToCalculate) {
     elementsToCalculate.splice((operatorIndex - 1), numberToDelete, calc);
 }
 
-function displayKey(event) {
-    //Récupération du contenu des touches cliquées
-    const currentKey = event.target.textContent;
-    const ultimateKey = display.textContent[display.textContent.length -1];
-    const penultimateKey = display.textContent[display.textContent.length -2];
-
-    //gestion d'une multiselection 
-
-    //Gestion de la divison par 0
-    if (currentKey === "0" && penultimateKey === "÷") {
-        return display.textContent = "error";
-    }
-
-    //Gestion des nombres relatifs
-    if (currentKey === "-" && penultimateKey === "+") {
-        displaySign(" - ");
-    } else if (currentKey === "-" && penultimateKey === "-"){
-        displaySign(" + ");
-    } else {//Affichage par défaut
-        display.textContent += formatDisplay(currentKey, ultimateKey, penultimateKey);
-    }
-    
-}
-function displaySign(sign) {
-    display.textContent = display.textContent.slice(0,-3);//-3 --> espace + opérateur précédent + espace
-    display.textContent += sign;
-}
