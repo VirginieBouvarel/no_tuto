@@ -18,7 +18,7 @@ erase.addEventListener('click', event => {
     //on enlève donc espace + operateur + espace
     if (display.textContent[display.textContent.length -1] === " "){
         display.textContent = display.textContent.slice(0,-3);
-    }else{
+    } else{
         display.textContent = display.textContent.slice(0,-1);
     }
     
@@ -33,6 +33,7 @@ ac.addEventListener('click', event => {
 /*Execution du calcul au clic sur la touche égal*/
 equal.addEventListener('click', event => {
     event.stopPropagation();
+    if (display.textContent === "error") return;
     display.textContent = calculate();
 });
 
@@ -177,6 +178,11 @@ function displayKey(event) {
     const currentKey = event.target.textContent;
     const ultimateKey = display.textContent[display.textContent.length -1];
     const penultimateKey = display.textContent[display.textContent.length -2];
+
+    // //Gestion de la divison par 0
+    if (currentKey === "0" && penultimateKey === "÷") {
+        return display.textContent = "error";
+    }
 
     //Gestion des nombres relatifs
     if (currentKey === "-" && penultimateKey === "+") {
