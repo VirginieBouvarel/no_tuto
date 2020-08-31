@@ -8,7 +8,7 @@ const [ac,one, two, three,four,five,six,seven,eight,nine,zero,dot,plus,minus,mul
 const operatorsList = ["%", "÷", "x", "-", "+"];
 const strictOperatorsList = ["÷", "x", "-", "+"];//sans les %
 
-/*Affichage des caractères sur l'écran en fonction des touches cliquées*/
+/*Affichage des caractères sur l'écran en fonction des touches cliquées*/ 
 allkeys.addEventListener('click', event => displayKey(event));
 
 /*Suppression du dernier caractère affiché*/
