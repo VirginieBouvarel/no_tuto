@@ -52,6 +52,9 @@ h1 span{
 	border-radius:10px 10px 0 0;
 	min-height:68px;
 }
+.screen > p {
+	text-overflow: clip clip;
+}
 .grid-4{
 	display:flex;
 	flex-flow:column wrap;

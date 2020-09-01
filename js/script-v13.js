@@ -36,8 +36,11 @@ ac.addEventListener('click', event => {
 /*Execution du calcul au clic sur la touche égal*/
 equal.addEventListener('click', event => {
     event.stopPropagation();
-    if (display.textContent === "error") return;
-    display.textContent = calculate();
+    if (display.textContent.search(/÷ 0 /) > -1) {
+        display.textContent = "error";
+    }else {
+        display.textContent = calculate();
+    } 
 });
 
 
@@ -190,9 +193,9 @@ function displayKey(event) {
     const penultimateKey = display.textContent[display.textContent.length -2];
 
     //Gestion de la divison par 0
-    if (currentKey === "0" && penultimateKey === "÷") {
-        return display.textContent = "error";
-    }
+    // if (currentKey === "0" && penultimateKey === "÷") {
+    //     return display.textContent = "error";
+    // }
     if (ultimateKey === "r") {//Après la tentative de division par zéro,on reset l'affichage 
         display.textContent = "";
     }
