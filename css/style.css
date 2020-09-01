@@ -141,3 +141,13 @@ h1 span{
 }
 
 
+@media screen and (max-width:500px) {
+
+	body {
+		background-color: rgb(154,205,50, 0.6);
+	}
+	.background {
+		background-color:transparent;
+		width:100%;
+	}
+}

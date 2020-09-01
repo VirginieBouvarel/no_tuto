@@ -19,7 +19,9 @@ erase.addEventListener('click', event => {
         display.textContent = display.textContent.slice(0,-3);
     } else if (display.textContent[display.textContent.length -1] === "%") {//Si le dernier caractère est un %, on enlève "esp+%"
         display.textContent = display.textContent.slice(0,-2);
-    } else {
+    } else if (display.textContent === "error") {//Après une tentative de division par zéro, on vide l'affichage
+        display.textContent = ""
+    }else {
         display.textContent = display.textContent.slice(0,-1);
     }
     
@@ -112,7 +114,7 @@ function formatDisplay(currentKey, ultimateKey, penultimateKey) {
         if (isAPercent(currentKey) && isADot(ultimateKey)) {
             return `0 ${currentKey}`;
         }
-    
+
     /**
      * Dans tous les autres cas la saisie n'est pas autorisée et
      * on affiche rien de plus
@@ -187,11 +189,12 @@ function displayKey(event) {
     const ultimateKey = display.textContent[display.textContent.length -1];
     const penultimateKey = display.textContent[display.textContent.length -2];
 
-    //gestion d'une multiselection 
-
     //Gestion de la divison par 0
     if (currentKey === "0" && penultimateKey === "÷") {
         return display.textContent = "error";
+    }
+    if (ultimateKey === "r") {//Après la tentative de division par zéro,on reset l'affichage 
+        display.textContent = "";
     }
 
     //Gestion des nombres relatifs
