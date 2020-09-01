@@ -1,5 +1,8 @@
+# Chronomètre
 
-Projet simple visant à réaliser un chronomètre from scratch pour travailler sur la conception d'un programme  sans tuto.
+Objectif: Réalisation d'un chronomètre
+
+> Technos : Html/Css/Javascript
 
 Fonctionnalités:
 - START: Déclenchement du compteur, avec rafraîchissement de l'affichage tous les centièmes de seconde
