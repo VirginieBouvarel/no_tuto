@@ -7,6 +7,7 @@ Objectif:  Réaliser un programme simulant l'utilisation d'une calculatrice de t
 Fonctionnalités | Done
 ----------------|------
 Layout flexbox |✔️
+Affichage d'opérations sur plusieurs lignes | ✔️
 Verrouillage des saisies non autorisées | ✔️
 Gestion des edge cases pour l'affichage | ✔️
 Suppression du dernier caractère saisi | ✔️
