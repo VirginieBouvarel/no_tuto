@@ -1,8 +1,8 @@
 # Chronomètre
 
-Objectif: Réalisation d'un chronomètre
+Objectif: Réalisation d'un chronomètre simple avec les fonctionnalités de base
 
-> Technos : Html/Css/Javascript
+> Technos : HTML/CSS/JS
 
 Fonctionnalités:
 - START: Déclenchement du compteur, avec rafraîchissement de l'affichage tous les centièmes de seconde
