@@ -110,6 +110,9 @@ body{
 		flex-direction:column;
 		align-items:center;
 	}
+	.chrono {
+		margin-top: 4rem;
+	}
 	.splits{
 		margin-left:0;
 		margin-top:2rem;
