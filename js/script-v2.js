@@ -124,10 +124,10 @@ function calculateDuration(currentTime, previousTime) {
 
     const DURATION_IN_CENTISECONDS = CURRENT_IN_CENTISECONDS - PREVIOUS_IN_CENTISECONDS;
     
-    return centisecondsToMinSecCs(DURATION_IN_CENTISECONDS);;
+    return getMinSecCs(DURATION_IN_CENTISECONDS);;
 }
 
-function centisecondsToMinSecCs(cs) {
+function getMinSecCs(cs) {
     const MIN = Math.floor(cs / 6000);// 1 minutes = 6000 centièmes de secondes
     cs -= MIN * 6000;
 
