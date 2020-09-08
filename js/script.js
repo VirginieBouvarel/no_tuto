@@ -1,38 +1,42 @@
-const timer = document.querySelector('#time');
-const splits = document.querySelector('.splits');
-const startButton = document.querySelector('.btn-start');
-const pauseButton = document.querySelector('.btn-pause');
-const splitButton = document.querySelector('.btn-split');
-const resetButton = document.querySelector('.btn-reset');
+const TIMER = document.querySelector('#time');
+const SPLITS = document.querySelector('.splits');
+const START_BUTTON = document.querySelector('.btn-start');
+const PAUSE_BUTTON = document.querySelector('.btn-pause');
+const SPLIT_BUTTON = document.querySelector('.btn-split');
+const RESET_BUTTON = document.querySelector('.btn-reset');
 
-const time = {
+const TIME = {
     minutes: 0,
     seconds: 0,
     centiseconds: 0
-}
-const previousTime = {
+};
+
+const PREVIOUS_TIME = {
     minutes:0,
     seconds:0,
     centiseconds:0
-}
+};
+
 let intervalID;
-const centisecondsCeil = 99;
-const secondsCeil = 59;
+const CENTISECONDS_CEIL = 99;
+const SECONDS_CEIL = 59;
 
-//Initialisation du timer
-displayTime(time, timer);
+// Au départ on s'assure que le timer est bien à zéro
+displayTime(TIME, TIMER);
 
-startButton.addEventListener('click', startChrono);
-pauseButton.addEventListener('click', stopChrono);
-resetButton.addEventListener('click', resetChrono);
-splitButton.addEventListener('click', splitChrono);
+START_BUTTON.addEventListener('click', startChrono);
+PAUSE_BUTTON.addEventListener('click', stopChrono);
+RESET_BUTTON.addEventListener('click', resetChrono);
+SPLIT_BUTTON.addEventListener('click', splitChrono);
 
 
 
-/*FONCTIONS*/
+/* FONCTIONS */
+
 function displayTime(timeToDisplay, place) {
     place.textContent = formatTime(timeToDisplay);
 }
+
 function formatTime(timeToFormat) {
     let min = timeToFormat.minutes;
     let sec = timeToFormat.seconds;
@@ -50,82 +54,86 @@ function formatTime(timeToFormat) {
     return `${min}:${sec}.${cs}`;
 }
 
-
 function startChrono() {
+    // On ajoute un centième de seconde à chaque interval
     intervalID = setInterval(function(){
-        //On ajoute un centième de seconde à chaque interval
-        time.centiseconds ++;
-        //On met a jour les valeurs de time 
-        if (time.centiseconds > centisecondsCeil) {
-            time.seconds ++ ;
-            time.centiseconds = 0;
+        TIME.centiseconds++;
+
+        // Passé 99 cs on ajoute 1 sec
+        if (TIME.centiseconds > CENTISECONDS_CEIL) {
+            TIME.seconds++ ;
+            TIME.centiseconds = 0;
         }
-        
-        if(time.seconds > secondsCeil) {
-            time.minutes ++;
-            time.seconds = 0;
+        // Passé 60 sec on ajoute 1 min
+        if(TIME.seconds > SECONDS_CEIL) {
+            TIME.minutes++;
+            TIME.seconds = 0;
         }
-        //On rafraichit l'affichage
-        displayTime(time, timer);
+ 
+        displayTime(TIME, TIMER);
     }, 10);
 }
+
 function stopChrono() {
     clearInterval(intervalID);
 }
+
 function resetChrono() {
     stopChrono();
-    //On vide la liste de splits et on remet les valeurs de time à zéro
-    splits.innerHTML = '<h3><i class="fas fa-user-clock"></i></h3>';
-    time.minutes = 0;
-    time.seconds = 0;
-    time.centiseconds = 0;
-    //On rafraîchit l'affichage
-    displayTime(time, timer);
+    // On vide la liste de splits et on remet les valeurs de time à zéro
+    SPLITS.innerHTML = '<h3><i class="fas fa-user-clock"></i></h3>';
+    TIME.minutes = 0;
+    TIME.seconds = 0;
+    TIME.centiseconds = 0;
+    // On rafraîchit l'affichage
+    displayTime(TIME, TIMER);
     updatePreviousTime();
 }
+
 function splitChrono() {
-    //On crée un li pour contenir la valeur courante de time
-    const li = document.createElement('li');
-    li.textContent = formatTime(time);
-    //On crée une span pour contenir le calcul de la différence avec le temps précédent
-    const span = document.createElement('span');
-    span.textContent = `(+ ${formatTime(calculateDuration(time, previousTime))})`;
-    //On met les deux éléments dans le DOM
-    li.appendChild(span);
-    splits.appendChild(li);
-    //on met a jour les valeurs de previousTime
+    // On construit le split pour l'afficher
+    const LI = document.createElement('li');
+    LI.textContent = formatTime(TIME);
+
+    const SPAN = document.createElement('span');
+    SPAN.textContent = `(+ ${formatTime(calculateDuration(TIME, PREVIOUS_TIME))})`;
+   
+    LI.appendChild(SPAN);
+    SPLITS.appendChild(LI);
+
+    // On assigne les valeurs actuelles de TIME à PREVIOUSTIME en prévision de la prochaine comparaison
     updatePreviousTime();
 }
 
 function updatePreviousTime() {
-    previousTime.minutes = time.minutes;
-    previousTime.seconds = time.seconds;
-    previousTime.centiseconds = time.centiseconds;
+    PREVIOUS_TIME.minutes = TIME.minutes;
+    PREVIOUS_TIME.seconds = TIME.seconds;
+    PREVIOUS_TIME.centiseconds = TIME.centiseconds;
 }
+
 function calculateDuration(currentTime, previousTime) {
-    //On convertit les temps en centièmes de secondes
-    const currentInCentiseconds = currentTime.centiseconds + (currentTime.seconds * 100) + ((currentTime.minutes*60)*100);
-    const previousInCentiseconds = previousTime.centiseconds + (previousTime.seconds * 100) + ((previousTime.minutes*60)*100);
+    // On convertit les différents temps en centièmes de secondes pour éxécuter la soustraction plus facilement puis on redistribue en minutes, secondes et centisecondes
 
-    //On calcule la différence 
-    const durationInCentiseconds = currentInCentiseconds - previousInCentiseconds;
+    const CURRENT_IN_CENTISECONDS = currentTime.centiseconds + (currentTime.seconds * 100) + ((currentTime.minutes*60)*100);
+    const PREVIOUS_IN_CENTISECONDS = previousTime.centiseconds + (previousTime.seconds * 100) + ((previousTime.minutes*60)*100);
 
-    //On met le résultat dans une variable duration
-    const duration = {
+    const DURATION_IN_CENTISECONDS = CURRENT_IN_CENTISECONDS - PREVIOUS_IN_CENTISECONDS;
+
+    const DURATION = {
         minutes:0,
         seconds:0,
-        centiseconds: durationInCentiseconds
-    }
-    //On met à jour les valeurs de duration
-    while(duration.centiseconds > centisecondsCeil){
-      duration.centiseconds -= 100;
-      duration.seconds ++;
-      while(duration.seconds > secondsCeil){
-        duration.seconds -= 60;
-        duration.minutes ++;
+        centiseconds: DURATION_IN_CENTISECONDS
+    };
+
+    while(DURATION.centiseconds > CENTISECONDS_CEIL){
+      DURATION.centiseconds -= 100;
+      DURATION.seconds++;
+      while(DURATION.seconds > SECONDS_CEIL){
+        DURATION.seconds -= 60;
+        DURATION.minutes++;
       }
     }
-    return duration;
+    return DURATION;
 }
 
 
