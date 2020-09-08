@@ -91,7 +91,7 @@ function resetChrono() {
     TIME.centiseconds = 0;
     
     displayTime(TIME, TIMER);
-    
+
     updatePreviousTime();
 }
 
@@ -123,24 +123,24 @@ function calculateDuration(currentTime, previousTime) {
     const PREVIOUS_IN_CENTISECONDS = previousTime.centiseconds + (previousTime.seconds * 100) + ((previousTime.minutes*60)*100);
 
     const DURATION_IN_CENTISECONDS = CURRENT_IN_CENTISECONDS - PREVIOUS_IN_CENTISECONDS;
-
-    const DURATION = {
-        minutes:0,
-        seconds:0,
-        centiseconds: DURATION_IN_CENTISECONDS
-    };
-
-    while(DURATION.centiseconds > CENTISECONDS_CEIL){
-      DURATION.centiseconds -= 100;
-      DURATION.seconds++;
-      while(DURATION.seconds > SECONDS_CEIL){
-        DURATION.seconds -= 60;
-        DURATION.minutes++;
-      }
-    }
-    return DURATION;
+    
+    return centisecondsToMinSecCs(DURATION_IN_CENTISECONDS);;
 }
 
+function centisecondsToMinSecCs(cs) {
+    const MIN = Math.floor(cs / 6000);// 1 minutes = 6000 centièmes de secondes
+    cs -= MIN * 6000;
 
+    const SEC = Math.floor(cs / 100);
+    cs -= SEC * 100;
 
+    const DURATION = {
+        minutes: MIN,
+        seconds: SEC,
+        centiseconds:cs
+    };
+
+    return DURATION;
+
+}
 
