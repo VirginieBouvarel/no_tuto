@@ -56,37 +56,42 @@ function formatTime(timeToFormat) {
 
 function startChrono() {
     // On ajoute un centième de seconde à chaque interval
-    intervalID = setInterval(function(){
-        TIME.centiseconds++;
-
-        // Passé 99 cs on ajoute 1 sec
-        if (TIME.centiseconds > CENTISECONDS_CEIL) {
-            TIME.seconds++ ;
-            TIME.centiseconds = 0;
-        }
-        // Passé 60 sec on ajoute 1 min
-        if(TIME.seconds > SECONDS_CEIL) {
-            TIME.minutes++;
-            TIME.seconds = 0;
-        }
- 
-        displayTime(TIME, TIMER);
-    }, 10);
+    if (!intervalID) {
+        intervalID = setInterval(function(){
+            TIME.centiseconds++;
+    
+            // Passé 99 cs on ajoute 1 sec
+            if (TIME.centiseconds > CENTISECONDS_CEIL) {
+                TIME.seconds++ ;
+                TIME.centiseconds = 0;
+            }
+            // Passé 60 sec on ajoute 1 min
+            if(TIME.seconds > SECONDS_CEIL) {
+                TIME.minutes++;
+                TIME.seconds = 0;
+            }
+     
+            displayTime(TIME, TIMER);
+        }, 10);
+    }
+    
 }
 
 function stopChrono() {
     clearInterval(intervalID);
+    intervalID = 0;
 }
 
 function resetChrono() {
     stopChrono();
-    // On vide la liste de splits et on remet les valeurs de time à zéro
-    SPLITS.innerHTML = '<h3><i class="fas fa-user-clock"></i></h3>';
+    
+    SPLITS.innerHTML = '';
     TIME.minutes = 0;
     TIME.seconds = 0;
     TIME.centiseconds = 0;
-    // On rafraîchit l'affichage
+    
     displayTime(TIME, TIMER);
+
     updatePreviousTime();
 }
 
@@ -118,24 +123,24 @@ function calculateDuration(currentTime, previousTime) {
     const PREVIOUS_IN_CENTISECONDS = previousTime.centiseconds + (previousTime.seconds * 100) + ((previousTime.minutes*60)*100);
 
     const DURATION_IN_CENTISECONDS = CURRENT_IN_CENTISECONDS - PREVIOUS_IN_CENTISECONDS;
-
-    const DURATION = {
-        minutes:0,
-        seconds:0,
-        centiseconds: DURATION_IN_CENTISECONDS
-    };
-
-    while(DURATION.centiseconds > CENTISECONDS_CEIL){
-      DURATION.centiseconds -= 100;
-      DURATION.seconds++;
-      while(DURATION.seconds > SECONDS_CEIL){
-        DURATION.seconds -= 60;
-        DURATION.minutes++;
-      }
-    }
-    return DURATION;
+    
+    return getMinSecCs(DURATION_IN_CENTISECONDS);;
 }
 
+function getMinSecCs(cs) {
+    const MIN = Math.floor(cs / 6000);// 1 minutes = 6000 centièmes de secondes
+    cs -= MIN * 6000;
 
+    const SEC = Math.floor(cs / 100);
+    cs -= SEC * 100;
 
+    const DURATION = {
+        minutes: MIN,
+        seconds: SEC,
+        centiseconds:cs
+    };
+
+    return DURATION;
+
+}
 
