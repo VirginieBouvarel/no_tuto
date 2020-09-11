@@ -1,17 +1,17 @@
-const TIMER = document.querySelector('#time');
-const SPLITS = document.querySelector('.splits');
-const START_BUTTON = document.querySelector('.btn-start');
-const PAUSE_BUTTON = document.querySelector('.btn-pause');
-const SPLIT_BUTTON = document.querySelector('.btn-split');
-const RESET_BUTTON = document.querySelector('.btn-reset');
+const timer = document.querySelector('#time');
+const splits = document.querySelector('.splits');
+const startButton = document.querySelector('.btn-start');
+const pauseButton = document.querySelector('.btn-pause');
+const splitButton = document.querySelector('.btn-split');
+const resetButton = document.querySelector('.btn-reset');
 
-const TIME = {
+const time = {
     minutes: 0,
     seconds: 0,
     centiseconds: 0
 };
 
-const PREVIOUS_TIME = {
+const previousTime = {
     minutes:0,
     seconds:0,
     centiseconds:0
@@ -22,12 +22,12 @@ const CENTISECONDS_CEIL = 99;
 const SECONDS_CEIL = 59;
 
 // Au départ on s'assure que le timer est bien à zéro
-displayTime(TIME, TIMER);
+displayTime(time, timer);
 
-START_BUTTON.addEventListener('click', startChrono);
-PAUSE_BUTTON.addEventListener('click', stopChrono);
-RESET_BUTTON.addEventListener('click', resetChrono);
-SPLIT_BUTTON.addEventListener('click', splitChrono);
+startButton.addEventListener('click', startChrono);
+pauseButton.addEventListener('click', stopChrono);
+resetButton.addEventListener('click', resetChrono);
+splitButton.addEventListener('click', splitChrono);
 
 
 
@@ -58,20 +58,20 @@ function startChrono() {
     // On ajoute un centième de seconde à chaque interval
     if (!intervalID) {
         intervalID = setInterval(function(){
-            TIME.centiseconds++;
+            time.centiseconds++;
     
             // Passé 99 cs on ajoute 1 sec
-            if (TIME.centiseconds > CENTISECONDS_CEIL) {
-                TIME.seconds++ ;
-                TIME.centiseconds = 0;
+            if (time.centiseconds > CENTISECONDS_CEIL) {
+                time.seconds++ ;
+                time.centiseconds = 0;
             }
             // Passé 60 sec on ajoute 1 min
-            if(TIME.seconds > SECONDS_CEIL) {
-                TIME.minutes++;
-                TIME.seconds = 0;
+            if(time.seconds > SECONDS_CEIL) {
+                time.minutes++;
+                time.seconds = 0;
             }
      
-            displayTime(TIME, TIMER);
+            displayTime(time, timer);
         }, 10);
     }
     
@@ -85,62 +85,62 @@ function stopChrono() {
 function resetChrono() {
     stopChrono();
     
-    SPLITS.innerHTML = '';
-    TIME.minutes = 0;
-    TIME.seconds = 0;
-    TIME.centiseconds = 0;
+    splits.innerHTML = '';
+    time.minutes = 0;
+    time.seconds = 0;
+    time.centiseconds = 0;
     
-    displayTime(TIME, TIMER);
+    displayTime(time, timer);
 
     updatePreviousTime();
 }
 
 function splitChrono() {
     // On construit le split pour l'afficher
-    const LI = document.createElement('li');
-    LI.textContent = formatTime(TIME);
+    const li = document.createElement('li');
+    li.textContent = formatTime(time);
 
-    const SPAN = document.createElement('span');
-    SPAN.textContent = `(+ ${formatTime(calculateDuration(TIME, PREVIOUS_TIME))})`;
+    const span = document.createElement('span');
+    span.textContent = `(+ ${formatTime(calculateDuration(time, previousTime))})`;
    
-    LI.appendChild(SPAN);
-    SPLITS.appendChild(LI);
+    li.appendChild(span);
+    splits.appendChild(li);
 
     // On assigne les valeurs actuelles de TIME à PREVIOUSTIME en prévision de la prochaine comparaison
     updatePreviousTime();
 }
 
 function updatePreviousTime() {
-    PREVIOUS_TIME.minutes = TIME.minutes;
-    PREVIOUS_TIME.seconds = TIME.seconds;
-    PREVIOUS_TIME.centiseconds = TIME.centiseconds;
+    previousTime.minutes = time.minutes;
+    previousTime.seconds = time.seconds;
+    previousTime.centiseconds = time.centiseconds;
 }
 
 function calculateDuration(currentTime, previousTime) {
     // On convertit les différents temps en centièmes de secondes pour éxécuter la soustraction plus facilement puis on redistribue en minutes, secondes et centisecondes
 
-    const CURRENT_IN_CENTISECONDS = currentTime.centiseconds + (currentTime.seconds * 100) + ((currentTime.minutes*60)*100);
-    const PREVIOUS_IN_CENTISECONDS = previousTime.centiseconds + (previousTime.seconds * 100) + ((previousTime.minutes*60)*100);
+    const currentInCentiseconds = currentTime.centiseconds + (currentTime.seconds * 100) + ((currentTime.minutes*60)*100);
+    const previousInCentiseconds = previousTime.centiseconds + (previousTime.seconds * 100) + ((previousTime.minutes*60)*100);
 
-    const DURATION_IN_CENTISECONDS = CURRENT_IN_CENTISECONDS - PREVIOUS_IN_CENTISECONDS;
+    const durationInCentiseconds = currentInCentiseconds - previousInCentiseconds;
     
-    return getMinSecCs(DURATION_IN_CENTISECONDS);;
+    return getMinSecCs(durationInCentiseconds);;
 }
 
 function getMinSecCs(cs) {
-    const MIN = Math.floor(cs / 6000);// 1 minutes = 6000 centièmes de secondes
-    cs -= MIN * 6000;
+    const min = Math.floor(cs / 6000);// 1 minutes = 6000 centièmes de secondes
+    cs -= min * 6000;
 
-    const SEC = Math.floor(cs / 100);
-    cs -= SEC * 100;
+    const sec = Math.floor(cs / 100);
+    cs -= sec * 100;
 
-    const DURATION = {
-        minutes: MIN,
-        seconds: SEC,
+    const duration = {
+        minutes: min,
+        seconds: sec,
         centiseconds:cs
     };
 
-    return DURATION;
+    return duration;
 
 }
 
