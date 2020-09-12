@@ -1,48 +1,45 @@
-/*Récupération des éléments du DOM*/
 const display = document.querySelector('#display');
 const allkeys = document.querySelector('#all-keys');
-const keys = Array.from(document.querySelectorAll('.key'));
-const [ac,one, two, three,four,five,six,seven,eight,nine,zero,dot,plus,minus,multiply,divide,percent,erase,equal] = keys;
-
 
 const operatorsList = ["%", "÷", "x", "-", "+"];
 const strictOperatorsList = ["÷", "x", "-", "+"];//sans les %
 
-/*Affichage des caractères sur l'écran en fonction des touches cliquées*/ 
-allkeys.addEventListener('click', event => displayKey(event));
+const ERROR_MESSAGE = "error"; 
 
-/*Suppression du dernier caractère affiché*/
-erase.addEventListener('click', event => {
-    event.stopPropagation();
-    
-    if (display.textContent[display.textContent.length -1] === " ") {//Si le dernier caractère est un espace, alors la dernière touche saisie était un opérateur, on enlève "esp+operateur+esp "
-        display.textContent = display.textContent.slice(0,-3);
-    } else if (display.textContent[display.textContent.length -1] === "%") {//Si le dernier caractère est un %, on enlève "esp+%"
-        display.textContent = display.textContent.slice(0,-2);
-    } else if (display.textContent === "error") {//Après une tentative de division par zéro, on vide l'affichage
-        display.textContent = ""
-    }else {
-        display.textContent = display.textContent.slice(0,-1);
+allkeys.addEventListener('click', handleKey);
+
+
+
+function handleKey(event) {
+    const currentKey = event.target.textContent;
+    const ultimateKey = display.textContent[display.textContent.length -1];
+    const penultimateKey = display.textContent[display.textContent.length -2];
+
+    if (currentKey === "AC" || display.textContent === ERROR_MESSAGE) {
+        display.textContent = "";
+    }
+
+    if (currentKey === "❮") {
+        erase();
+    }
+
+    if (currentKey === "=") {
+        if (display.textContent.search(/÷ 0( |$)/) > -1) {
+            display.textContent = ERROR_MESSAGE;
+        }else {
+            display.textContent = calculate();
+        } 
+    }
+
+    if (currentKey === "-" && penultimateKey === "+") {
+        displaySign(" - ");
+    } else if (currentKey === "-" && penultimateKey === "-"){
+        displaySign(" + ");
+    } else {//Affichage par défaut
+        display.textContent += formatDisplay(currentKey, ultimateKey, penultimateKey);
     }
     
-});
-
-/*Reset complet de l'affichage*/
-ac.addEventListener('click', event => {
-    event.stopPropagation();
-    display.textContent = "";
-} )
-
-/*Execution du calcul au clic sur la touche égal*/
-equal.addEventListener('click', event => {
-    event.stopPropagation();
-    if (display.textContent.search(/÷ 0( |$)/) > -1) {
-        display.textContent = "error";
-    }else {
-        display.textContent = calculate();
-    } 
-});
-
+}
 
 function formatDisplay(currentKey, ultimateKey, penultimateKey) {
 
@@ -124,8 +121,6 @@ function formatDisplay(currentKey, ultimateKey, penultimateKey) {
     */
         return "";
 }
- 
-
 
 function calculate() {
     const elementsToCalculate = display.textContent.split(" ").map(item => {
@@ -186,27 +181,20 @@ function calculateByOperator(operator, operatorIndex, elementsToCalculate) {
     elementsToCalculate.splice((operatorIndex - 1), numberToDelete, calc);
 }
 
-function displayKey(event) {
-    //Récupération du contenu des touches cliquées
-    const currentKey = event.target.textContent;
-    const ultimateKey = display.textContent[display.textContent.length -1];
-    const penultimateKey = display.textContent[display.textContent.length -2];
-
-    if (ultimateKey === "r") {//Après la tentative de division par zéro,on reset l'affichage 
-        display.textContent = "";
-    }
-
-    //Gestion des nombres relatifs
-    if (currentKey === "-" && penultimateKey === "+") {
-        displaySign(" - ");
-    } else if (currentKey === "-" && penultimateKey === "-"){
-        displaySign(" + ");
-    } else {//Affichage par défaut
-        display.textContent += formatDisplay(currentKey, ultimateKey, penultimateKey);
-    }
-    
-}
 function displaySign(sign) {
     display.textContent = display.textContent.slice(0,-3);//-3 --> espace + opérateur précédent + espace
     display.textContent += sign;
+}
+
+function erase() {
+    const lastCharacter = display.textContent[display.textContent.length - 1];
+    if (lastCharacter === " ") {//alors la dernière touche saisie était un opérateur, on enlève "esp+operateur+esp "
+        display.textContent = display.textContent.slice(0,-3);
+    } else if (lastCharacter === "%") {//on enlève "esp+%"
+        display.textContent = display.textContent.slice(0,-2);
+    } else if (display.textContent === ERROR_MESSAGE) {
+        display.textContent = ""
+    }else {
+        display.textContent = display.textContent.slice(0,-1);
+    }
 }
