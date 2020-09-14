@@ -34,12 +34,13 @@ function handleKey(event) {
             } 
             break;
         case "-":
-            if (penultimateKey === "+") return displaySign(" - ");
-            if (penultimateKey === "-") return displaySign(" + ");
-            display.textContent += formatDisplay(currentKey, ultimateKey, penultimateKey);//? redondance OK?
-            break;
+            if (penultimateKey === "+" || penultimateKey === "-") {
+                invertSign(penultimateKey);
+                break;
+            } 
+            //On omet le break pour effectuer l'affichage par défaut du moins qui est maintenant un simple operateur
         default:
-            display.textContent += formatDisplay(currentKey, ultimateKey, penultimateKey);//? redondance OK?
+            display.textContent += formatDisplay(currentKey, ultimateKey, penultimateKey);
     }
 }
 
@@ -136,43 +137,53 @@ function getOperatorIndex(operator, elementsToCalculate) {
 }
 
 function calculateByOperator(operator, operatorIndex, elementsToCalculate) {
+    const operand1 = elementsToCalculate[operatorIndex - 1];
+    const operand2 = elementsToCalculate[operatorIndex + 1];
     let calc;
-    let numberOfCharsToDelete = 3;//nombre avant opérateur, opérateur, nombre après opérateur
+    let numberOfCharsToDelete = 3;//Par défaut: nombre avant opérateur, opérateur, nombre après opérateur
+
     switch(operator) {
         case "%":
-            switch (elementsToCalculate[operatorIndex - 2]) {
+            const previousOperator = elementsToCalculate[operatorIndex - 2];
+            switch (previousOperator) {
                 case undefined:
                 case "x":
                 case "÷":
-                    calc = elementsToCalculate[operatorIndex - 1] / 100;
+                    calc = operand1 / 100;
                     numberOfCharsToDelete = 2;//symbole % et nombre avant symbole
                     break;
                 case "+":
                 case "-":
-                    calc = elementsToCalculate[operatorIndex - 3] * (elementsToCalculate[operatorIndex - 1] / 100);
+                    const valueToIncreaseOrDecrease = elementsToCalculate[operatorIndex - 3]
+                    calc = (operand1 / 100) * valueToIncreaseOrDecrease;
                     numberOfCharsToDelete = 2;
                     break;
             }
             break;
         case "÷":
-            calc = elementsToCalculate[operatorIndex - 1] / elementsToCalculate[operatorIndex + 1]; 
+            calc = operand1 / operand2; 
             break;
         case "x":
-            calc = elementsToCalculate[operatorIndex - 1] * elementsToCalculate[operatorIndex + 1];
+            calc = operand1 * operand2;
             break;
         case "-":
-            calc = elementsToCalculate[operatorIndex - 1] - elementsToCalculate[operatorIndex + 1];
+            calc = operand1 - operand2;
             break;
         case "+":
-            calc = elementsToCalculate[operatorIndex - 1] + elementsToCalculate[operatorIndex + 1];
+            calc = operand1 + operand2;
             break;
     }
     elementsToCalculate.splice((operatorIndex - 1), numberOfCharsToDelete, calc);
 }
 
-function displaySign(sign) {
+function invertSign(sign) {
     display.textContent = display.textContent.slice(0,-3);//-3 --> espace + opérateur précédent + espace
-    display.textContent += sign;
+    if (sign === "+") {
+        sign= "-";
+    }else {
+        sign= "+";
+    }
+    display.textContent += ` ${sign} `;
 }
 
 function erase() {
