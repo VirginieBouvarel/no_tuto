@@ -26,7 +26,8 @@ function handleKey(event) {
             erase();
             break;
         case "=":
-            if (display.textContent.search(/÷ 0( |$)/) > -1) {  // Cas d'une division par zéro
+            const zeroOrEquivalent = /÷ 0( |$|\.0+ |\.0+$)/;
+            if (display.textContent.search(zeroOrEquivalent) > -1) {  // Cas d'une division par zéro
             display.textContent = ERROR_MESSAGE;
             }else {
                 display.textContent = calculate();
