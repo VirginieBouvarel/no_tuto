@@ -2,7 +2,7 @@ const display = document.querySelector('#display');
 const allkeys = document.querySelector('#all-keys');
 
 const operatorsList = ["%", "÷", "x", "-", "+"];
-const strictOperatorsList = ["÷", "x", "-", "+"];//sans les %
+const strictOperatorsList = ["÷", "x", "-", "+"];
 
 const ERROR_MESSAGE = "error"; 
 
@@ -15,51 +15,40 @@ function handleKey(event) {
     const ultimateKey = display.textContent[display.textContent.length -1];
     const penultimateKey = display.textContent[display.textContent.length -2];
 
-    if (currentKey === "AC" || display.textContent === ERROR_MESSAGE) {
-        display.textContent = "";
-    }
+    if (event.target === allkeys) return;//fix bug multiselection
+    if (display.textContent === ERROR_MESSAGE) display.textContent = "";
 
-    if (currentKey === "❮") {
-        erase();
-    }
-
-    if (currentKey === "=") {
-        if (display.textContent.search(/÷ 0( |$)/) > -1) {
+    switch(currentKey) {
+        case "AC":
+            display.textContent = "";
+            break;
+        case "❮":
+            erase();
+            break;
+        case "=":
+            if (display.textContent.search(/÷ 0( |$)/) > -1) {  // Cas d'une division par zéro
             display.textContent = ERROR_MESSAGE;
-        }else {
-            display.textContent = calculate();
-        } 
+            }else {
+                display.textContent = calculate();
+            } 
+            break;
+        case "-":
+            if (penultimateKey === "+") return displaySign(" - ");
+            if (penultimateKey === "-") return displaySign(" + ");
+            display.textContent += formatDisplay(currentKey, ultimateKey, penultimateKey);//? redondance OK?
+            break;
+        default:
+            display.textContent += formatDisplay(currentKey, ultimateKey, penultimateKey);//? redondance OK?
     }
-
-    if (currentKey === "-" && penultimateKey === "+") {
-        displaySign(" - ");
-    } else if (currentKey === "-" && penultimateKey === "-"){
-        displaySign(" + ");
-    } else {//Affichage par défaut
-        display.textContent += formatDisplay(currentKey, ultimateKey, penultimateKey);
-    }
-    
 }
 
 function formatDisplay(currentKey, ultimateKey, penultimateKey) {
 
-    const isANumber = key => {
-        if (key === undefined) return false;
-        return key.search(/[0-9]/) > -1;
-    }
+    const isANumber = key => !isNaN(key);
     const isADot = key => key === ".";
     const isAPercent = key => key === "%";
-    const isNotAPercent = key => key !== "%";
     const isAnOperator = key => strictOperatorsList.includes(key);   
-    const isAMultiSelect = key => key.replace(/\s*/gi, "") === "AC1234567890.+-x÷%❮=";//fix d'un bug lors d'une sélection à la souris de plusieurs cases
-
-    //Gestion conditionnel de l'affichage
-    /**
-     * Si l'utilisateur à séléctionné plusieurs touches en même temps au lieu d'une 
-     * on n'autorise pas la saisie
-     */
-        if (isAMultiSelect(currentKey)) return "";
-
+    
     /**
      * Si la clé a afficher est :
      * un nombre qui suit tout sauf un pourcent OU
@@ -67,7 +56,7 @@ function formatDisplay(currentKey, ultimateKey, penultimateKey) {
      * un signe négatif (c'est-à-dire un "-" qui suit un "x" ou un "÷", ou qui débute la saisie)
      * on affiche la clé
      */
-        if ((isANumber(currentKey) && isNotAPercent(ultimateKey)) ||
+        if ((isANumber(currentKey) && !isAPercent(ultimateKey)) ||
             (isADot(currentKey) && isANumber(ultimateKey)) ||
             (currentKey === "-" && (ultimateKey === undefined || penultimateKey === "x" || penultimateKey ==="÷"))
         ) {
@@ -147,8 +136,7 @@ function getOperatorIndex(operator, elementsToCalculate) {
 
 function calculateByOperator(operator, operatorIndex, elementsToCalculate) {
     let calc;
-    let numberToDelete = 3;//nombre avant opérateur, opérateur, nombre après opérateur
-
+    let numberOfCharsToDelete = 3;//nombre avant opérateur, opérateur, nombre après opérateur
     switch(operator) {
         case "%":
             switch (elementsToCalculate[operatorIndex - 2]) {
@@ -156,12 +144,12 @@ function calculateByOperator(operator, operatorIndex, elementsToCalculate) {
                 case "x":
                 case "÷":
                     calc = elementsToCalculate[operatorIndex - 1] / 100;
-                    numberToDelete = 2;//symbole % et nombre avant symbole
+                    numberOfCharsToDelete = 2;//symbole % et nombre avant symbole
                     break;
                 case "+":
                 case "-":
                     calc = elementsToCalculate[operatorIndex - 3] * (elementsToCalculate[operatorIndex - 1] / 100);
-                    numberToDelete = 2;
+                    numberOfCharsToDelete = 2;
                     break;
             }
             break;
@@ -178,7 +166,7 @@ function calculateByOperator(operator, operatorIndex, elementsToCalculate) {
             calc = elementsToCalculate[operatorIndex - 1] + elementsToCalculate[operatorIndex + 1];
             break;
     }
-    elementsToCalculate.splice((operatorIndex - 1), numberToDelete, calc);
+    elementsToCalculate.splice((operatorIndex - 1), numberOfCharsToDelete, calc);
 }
 
 function displaySign(sign) {
@@ -188,13 +176,18 @@ function displaySign(sign) {
 
 function erase() {
     const lastCharacter = display.textContent[display.textContent.length - 1];
-    if (lastCharacter === " ") {//alors la dernière touche saisie était un opérateur, on enlève "esp+operateur+esp "
-        display.textContent = display.textContent.slice(0,-3);
-    } else if (lastCharacter === "%") {//on enlève "esp+%"
-        display.textContent = display.textContent.slice(0,-2);
-    } else if (display.textContent === ERROR_MESSAGE) {
-        display.textContent = ""
-    }else {
-        display.textContent = display.textContent.slice(0,-1);
+
+    if (display.textContent === ERROR_MESSAGE) display.textContent = "";
+
+    switch(lastCharacter) {
+        case " ": //alors la dernière touche saisie était un opérateur, on enlève "esp+operateur+esp "
+            display.textContent = display.textContent.slice(0,-3);
+            break;
+        case "%"://on enlève "esp+%"
+            display.textContent = display.textContent.slice(0,-2);
+            break;
+        default:
+            display.textContent = display.textContent.slice(0,-1);
+            break;
     }
 }
