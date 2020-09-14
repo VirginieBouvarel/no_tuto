@@ -8,12 +8,10 @@ const ERROR_MESSAGE = "error";
 
 allkeys.addEventListener('click', handleKey);
 
-
-
 function handleKey(event) {
     const currentKey = event.target.textContent;
-    const ultimateKey = display.textContent[display.textContent.length -1];
-    const penultimateKey = display.textContent[display.textContent.length -2];
+    const ultimateKey = getCharByIndex(-1);
+    const penultimateKey = getCharByIndex(-2);
 
     if (event.target === allkeys) return;//fix bug multiselection
     if (display.textContent === ERROR_MESSAGE) display.textContent = "";
@@ -44,73 +42,44 @@ function handleKey(event) {
     }
 }
 
-function formatDisplay(currentKey, ultimateKey, penultimateKey) {
+function getCharByIndex(position) {
+    return display.textContent[display.textContent.length + position];
+}
 
+function formatDisplay(currentKey, ultimateKey, penultimateKey) {
     const isANumber = key => !isNaN(key);
     const isADot = key => key === ".";
     const isAPercent = key => key === "%";
     const isAnOperator = key => strictOperatorsList.includes(key);   
     
-    /**
-     * Si la clé a afficher est :
-     * un nombre qui suit tout sauf un pourcent OU
-     * un point qui suit un nombre OU
-     * un signe négatif (c'est-à-dire un "-" qui suit un "x" ou un "÷", ou qui débute la saisie)
-     * on affiche la clé
-     */
-        if ((isANumber(currentKey) && !isAPercent(ultimateKey)) ||
-            (isADot(currentKey) && isANumber(ultimateKey)) ||
-            (currentKey === "-" && (ultimateKey === undefined || penultimateKey === "x" || penultimateKey ==="÷"))
-        ) {
-            return currentKey;
-        } 
-    /**
-     * Si la clé a afficher est un opérateur, et que l'on a un nombre ou un % juste avant, 
-     * on affiche la clé avec un espace avant et après
-    */
-        if (isAnOperator(currentKey) && (isANumber(ultimateKey) || isAPercent(ultimateKey))) {
-            return ` ${currentKey} `;
-        }
+    if ((isANumber(currentKey) && !isAPercent(ultimateKey)) ||// un nombre suit tout sauf un pourcent
+        (isADot(currentKey) && isANumber(ultimateKey)) ||// un nombre suit un point
+        (currentKey === "-" && (ultimateKey === undefined || penultimateKey === "x" || penultimateKey ==="÷")) //signe négatif
+    ) {
+        return currentKey;
+    } 
 
-    /**
-     * Si la clé a afficher est un point qui suit un opérateur, 
-     * on affiche la clé en ajoutant un zéro devant pour commencer le nombre décimal qui va suivre
-    */
-        if (isADot(currentKey) && isAnOperator(penultimateKey)) {
-            return `0${currentKey}`;
-        }
+    if (isAnOperator(currentKey) && (isANumber(ultimateKey) || isAPercent(ultimateKey))) { // un operateur suit un nombre ou un pourcent
+        return ` ${currentKey} `;
+    }
+
+    if (isADot(currentKey) && isAnOperator(penultimateKey)) { //une virgule suit directement un operateur
+        return `0${currentKey}`;
+    }
  
-    /**
-     * Si la clé a afficher est un opérateur qui suit un point, 
-     * on affiche la clé en ajoutant un zéro devant pour terminer la nombre décimal précédent et
-     * on ajoute un espace avant et après
-    */
-        if (isAnOperator(currentKey) && isADot(ultimateKey)) {
-            return `0 ${currentKey} `;
-        }
+    if (isAnOperator(currentKey) && isADot(ultimateKey)) { // un operateur suit directement une virgule
+        return `0 ${currentKey} `;
+    }
 
-    /**
-     * Si la clé a afficher est un pourcent qui suit un nombre, 
-     * on affiche la clé avec un espace avant pour le dissocier du nombre
-    */
-        if (isAPercent(currentKey) && isANumber(ultimateKey)) {
-            return ` ${currentKey}`;
-        }
+    if (isAPercent(currentKey) && isANumber(ultimateKey)) { // un pourcent suit directement un nombre
+        return ` ${currentKey}`;
+    }
 
-    /**
-     * Si la clé a afficher est un pourcent qui suit un point, 
-     * on affiche la clé en ajoutant un zéro devant pour terminer la nombre décimal précédent et
-     * on ajoute un espace avant pour le dissocier du nombre
-    */
-        if (isAPercent(currentKey) && isADot(ultimateKey)) {
-            return `0 ${currentKey}`;
-        }
+    if (isAPercent(currentKey) && isADot(ultimateKey)) { // un pourcent suit directement une virgule
+        return `0 ${currentKey}`;
+    }
 
-    /**
-     * Dans tous les autres cas la saisie n'est pas autorisée et
-     * on affiche rien de plus
-    */
-        return "";
+    return ""; 
 }
 
 function calculate() {
@@ -187,7 +156,7 @@ function invertSign(sign) {
 }
 
 function erase() {
-    const lastCharacter = display.textContent[display.textContent.length - 1];
+    const lastCharacter = getCharByIndex(-1);
 
     if (display.textContent === ERROR_MESSAGE) display.textContent = "";
 
