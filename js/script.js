@@ -13,27 +13,28 @@ window.onload = function () {
     
     class Paddle {
         constructor(posX, posY, width, height, color) {
-            this.posX = 375;
-            this.posY = 570;
-            this.width = 150;
-            this.height = 30;
-            this.color = "#fff";
+            this.posX = posX;
+            this.posY = posY;
+            this.width = width;
+            this.height = height;
+            this.color = color;
         }
         draw() {
             ctx.fillStyle = this.color;
             ctx.fillRect(this.posX, this.posY, this.width, this.height);
         };
         moveTo(handleType, direction) {
-            const paddleOutsideCanvas = (this.posX < 0 || this.posX > canvas.width - this.width );
+            const paddleOutsideOnRight = this.posX > canvas.width - this.width ;
+            const paddleOutsideOnLeft = this.posX < 0;
             const isMouse = (handleType === "mouse");
-            const speedInPixel = isMouse ? 5 : 50; //On rend le mouvement plus fluide lors d'une utilisation au clavier
+            const speedInPixel = isMouse ? 25 : 80; //On rend le mouvement plus fluide lors d'une utilisation au clavier
 
             ctx.clearRect(this.posX, this.posY, this.width, this.height);
 
-            if (direction === "right" && !paddleOutsideCanvas) {
+            if (direction === "right" && !paddleOutsideOnRight) {
                 this.posX += speedInPixel;
             }
-            if (direction === "left" && !paddleOutsideCanvas) {
+            if (direction === "left" && !paddleOutsideOnLeft) {
                 this.posX -= speedInPixel;
             }
 
@@ -56,11 +57,11 @@ window.onload = function () {
         //On définit le contexte de dessin
         ctx = canvas.getContext('2d');
         //On dessine la raquette
-        paddle = new Paddle();
+        paddle = new Paddle(375, 570, 150, 30, "#fff");
         paddle.draw();
         //On écoute les touches fléchées ou les mouvement de la souris pour diriger le paddle
         window.addEventListener("keydown", handleKeyDown);
-        canvas.addEventListener("mousedown", handleMouseMove);
+        canvas.addEventListener("mousemove", handleMouseMove);
     }
 
     function handleKeyDown(event) {
