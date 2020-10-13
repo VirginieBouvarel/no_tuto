@@ -6,11 +6,11 @@ window.onload = function () {
     const CANVAS_HEIGHT = 600;
     const ARROW_RIGHT = 39;
     const ARROW_LEFT = 37;
-    
+
     let canvas;
     let ctx;
     let paddle; 
-    
+
     class Paddle {
         constructor(posX, posY, width, height, color) {
             this.posX = posX;
@@ -43,23 +43,23 @@ window.onload = function () {
     }
     
     function init() {
-        //On crée le canvas
+      
         canvas = document.createElement('canvas');
-        //On définit les paramètres du canvas
+ 
         canvas.width = CANVAS_WIDTH;
         canvas.height = CANVAS_HEIGHT;
         canvas.style.border = "30px solid grey";
         canvas.style.margin = "50px auto";
         canvas.style.display = "block";
         canvas.style.backgroundColor = "black";
-        //On affiche le canvas dans la page
+
         document.body.appendChild(canvas);
-        //On définit le contexte de dessin
+
         ctx = canvas.getContext('2d');
-        //On dessine la raquette
+
         paddle = new Paddle(375, 570, 150, 30, "#fff");
         paddle.draw();
-        //On écoute les touches fléchées ou les mouvement de la souris pour diriger le paddle
+
         window.addEventListener("keydown", handleKeyDown);
         canvas.addEventListener("mousemove", handleMouseMove);
     }
@@ -85,14 +85,5 @@ window.onload = function () {
         
     }
 
-
-
-
-
-
-
-
-
     init();
-
 }
