@@ -10,6 +10,8 @@ window.onload = function () {
     let canvas;
     let ctx;
     let paddle; 
+    let ball;
+    let interval
 
     class Paddle {
         constructor(posX, posY, width, height, color) {
@@ -24,22 +26,48 @@ window.onload = function () {
             ctx.fillRect(this.posX, this.posY, this.width, this.height);
         };
         moveTo(handleType, direction) {
-            const paddleOutsideOnRight = this.posX > canvas.width - this.width ;
-            const paddleOutsideOnLeft = this.posX < 0;
+            const paddleOutOnRight = this.posX > canvas.width - this.width ;
+            const paddleOutOnLeft = this.posX < 0;
             const isMouse = (handleType === "mouse");
             const speedInPixel = isMouse ? 25 : 80; //On rend le mouvement plus fluide lors d'une utilisation au clavier
 
             ctx.clearRect(this.posX, this.posY, this.width, this.height);
 
-            if (direction === "right" && !paddleOutsideOnRight) {
+            if (direction === "right" && !paddleOutOnRight) {
                 this.posX += speedInPixel;
             }
-            if (direction === "left" && !paddleOutsideOnLeft) {
+            if (direction === "left" && !paddleOutOnLeft) {
                 this.posX -= speedInPixel;
             }
 
             this.draw();
         }
+    }
+
+    class Ball {
+        constructor (x, y, radius, color) {
+            this.x = x;
+            this.y = y;
+            this.radius = radius;
+            this.color = color;
+        }
+        draw() {
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+        }
+        move() {
+            interval = setInterval(this.redraw.bind(this), 10);
+        }
+        redraw() {
+            this.x += -2;
+            this.y += 1;
+            this.draw();
+        }
+        stop() {
+            clearInterval(interval);
+        }
+
     }
     
     function init() {
@@ -59,6 +87,10 @@ window.onload = function () {
 
         paddle = new Paddle(375, 570, 150, 30, "#fff");
         paddle.draw();
+
+        ball = new Ball(450, 10, 10, "#fff");
+        ball.draw();
+        ball.move();
 
         window.addEventListener("keydown", handleKeyDown);
         canvas.addEventListener("mousemove", handleMouseMove);
