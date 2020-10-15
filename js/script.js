@@ -96,6 +96,7 @@ class Ball {
 
         this.x = nextPosX;
         this.y = nextPosY;
+        
     }
 
     move() {
