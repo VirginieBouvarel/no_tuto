@@ -11,7 +11,7 @@ let ctx;
 let paddle; 
 let ball;
 let interval;
-let speed = 15;
+let delay = 15;//ms
 
 class Paddle {
     constructor(posX, posY, width, height, color) {
@@ -47,12 +47,16 @@ class Paddle {
 }
 
 class Ball {
-    constructor (x, y, radius, color) {
+    constructor (x, y, radius, color, direction) {
         this.x = x;
         this.y = y;
         this.radius = radius;
         this.color = color;
+        this.direction = direction;
+        
+
     }
+
     draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2);
@@ -60,10 +64,46 @@ class Ball {
         ctx.fill();
         ctx.closePath();
     }
-    setNextPosition() {
-        this.x += -2;
-        this.y += 2;
+
+    checkCollision(nextPosX, nextPosY) {
+
+        //On détermine les coordonnées des bords du canvas
+        const leftEdge = 0 + ball.radius;//x = 10;
+        const rightEdge = CANVAS_WIDTH - ball.radius; //x= 890;
+        const topEdge = 0 + ball.radius;//y = 10;
+        const bottomEdge = CANVAS_HEIGHT - ball.radius; //y = 590;
+
+        //On compare les coordonnées du bord de la balle avec ceux des bords du canvas
+        if (nextPosX <= leftEdge) return "left";
+        if (nextPosX >= rightEdge) return "right";
+        if (nextPosY <= topEdge) return "top";
+        if (nextPosY >= bottomEdge) return "bottom";
     }
+
+    setNextPosition() {
+        const nextPosX = this.x - this.direction;
+        const nextPosY = this.y + this.direction;
+
+        const collision = this.checkCollision(nextPosX, nextPosY);
+
+        if (collision === "left" || collision === "right") {
+            this.direction = - this.direction;
+           
+        }
+        if (collision === "top" || collision === "bottom") {
+            this.direction = - this.direction;
+        }
+
+        this.x = nextPosX;
+        this.y = nextPosY;
+    }
+
+    move() {
+        this.setNextPosition();
+        this.draw();
+    }
+  
+
 }
 
 function init() {
@@ -82,13 +122,16 @@ function init() {
     ctx = canvas.getContext('2d');
 
     paddle = new Paddle(375, 570, 150, 30, "#fff");
-    ball = new Ball(450, 11, 10, "#fff");
+    paddle.draw();
+    ball = new Ball(450, 11, 10, "#fff", 2);
+    ball.draw();
 
     window.addEventListener("keydown", handleKeyDown);
     canvas.addEventListener("mousemove", handleMouseMove);
 
-    interval = setInterval(refreshCanvas, speed);
-    checkCollision();
+    interval = setInterval(refreshCanvas, delay);
+    
+    
 }
 
 function handleKeyDown(event) {
@@ -115,28 +158,12 @@ function handleMouseMove(event) {
 function refreshCanvas() {
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     paddle.draw();
-    ball.draw();
-    ball.setNextPosition();
-}
-//TODO: ne s'affiche pas dans la console
-function checkCollision() {
-    // if (ball.x === 0 + ball.radius) return "leftCollision";
-    // if (ball.x === CANVAS_WIDTH - ball.radius) return "rightCollision";
-    // if (ball.y === 0 + ball.radius) return "topCollision";
-    // if (ball.y === CANVAS_HEIGHT - ball.radius) return "bottomCollision";
-    if (ball.x < 0 + ball.radius) console.log("leftCollision");//x < 10
-    if (ball.x > CANVAS_WIDTH - ball.radius) console.log("rightCollision"); // x > 890
-    if (ball.y < 0 + ball.radius) console.log("topCollision");//y < 10
-    if (ball.y > CANVAS_HEIGHT - ball.radius) console.log("bottomCollision");//y > 590
-}
-//TODO: appeler la fonction play() quelque part
-function play() {
-    const collision = checkCollision();
-    if (collision === "bottomCollision") return gameOver();
-    rebound(collision);
+    ball.move();
 }
 
-//TODO: function gameOver();
-//TODO: function rebound(collision);
+
+
+
+
 
 window.addEventListener('load', init);   
