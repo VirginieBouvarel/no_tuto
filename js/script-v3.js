@@ -52,10 +52,8 @@ class Ball {
         this.y = y;
         this.radius = radius;
         this.color = color;
-        // this.nextPosX = this.x - 2;
-        // this.nextPosY = this.y + 2;
-        this.directionX = -2;
-        this.directionY = 2;
+        this.nextPosX = this.x - 2;
+        this.nextPosY = this.y + 2;
     }
 
    
@@ -67,35 +65,43 @@ class Ball {
         ctx.closePath();
     }
 
-    checkCollision(nextPosX, nextPosY) {
+    checkCollision() {
         //On détermine les coordonnées des bords du canvas en fonction du rayon de la balle
         const leftEdge = 0 + ball.radius;//x = 10;
         const rightEdge = CANVAS_WIDTH - ball.radius; //x= 890;
         const topEdge = 0 + ball.radius;//y = 10;
         const bottomEdge = CANVAS_HEIGHT - ball.radius; //y = 590;
 
-        if (nextPosX <= leftEdge) return "left";
-        if (nextPosX >= rightEdge) return "right";
-        if (nextPosY <= topEdge) return "top";
-        if (nextPosY >= bottomEdge) return "bottom";
+        if (this.nextPosX <= leftEdge) return "left";
+        if (this.nextPosX >= rightEdge) return "right";
+        if (this.nextPosY <= topEdge) return "top";
+        if (this.nextPosY >= bottomEdge) return "bottom";
     }
 
     setNextPosition() {
-        let nextPosX = this.x + this.directionX;
-        let nextPosY = this.y + this.directionY;
 
-        const collision = this.checkCollision(nextPosX, nextPosY);
+        //TODO: trouver le moyen d'incrémenter nextPosX et nextPosY  de 2 à chaque tour, en respectant le signe: si x va dans le sens x+2 alors nextposx = x + 2 mais si x va dans le sens x-2 alors nextPosX = x - 2. incrémenter = ajouter, il faut toujours ajouter 2 mais en + ou 2 en - selon le cas ---> + 2 ou + (-2) = + 2 ou - 2 en utilisant toujours l'incrémentation. du coup nextPosX = x + ?, ? étant soit +2 soit - 2
+        const collision = this.checkCollision();
 
-        if (collision === "left" || collision === "right") {
-            this.directionX = - this.directionX;
+        if (collision === "left") {
+            console.log("collision left");
+            this.nextPosX = this.x + 2;
+        }
+        if (collision === "right") {
+            console.log("collision right");
+            this.nextPosX = this.x - 2;
+        }
+        if (collision === "top") {
+            console.log("collision top");
+            this.nextPosY = this.y + 2;
+        }
+        if (collision === "bottom") {
+            console.log("collision bottom");
+            this.nextPosY = this.y - 2;
         }
 
-        if (collision === "top" || collision ===  "bottom") {
-            this.directionY = - this.directionY;
-        }
-
-        this.x = nextPosX;
-        this.y = nextPosY;
+        this.x = this.nextPosX;
+        this.y = this.nextPosY;
    
     }
 
