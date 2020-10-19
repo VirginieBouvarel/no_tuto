@@ -10,7 +10,7 @@ let ctx;
 let paddle; 
 let ball;
 let interval;
-let delay = 10;//ms
+let delay = 10; // ms
 
 
 class Paddle {
@@ -21,17 +21,19 @@ class Paddle {
         this.height = height;
         this.color = color;
     }
+
     draw() {
         ctx.beginPath();
         ctx.fillStyle = this.color;
         ctx.fillRect(this.posX, this.posY, this.width, this.height);
         ctx.closePath();
-    };
+    }
+
     moveTo(handleType, direction) {
         const paddleOutOnRight = this.posX > canvas.width - this.width ;
         const paddleOutOnLeft = this.posX < 0;
         const isMouse = (handleType === "mouse");
-        const speedInPixel = isMouse ? 7 : 80; //On rend le mouvement plus fluide lors d'une utilisation au clavier
+        const speedInPixel = isMouse ? 7 : 80; // On rend le mouvement plus fluide lors d'une utilisation au clavier
 
         ctx.clearRect(this.posX, this.posY, this.width, this.height);
 
@@ -56,7 +58,6 @@ class Ball {
         this.directionY = 2;
     }
 
-   
     draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2);
@@ -66,11 +67,11 @@ class Ball {
     }
 
     checkCollision(nextPosX, nextPosY) {
-        //On détermine les coordonnées des bords du canvas en fonction du rayon de la balle
-        const leftEdge = 0 + ball.radius;//x = 10;
-        const rightEdge = CANVAS_WIDTH - ball.radius; //x= 890;
-        const topEdge = 0 + ball.radius;//y = 10;
-        const bottomEdge = CANVAS_HEIGHT - ball.radius; //y = 590;
+        // On détermine les coordonnées des bords du canvas en fonction du rayon de la balle
+        const leftEdge = 0 + ball.radius; // x = 10;
+        const rightEdge = CANVAS_WIDTH - ball.radius; // x= 890;
+        const topEdge = 0 + ball.radius; // y = 10;
+        const bottomEdge = CANVAS_HEIGHT - ball.radius; // y = 590;
         const isOnPaddle = nextPosX >= paddle.posX && nextPosX <= paddle.posX + paddle.width && nextPosY >= bottomEdge - paddle.height;
 
         if (nextPosX <= leftEdge) return "left";
@@ -101,8 +102,7 @@ class Ball {
    
     }
 
-    move() {
-        
+    move() {  
         this.setNextPosition();
         this.draw();
     }
@@ -133,9 +133,7 @@ function init() {
     window.addEventListener("keydown", handleKeyDown);
     canvas.addEventListener("mousemove", handleMouseMove);
 
-    interval = setInterval(refreshCanvas, delay);
-    
-    
+    interval = setInterval(refreshCanvas, delay); 
 }
 
 function handleKeyDown(event) {
@@ -174,10 +172,6 @@ function gameOver() {
     ctx.textAlign = "center";
     ctx.strokeText('Game Over', 446, 300);
 }
-
-
-
-
 
 
 window.addEventListener('load', init);   
