@@ -10,7 +10,7 @@ let ctx;
 let paddle; 
 let ball;
 let interval;
-let delay = 15;//ms
+let delay = 10;//ms
 
 
 class Paddle {
@@ -31,7 +31,7 @@ class Paddle {
         const paddleOutOnRight = this.posX > canvas.width - this.width ;
         const paddleOutOnLeft = this.posX < 0;
         const isMouse = (handleType === "mouse");
-        const speedInPixel = isMouse ? 25 : 80; //On rend le mouvement plus fluide lors d'une utilisation au clavier
+        const speedInPixel = isMouse ? 7 : 80; //On rend le mouvement plus fluide lors d'une utilisation au clavier
 
         ctx.clearRect(this.posX, this.posY, this.width, this.height);
 
@@ -52,8 +52,6 @@ class Ball {
         this.y = y;
         this.radius = radius;
         this.color = color;
-        // this.nextPosX = this.x - 2;
-        // this.nextPosY = this.y + 2;
         this.directionX = -2;
         this.directionY = 2;
     }
@@ -73,11 +71,13 @@ class Ball {
         const rightEdge = CANVAS_WIDTH - ball.radius; //x= 890;
         const topEdge = 0 + ball.radius;//y = 10;
         const bottomEdge = CANVAS_HEIGHT - ball.radius; //y = 590;
+        const isOnPaddle = nextPosX >= paddle.posX && nextPosX <= paddle.posX + paddle.width && nextPosY >= bottomEdge - paddle.height;
 
         if (nextPosX <= leftEdge) return "left";
         if (nextPosX >= rightEdge) return "right";
         if (nextPosY <= topEdge) return "top";
         if (nextPosY >= bottomEdge) return "bottom";
+        if (isOnPaddle) return "paddle";
     }
 
     setNextPosition() {
@@ -86,11 +86,13 @@ class Ball {
 
         const collision = this.checkCollision(nextPosX, nextPosY);
 
+        if (collision === "bottom") {
+            gameOver();
+        }
         if (collision === "left" || collision === "right") {
             this.directionX = - this.directionX;
         }
-
-        if (collision === "top" || collision ===  "bottom") {
+        if (collision === "top" || collision ===  "paddle") {
             this.directionY = - this.directionY;
         }
 
@@ -161,6 +163,16 @@ function refreshCanvas() {
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     paddle.draw();
     ball.move();
+}
+
+function gameOver() {
+    console.log("Game Over");
+    clearInterval(interval);
+    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    ctx.strokeStyle = "#fff";
+    ctx.font = '6rem Arial';
+    ctx.textAlign = "center";
+    ctx.strokeText('Game Over', 446, 300);
 }
 
 
