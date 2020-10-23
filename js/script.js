@@ -133,6 +133,8 @@ function init() {
 }
 
 function startPong() {
+    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+     
     paddle = new Paddle(375, 570, 150, 30, "#fff");
     paddle.draw();
     ball = new Ball(450, 10, 10, "#fff");
@@ -164,7 +166,7 @@ function handleMouseMove(event) {
 }
 
 function refreshCanvas() {
-    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    ctx.clearRect(ball.x - ball.radius, ball.y - ball.radius, ball.radius * 2, ball.radius * 2); // On ne rafraîchit que la portion de canvas contenant ball
     paddle.draw();
     ball.move();
 }
