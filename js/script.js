@@ -2,8 +2,6 @@
 
 const CANVAS_WIDTH = 900;
 const CANVAS_HEIGHT = 600;
-const ARROW_RIGHT = 39;
-const ARROW_LEFT = 37;
 
 let canvas;
 let ctx;
@@ -30,22 +28,41 @@ class Paddle {
     }
 
     moveTo(handleType, direction) {
-        const paddleOutOnRight = this.posX > canvas.width - this.width ;
-        const paddleOutOnLeft = this.posX < 0;
         const isMouse = (handleType === "mouse");
         const speedInPixel = isMouse ? 7 : 80; // On rend le mouvement plus fluide lors d'une utilisation au clavier
+        const canvasLeftEdge =  0;
+        const canvasRightEdge =  CANVAS_WIDTH - this.width;
+        let nextPosition;
 
         ctx.clearRect(this.posX, this.posY, this.width, this.height);
+        
+        if (direction === "right") {
+            nextPosition = this.posX + speedInPixel;
+            if (nextPosition > canvasRightEdge) {
+                this.posX = canvasRightEdge; // s'arrête à la limite du bord droit
+            } else {
+                this.posX += speedInPixel;
+            }
 
-        if (direction === "right" && !paddleOutOnRight) {
-            this.posX += speedInPixel;
+        } else { // direction === "left"
+            nextPosition = this.posX - speedInPixel;
+            if (nextPosition < canvasLeftEdge) {
+                this.posX = canvasLeftEdge; // s'arrête à la limite du bord gauche
+            } else {
+                this.posX -= speedInPixel;
+            }
+
         }
-        if (direction === "left" && !paddleOutOnLeft) {
-            this.posX -= speedInPixel;
-        }
+        
+        
+    
+
+   
 
         this.draw();
     }
+
+
 }
 
 class Ball {
@@ -138,11 +155,14 @@ function init() {
 
 function handleKeyDown(event) {
 
-    if(event.keyCode === ARROW_RIGHT) {
+    if(event.code === "ArrowRight") {
         paddle.moveTo("arrow", "right");
     }
-    if(event.keyCode === ARROW_LEFT) {
+    if(event.code === "ArrowLeft") {
         paddle.moveTo("arrow", "left");
+    }
+    if (event.code === "Space") {
+        init();
     }
 }
 
