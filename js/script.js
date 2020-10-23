@@ -7,7 +7,7 @@ let canvas;
 let ctx;
 let paddle; 
 let ball;
-let interval;
+let animationID;
 let delay = 10; // ms
 
 
@@ -19,12 +19,14 @@ class Paddle {
         this.height = height;
         this.color = color;
     }
+
     draw() {
         ctx.beginPath();
         ctx.fillStyle = this.color;
         ctx.fillRect(this.posX, this.posY, this.width, this.height);
         ctx.closePath();
     }
+
     moveTo(handleType, direction) {
         const isMouse = (handleType === "mouse");
         const speedInPixel = isMouse ? 7 : 80; // On rend le mouvement plus fluide lors d'une utilisation au clavier
@@ -53,8 +55,6 @@ class Paddle {
         }
         this.draw();
     }
-
-
 }
 
 class Ball {
@@ -66,6 +66,7 @@ class Ball {
         this.directionX = -2;
         this.directionY = 2;
     }
+
     draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2);
@@ -73,6 +74,7 @@ class Ball {
         ctx.fill();
         ctx.closePath();
     }
+
     checkCollision(nextPosX, nextPosY) {
         // On détermine les coordonnées des bords du canvas en fonction du rayon de la balle
         const leftEdge = 0 + ball.radius; // x = 10;
@@ -87,6 +89,7 @@ class Ball {
         if (nextPosY >= bottomEdge) return "bottom";
         if (isOnPaddle) return "paddle";
     }
+
     setNextPosition() {
         let nextPosX = this.x + this.directionX;
         let nextPosY = this.y + this.directionY;
@@ -96,6 +99,7 @@ class Ball {
         if (collision === "bottom") {
             gameOver();
         }
+        // Si la balle dépasse le canvas on inverse le sens pour générer l'effet de rebond
         if (collision === "left" || collision === "right") {
             this.directionX = - this.directionX;
         }
@@ -107,6 +111,7 @@ class Ball {
         this.y = nextPosY;
    
     }
+
     move() {  
         this.setNextPosition();
         this.draw();
@@ -132,17 +137,6 @@ function init() {
     startPong();
 }
 
-function startPong() {
-    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-     
-    paddle = new Paddle(375, 570, 150, 30, "#fff");
-    paddle.draw();
-    ball = new Ball(450, 10, 10, "#fff");
-    ball.draw();
-
-    interval = setInterval(refreshCanvas, delay); 
-}
-
 function handleKeyDown(event) {
     if(event.code === "ArrowRight") {
         paddle.moveTo("arrow", "right");
@@ -165,15 +159,27 @@ function handleMouseMove(event) {
     
 }
 
+function startPong() {
+    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+     
+    paddle = new Paddle(375, 570, 150, 30, "#fff");
+    paddle.draw();
+    ball = new Ball(450, 10, 10, "#fff");
+    ball.draw();
+
+    refreshCanvas();
+}
+
 function refreshCanvas() {
     ctx.clearRect(ball.x - ball.radius, ball.y - ball.radius, ball.radius * 2, ball.radius * 2); // On ne rafraîchit que la portion de canvas contenant ball
     paddle.draw();
     ball.move();
+    animationID = requestAnimationFrame(refreshCanvas);
 }
 
 function gameOver() {
     console.log("Game Over");
-    clearInterval(interval);
+    cancelAnimationFrame(animationID);
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     ctx.strokeStyle = "#fff";
     ctx.font = '6rem Arial';
