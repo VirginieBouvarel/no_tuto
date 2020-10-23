@@ -19,14 +19,12 @@ class Paddle {
         this.height = height;
         this.color = color;
     }
-
     draw() {
         ctx.beginPath();
         ctx.fillStyle = this.color;
         ctx.fillRect(this.posX, this.posY, this.width, this.height);
         ctx.closePath();
     }
-
     moveTo(handleType, direction) {
         const isMouse = (handleType === "mouse");
         const speedInPixel = isMouse ? 7 : 80; // On rend le mouvement plus fluide lors d'une utilisation au clavier
@@ -53,12 +51,6 @@ class Paddle {
             }
 
         }
-        
-        
-    
-
-   
-
         this.draw();
     }
 
@@ -74,7 +66,6 @@ class Ball {
         this.directionX = -2;
         this.directionY = 2;
     }
-
     draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2);
@@ -82,7 +73,6 @@ class Ball {
         ctx.fill();
         ctx.closePath();
     }
-
     checkCollision(nextPosX, nextPosY) {
         // On détermine les coordonnées des bords du canvas en fonction du rayon de la balle
         const leftEdge = 0 + ball.radius; // x = 10;
@@ -97,7 +87,6 @@ class Ball {
         if (nextPosY >= bottomEdge) return "bottom";
         if (isOnPaddle) return "paddle";
     }
-
     setNextPosition() {
         let nextPosX = this.x + this.directionX;
         let nextPosY = this.y + this.directionY;
@@ -118,19 +107,14 @@ class Ball {
         this.y = nextPosY;
    
     }
-
     move() {  
         this.setNextPosition();
         this.draw();
     }
-  
-
 }
 
 function init() {
-    
     canvas = document.createElement('canvas');
-
     canvas.width = CANVAS_WIDTH;
     canvas.height = CANVAS_HEIGHT;
     canvas.style.border = "30px solid grey";
@@ -142,19 +126,22 @@ function init() {
 
     ctx = canvas.getContext('2d');
 
+    window.addEventListener("keydown", handleKeyDown);
+    canvas.addEventListener("mousemove", handleMouseMove);
+
+    startPong();
+}
+
+function startPong() {
     paddle = new Paddle(375, 570, 150, 30, "#fff");
     paddle.draw();
     ball = new Ball(450, 10, 10, "#fff");
     ball.draw();
 
-    window.addEventListener("keydown", handleKeyDown);
-    canvas.addEventListener("mousemove", handleMouseMove);
-
     interval = setInterval(refreshCanvas, delay); 
 }
 
 function handleKeyDown(event) {
-
     if(event.code === "ArrowRight") {
         paddle.moveTo("arrow", "right");
     }
@@ -162,12 +149,11 @@ function handleKeyDown(event) {
         paddle.moveTo("arrow", "left");
     }
     if (event.code === "Space") {
-        init();
+        startPong ();
     }
 }
 
 function handleMouseMove(event) {
-
     if(event.movementX > 0) {
         paddle.moveTo("mouse", "right");
     }
@@ -192,6 +178,7 @@ function gameOver() {
     ctx.textAlign = "center";
     ctx.strokeText('Game Over', 446, 300);
 }
+
 
 
 window.addEventListener('load', init);   
