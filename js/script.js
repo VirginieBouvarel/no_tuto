@@ -8,7 +8,7 @@ let ctx;
 let paddle; 
 let ball;
 let animationID;
-let delay = 10; // ms
+
 
 
 class Paddle {
@@ -29,7 +29,7 @@ class Paddle {
 
     moveTo(handleType, direction) {
         const isMouse = (handleType === "mouse");
-        const speedInPixel = isMouse ? 7 : 80; // On rend le mouvement plus fluide lors d'une utilisation au clavier
+        const speedInPixel = isMouse ? 10  : 80; // On rend le mouvement plus fluide lors d'une utilisation au clavier
         const canvasLeftEdge =  0;
         const canvasRightEdge =  CANVAS_WIDTH - this.width;
         let nextPosition;
@@ -76,7 +76,7 @@ class Ball {
     }
 
     checkCollision(nextPosX, nextPosY) {
-        // On détermine les coordonnées des bords du canvas en fonction du rayon de la balle
+        // On détermine les coordonnées des zones de contact entre la balle et le bord du canvas en tenant compte du rayon de la balle
         const leftEdge = 0 + ball.radius; // x = 10;
         const rightEdge = CANVAS_WIDTH - ball.radius; // x= 890;
         const topEdge = 0 + ball.radius; // y = 10;
@@ -107,8 +107,8 @@ class Ball {
             this.directionY = - this.directionY;
         }
 
-        this.x = nextPosX;
-        this.y = nextPosY;
+        this.x += this.directionX;
+        this.y += this.directionY;
    
     }
 
