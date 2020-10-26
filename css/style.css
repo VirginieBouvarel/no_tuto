@@ -1,4 +1,11 @@
 *, *:before, *:after {
     box-sizing:border-box;
 }
-/*font-family: 'Orbitron', sans-serif;*/
+
+.display {
+    color:fuchsia;
+    font-size:2rem;
+    font-weight:bold;
+    font-family:Arial;
+    text-align:center;
+}

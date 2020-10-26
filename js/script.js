@@ -2,12 +2,14 @@
 
 const CANVAS_WIDTH = 900;
 const CANVAS_HEIGHT = 600;
+const score = document.querySelector('#score');
 
 let canvas;
 let ctx;
 let paddle; 
 let ball;
 let animationID;
+let numberOfPaddleCollision = 0;
 
 
 
@@ -104,6 +106,9 @@ class Ball {
             this.directionX = - this.directionX;
         }
         if (collision === "top" || collision ===  "paddle") {
+            if (collision === "paddle") {
+                updateScore();
+            }
             this.directionY = - this.directionY;
         }
 
@@ -126,10 +131,10 @@ function init() {
     canvas.style.margin = "50px auto";
     canvas.style.display = "block";
     canvas.style.backgroundColor = "black";
-
     document.body.appendChild(canvas);
-
     ctx = canvas.getContext('2d');
+
+    score.innerHTML = numberOfPaddleCollision;
 
     window.addEventListener("keydown", handleKeyDown);
     canvas.addEventListener("mousemove", handleMouseMove);
@@ -159,6 +164,7 @@ function handleMouseMove(event) {
     
 }
 
+
 function startPong() {
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
      
@@ -187,6 +193,9 @@ function gameOver() {
     ctx.strokeText('Game Over', 446, 300);
 }
 
-
+function updateScore() {
+    numberOfPaddleCollision++;
+    score.innerHTML = numberOfPaddleCollision;
+}
 
 window.addEventListener('load', init);   
