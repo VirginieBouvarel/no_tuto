@@ -96,25 +96,25 @@ class Ball {
         let nextPosX = this.x + this.directionX;
         let nextPosY = this.y + this.directionY;
 
-        const collision = this.checkCollision(nextPosX, nextPosY);
+        let collision = this.checkCollision(nextPosX, nextPosY);
 
         if (collision === "bottom") {
             gameOver();
-        }
-        // Si la balle dépasse le canvas on inverse le sens pour générer l'effet de rebond
-        if (collision === "left" || collision === "right") {
-            this.directionX = - this.directionX;
-        }
-        if (collision === "top" || collision ===  "paddle") {
-            if (collision === "paddle") {
-                updateScore();
+        } else {
+            // Si la balle dépasse le canvas on inverse le sens pour générer l'effet de rebond
+            if (collision === "left" || collision === "right") {
+                this.directionX = - this.directionX;
             }
-            this.directionY = - this.directionY;
-        }
+            if (collision === "top" || collision ===  "paddle") {
+                if (collision === "paddle") {
+                    updateScore();
+                }
+                this.directionY = - this.directionY;
+            }
 
-        this.x += this.directionX;
-        this.y += this.directionY;
-   
+            this.x += this.directionX;
+            this.y += this.directionY;
+        }
     }
 
     move() {  
@@ -177,7 +177,7 @@ function startPong() {
 }
 
 function refreshCanvas() {
-    ctx.clearRect(ball.x - ball.radius, ball.y - ball.radius, ball.radius * 2, ball.radius * 2); // On ne rafraîchit que la portion de canvas contenant ball
+    ctx.clearRect(ball.x - ball.radius, ball.y - ball.radius, ball.radius * 2, ball.radius * 2); // On ne rafraîchit que la portion de canvas contenant la balle
     paddle.draw();
     ball.move();
     animationID = requestAnimationFrame(refreshCanvas);
@@ -185,12 +185,12 @@ function refreshCanvas() {
 
 function gameOver() {
     console.log("Game Over");
-    cancelAnimationFrame(animationID);
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     ctx.strokeStyle = "#fff";
     ctx.font = '6rem Arial';
     ctx.textAlign = "center";
     ctx.strokeText('Game Over', 446, 300);
+    cancelAnimationFrame(animationID);
 }
 
 function updateScore() {
