@@ -9,9 +9,9 @@ let canvas;
 let ctx;
 let paddle; 
 let ball;
+let numberOfPaddleCollision = 0;
 let animationID = 0;
 let stopped;
-let numberOfPaddleCollision = 0;
 
 
 
@@ -67,8 +67,9 @@ class Ball {
         this.y = y;
         this.radius = radius;
         this.color = color;
-        this.directionX = - speed;
-        this.directionY = speed;
+        this.speed = speed;
+        this.directionX = - this.speed;
+        this.directionY = this.speed;
     }
 
     draw() {
@@ -123,6 +124,12 @@ class Ball {
         this.setNextPosition();
         this.draw();
     }
+
+    setSpeed() {
+        this.directionX = - this.speed;
+        this.directionY = this.speed;
+    }
+
 }
 
 function init() {
@@ -152,10 +159,10 @@ function handleKeyDown(event) {
         paddle.moveTo("arrow", "left");
     }
     if (event.code === "Space") {
-        startPong ();
+        startPong();
     }
 }
-
+    
 function handleMouseMove(event) {
     if(event.movementX > 0) {
         paddle.moveTo("mouse", "right");
@@ -169,25 +176,22 @@ function handleMouseMove(event) {
 
 function startPong() {
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-     
     paddle = new Paddle(375, 570, 150, 30, "#fff");
     paddle.draw();
-    ball = new Ball(450, 10, 10, "#fff", 3);
+    ball = new Ball(450, 10, 10, "#fff", 2);
     ball.draw();
+
     stopped = false;
     refreshCanvas();
-    
 }
 
 function refreshCanvas() {
-
     if (!stopped) {
         ctx.clearRect(ball.x - ball.radius, ball.y - ball.radius, ball.radius * 2, ball.radius * 2); // On ne rafraîchit que la portion de canvas contenant la balle
         paddle.draw();
         ball.move();
         animationID = requestAnimationFrame(refreshCanvas);
     }
-
 }
 
 function gameOver() {
@@ -197,6 +201,7 @@ function gameOver() {
     ctx.font = '6rem Arial';
     ctx.textAlign = "center";
     ctx.strokeText('Game Over', 446, 300);
+
     if (animationID) {
         cancelAnimationFrame(animationID);
     }
@@ -206,6 +211,18 @@ function gameOver() {
 function updateScore() {
     numberOfPaddleCollision++;
     score.innerHTML = numberOfPaddleCollision;
+    updateSpeed();
+}
+
+function updateSpeed() {
+    if (numberOfPaddleCollision >= 5) {
+        ball.speed += 1;
+        ball.setSpeed();
+    }
+    if (numberOfPaddleCollision >= 10) {
+        ball.speed += 2;
+        ball.setSpeed();
+    }
 }
 
 window.addEventListener('load', init);   
