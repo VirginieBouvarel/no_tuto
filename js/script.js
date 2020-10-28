@@ -8,7 +8,8 @@ let canvas;
 let ctx;
 let paddle; 
 let ball;
-let animationID;
+let animationID = 0;
+let stopped;
 let numberOfPaddleCollision = 0;
 
 
@@ -172,15 +173,19 @@ function startPong() {
     paddle.draw();
     ball = new Ball(450, 10, 10, "#fff");
     ball.draw();
-
+    stopped = false;
     refreshCanvas();
+    
 }
 
 function refreshCanvas() {
-    ctx.clearRect(ball.x - ball.radius, ball.y - ball.radius, ball.radius * 2, ball.radius * 2); // On ne rafraîchit que la portion de canvas contenant la balle
-    paddle.draw();
-    ball.move();
-    animationID = requestAnimationFrame(refreshCanvas);
+    if (!stopped) {
+        ctx.clearRect(ball.x - ball.radius, ball.y - ball.radius, ball.radius * 2, ball.radius * 2); // On ne rafraîchit que la portion de canvas contenant la balle
+        paddle.draw();
+        ball.move();
+        animationID = requestAnimationFrame(refreshCanvas);
+    }
+
 }
 
 function gameOver() {
@@ -190,7 +195,10 @@ function gameOver() {
     ctx.font = '6rem Arial';
     ctx.textAlign = "center";
     ctx.strokeText('Game Over', 446, 300);
-    cancelAnimationFrame(animationID);
+    if (animationID) {
+        cancelAnimationFrame(animationID);
+    }
+    stopped = true;
 }
 
 function updateScore() {
