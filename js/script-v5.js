@@ -1,3 +1,5 @@
+/* tentative d'ajout d'une gestion du fps pour requestAnimationFrame : ne fonctionne pas */
+
 
 "use strict";
 
@@ -9,9 +11,10 @@ let canvas;
 let ctx;
 let paddle; 
 let ball;
+let numberOfPaddleCollision = 0;
 let animationID = 0;
 let stopped;
-let numberOfPaddleCollision = 0;
+let fps, fpsInterval, startTime, now, then, elapsed;
 
 
 
@@ -62,13 +65,13 @@ class Paddle {
 }
 
 class Ball {
-    constructor (x, y, radius, color, speed) {
+    constructor (x, y, radius, color) {
         this.x = x;
         this.y = y;
         this.radius = radius;
         this.color = color;
-        this.directionX = - speed;
-        this.directionY = speed;
+        this.directionX = -2;
+        this.directionY = 2;
     }
 
     draw() {
@@ -141,7 +144,7 @@ function init() {
     window.addEventListener("keydown", handleKeyDown);
     canvas.addEventListener("mousemove", handleMouseMove);
 
-    startPong();
+    startPong(100);
 }
 
 function handleKeyDown(event) {
@@ -152,7 +155,7 @@ function handleKeyDown(event) {
         paddle.moveTo("arrow", "left");
     }
     if (event.code === "Space") {
-        startPong ();
+        startPong(100);
     }
 }
 
@@ -167,24 +170,33 @@ function handleMouseMove(event) {
 }
 
 
-function startPong() {
+function startPong(fps) {
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-     
     paddle = new Paddle(375, 570, 150, 30, "#fff");
     paddle.draw();
-    ball = new Ball(450, 10, 10, "#fff", 3);
+    ball = new Ball(450, 10, 10, "#fff");
     ball.draw();
     stopped = false;
-    refreshCanvas();
-    
+    fpsInterval = 200 / fps;
+    then = Date.now();
+    startTime = then;
+    refreshCanvas(); 
 }
 
 function refreshCanvas() {
-
     if (!stopped) {
-        ctx.clearRect(ball.x - ball.radius, ball.y - ball.radius, ball.radius * 2, ball.radius * 2); // On ne rafraîchit que la portion de canvas contenant la balle
-        paddle.draw();
-        ball.move();
+        // calcul du temps passé depuis la dernière requête
+        now = Date.now();
+        elapsed = now - then;
+        // Si temps en ms ok on dessine la frame suivante
+        if (elapsed > fpsInterval) {
+            then = now - (elapsed % fpsInterval);
+
+            ctx.clearRect(ball.x - ball.radius, ball.y - ball.radius, ball.radius * 2, ball.radius * 2); // On ne rafraîchit que la portion de canvas contenant la balle
+            paddle.draw();
+            ball.move();
+        }
+        // On appelle la prochaine requête
         animationID = requestAnimationFrame(refreshCanvas);
     }
 

@@ -1,3 +1,4 @@
+/* dernière version ok avant tentative d'ajout fps pour RAF */
 
 "use strict";
 
@@ -62,13 +63,13 @@ class Paddle {
 }
 
 class Ball {
-    constructor (x, y, radius, color, speed) {
+    constructor (x, y, radius, color) {
         this.x = x;
         this.y = y;
         this.radius = radius;
         this.color = color;
-        this.directionX = - speed;
-        this.directionY = speed;
+        this.directionX = -2;
+        this.directionY = 2;
     }
 
     draw() {
@@ -172,7 +173,7 @@ function startPong() {
      
     paddle = new Paddle(375, 570, 150, 30, "#fff");
     paddle.draw();
-    ball = new Ball(450, 10, 10, "#fff", 3);
+    ball = new Ball(450, 10, 10, "#fff");
     ball.draw();
     stopped = false;
     refreshCanvas();
