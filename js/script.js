@@ -32,8 +32,8 @@ class Paddle {
     }
 
     moveTo(handleType, direction) {
-        const isMouse = (handleType === "mouse");
-        const speedInPixel = isMouse ? 10  : 80; // On rend le mouvement plus fluide lors d'une utilisation au clavier
+        const isMouse = (handleType === "mouse");//TODO:inutile
+        const speedInPixel = isMouse ? 10  : 80; // On rend le mouvement plus fluide lors d'une utilisation au clavier //TODO:laisser seuleent le 80
         const canvasLeftEdge =  0;
         const canvasRightEdge =  CANVAS_WIDTH - this.width;
         let nextPosition;
@@ -154,12 +154,14 @@ function init() {
     ctx = canvas.getContext('2d');
 
     window.addEventListener("keydown", handleKeyDown);
-    canvas.addEventListener("mousemove", handleMouseMove);
+    canvas.addEventListener("mousemove", handleMouseMove);//TODO: window au lieu de canvas ?
 
     startPong();
 }
 
 function handleKeyDown(event) {
+    //TODO: enlever le handleType devenu itnutile
+    //? renommer moveTo en moveWithKeyBoard ou pas
     if(event.code === "ArrowRight") {
         paddle.moveTo("arrow", "right");
     }
@@ -172,11 +174,20 @@ function handleKeyDown(event) {
 }
     
 function handleMouseMove(event) {
-    if(event.movementX > 0) {
-        paddle.moveTo("mouse", "right");
-    }
-    if(event.movementX < 0) {
-        paddle.moveTo("mouse", "left");
+    // if(event.movementX > 0) {
+    //     paddle.moveTo("mouse", "right");
+    // }
+    // if(event.movementX < 0) {
+    //     paddle.moveTo("mouse", "left");
+    // }
+    //TODO: fonction autonome qui n'utiliserait plus paddle.moveTo
+    //TODO:renommer
+    //x de la souris - x du debut canvas = position de la souris par rapport au canvas
+    let relativeX = e.clientX - canvas.offsetLeft; 
+    //si cette position est à l'interieur du canvas (donc pas besoin des verifications faites dans paddle.moveTo)
+    if(relativeX > 0 && relativeX < canvas.width) {
+        //on attribut le x de la souris au centre du paddle
+        paddleX = relativeX - paddleWidth/2;
     }
     
 }
