@@ -1,4 +1,7 @@
 /* version ok avant refactoring de paddle.moveTo */
+/* tout fonctionne mais moveTo est devenu une usine a gaz*/
+
+
 "use strict";
 
 const CANVAS_WIDTH = 900;
