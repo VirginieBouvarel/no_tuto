@@ -1,3 +1,4 @@
+/* Version ok avant ajout modif handleMouseMove */
 
 "use strict";
 
@@ -108,13 +109,11 @@ class Ball {
             if (collision === "left" || collision === "right") {
                 this.directionX = - this.directionX;
             }
-            if (collision === "top"){
+            if (collision === "top" || collision ===  "paddle") {
+                if (collision === "paddle") {
+                    updateScore();
+                }
                 this.directionY = - this.directionY;
-            }
-            if (collision === "paddle") {
-                this.directionY = - this.directionY;
-                updateScore();
-                updateSpeed();
             }
 
             this.x += this.directionX;
@@ -127,17 +126,9 @@ class Ball {
         this.draw();
     }
 
-    setSpeedToDirection() {
-        if (this.directionX > 0) {
-            this.directionX = this.speed;
-        }else {
-            this.directionX = - this.speed;
-        }
-        if (this.directionY > 0) {
-            this.directionY = this.speed;
-        }else {
-            this.directionY = - this.speed;
-        }
+    setSpeed() {
+        this.directionX = - this.speed;
+        this.directionY = this.speed;
     }
 
 }
@@ -152,6 +143,8 @@ function init() {
     canvas.style.backgroundColor = "black";
     document.body.appendChild(canvas);
     ctx = canvas.getContext('2d');
+
+    score.innerHTML = numberOfPaddleCollision;
 
     window.addEventListener("keydown", handleKeyDown);
     canvas.addEventListener("mousemove", handleMouseMove);
@@ -183,9 +176,6 @@ function handleMouseMove(event) {
 
 
 function startPong() {
-    numberOfPaddleCollision = 0;
-    displayScore();
-    
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     paddle = new Paddle(375, 570, 150, 30, "#fff");
     paddle.draw();
@@ -219,23 +209,20 @@ function gameOver() {
     stopped = true;
 }
 
-function displayScore() {
-    score.innerHTML = numberOfPaddleCollision;
-}
-
 function updateScore() {
     numberOfPaddleCollision++;
-    displayScore();
+    score.innerHTML = numberOfPaddleCollision;
+    updateSpeed();
 }
 
 function updateSpeed() {
-    if (numberOfPaddleCollision === 10) {
-        ball.speed += 2;
-        ball.setSpeedToDirection();
-    }
-    if (numberOfPaddleCollision === 5) {
+    if (numberOfPaddleCollision >= 5) {
         ball.speed += 1;
-        ball.setSpeedToDirection();
+        ball.setSpeed();
+    }
+    if (numberOfPaddleCollision >= 10) {
+        ball.speed += 2;
+        ball.setSpeed();
     }
 }
 
