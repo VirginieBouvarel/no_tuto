@@ -35,6 +35,7 @@ class Paddle {
     }
 
     moveTo(handleType, direction) {
+        
         const isMouse = (handleType === "mouse");
         const speedInPixel = isMouse ? 10  : 80; // On rend le mouvement plus fluide lors d'une utilisation au clavier 
         const canvasLeftEdge =  0;

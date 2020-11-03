@@ -1,8 +1,13 @@
-/* version ok avant refactoring de paddle.moveTo */
 "use strict";
 
 const CANVAS_WIDTH = 900;
 const CANVAS_HEIGHT = 600;
+const CANVAS_BORDER_WIDTH = 30;
+const SPEED_IN_PIXEL = 80;
+
+const canvasLeftEdge =  0;
+const canvasRightEdge =  CANVAS_WIDTH - this.width;
+
 const score = document.querySelector('#score');
 
 let canvas;
@@ -31,39 +36,37 @@ class Paddle {
         ctx.closePath();
     }
 
-    moveTo(handleType, direction) {
-        const isMouse = (handleType === "mouse");
-        const speedInPixel = isMouse ? 10  : 80; // On rend le mouvement plus fluide lors d'une utilisation au clavier 
-        const canvasLeftEdge =  0;
-        const canvasRightEdge =  CANVAS_WIDTH - this.width;
-        let nextPosition;
-
+    move(control, direction = "none", mouseX = 0) {
         ctx.clearRect(this.posX, this.posY, this.width, this.height);
 
-        if (isMouse && direction > 0 && direction < canvas.width) {
-            //on attribut le x de la souris au centre du paddle
-            paddle.posX = direction - paddle.width/2;
-            
-        } else {// is arrows
+        if (control === "arrow") {
+            let nextPosition;
+
             if (direction === "right") {
-                nextPosition = this.posX + speedInPixel;
+                nextPosition = this.posX + SPEED_IN_PIXEL;
                 if (nextPosition > canvasRightEdge) {
                     this.posX = canvasRightEdge; // s'arrête à la limite du bord droit
                 } else {
-                    this.posX += speedInPixel;
+                    this.posX += SPEED_IN_PIXEL;
                 }
     
             } else { //direction = "left"
-                nextPosition = this.posX - speedInPixel;
+                nextPosition = this.posX - SPEED_IN_PIXEL;
                 if (nextPosition < canvasLeftEdge) {
                     this.posX = canvasLeftEdge; // s'arrête à la limite du bord gauche
                 } else {
-                    this.posX -= speedInPixel;
+                    this.posX -= SPEED_IN_PIXEL;
                 }
-    
             } 
+
+        } else { // control === "mouse"
+
+            if (mouseX > 0 && mouseX < CANVAS_WIDTH) {
+                this.posX = mouseX - this.width/2;
+                console.log(mouseX, CANVAS_WIDTH, this.width, this.posX);
+            }
         }
-        
+
         this.draw();
     }
 }
@@ -160,36 +163,30 @@ function init() {
     document.body.appendChild(canvas);
     ctx = canvas.getContext('2d');
 
-    window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("mousemove", handleMouseMove);//TODO: window au lieu de canvas ?
+    window.addEventListener("keydown", handleControls);
+    window.addEventListener("mousemove", handleControls);
 
     startPong();
 }
 
-function handleKeyDown(event) {
-    //TODO: enlever le handleType devenu itnutile
-    //? renommer moveTo en moveWithKeyBoard ou pas
-    if(event.code === "ArrowRight") {
-        paddle.moveTo("arrow", "right");
-    }
-    if(event.code === "ArrowLeft") {
-        paddle.moveTo("arrow", "left");
-    }
-    if (event.code === "Space") {
-        startPong();
+function handleControls(event) {
+    if (event.type === "keydown") {
+        switch (event.code) {
+            case "ArrowRight":
+                paddle.move("arrow", "right", 0);
+                break;
+            case "ArrowLeft":
+                paddle.move("arrow", "left", 0);
+                break;
+            case "Space":
+                startPong();
+                break;
+        }
+    } else { //event.type === "mousemove"
+        let mouseX = event.clientX - canvas.offsetLeft - CANVAS_BORDER_WIDTH; 
+        paddle.move("mouse", "none", mouseX);
     }
 }
-    
-function handleMouseMove(event) {
-    //on calcule le x de la souris 
-    //(x de la souris sur la page - x du canvas sur la page = x de la souris sur le canvas)
-    let mouseX = event.clientX - canvas.offsetLeft; 
-
-    // on passe la valeur du x de la souris comme direction à moveTo
-    paddle.moveTo("mouse", mouseX);
- 
-}
-
 
 function startPong() {
     numberOfPaddleCollision = 0;
