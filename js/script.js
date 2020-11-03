@@ -195,7 +195,7 @@ function startPong() {
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     paddle = new Paddle(375, 570, 150, 30, "#fff");
     paddle.draw();
-    ball = new Ball(450, 10, 10, "#fff", 2);
+    ball = new Ball(450, 10, 10, "#fff", 5);
     ball.draw();
 
     stopped = false;
@@ -235,12 +235,8 @@ function updateScore() {
 }
 
 function updateSpeed() {
-    if (numberOfPaddleCollision === 10) {
-        ball.speed += 2;
-        ball.setSpeedToDirection();
-    }
-    if (numberOfPaddleCollision === 5) {
-        ball.speed += 1;
+    if (numberOfPaddleCollision === 5 || numberOfPaddleCollision === 10) {
+        ball.speed += 3;
         ball.setSpeedToDirection();
     }
 }
