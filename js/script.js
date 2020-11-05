@@ -24,7 +24,7 @@ class Paddle {
         this.height = height;
         this.color = color;
 
-        this.speedInpixel = 80;
+        this.speedInPixel = 80;
         this.leftEdge = 0;
         this.rightEdge = CANVAS_WIDTH - this.width;
     }
@@ -36,25 +36,20 @@ class Paddle {
         ctx.closePath();
     }
 
-    move(control, direction = "none", mouseX = 0) {
+    move(control, mouseX = 0, direction = "right") {
         ctx.clearRect(this.posX, this.posY, this.width, this.height);
 
-        if (control === "arrow") {
-            let nextPosition;
-            if (direction === "right") {
-                nextPosition = this.posX + this.speedInPixel;
-                this.posX = nextPosition > this.rightEdge ? this.rightEdge : posX + this.speedInpixel;
-    
-            } else { //direction = "left"
-                nextPosition = this.posX - this.speedInPixel;
-                this.posX = nextPosition < this.leftEdge ? this.leftEdge : posX - this.speedInpixel;
-            } 
+        let nextPosition;
 
-        } else { // control === "mouse"
-            if (mouseX > 0 && mouseX < CANVAS_WIDTH) {
-                this.posX = mouseX - this.width/2;
-            }
+        if (control === "arrow") {
+            nextPosition = direction === "right" ? this.posX + this.speedInPixel : this.posX - this.speedInPixel;
+        } else {
+            nextPosition = mouseX - this.width/2;
         }
+
+        if (nextPosition > this.leftEdge && nextPosition < this.rightEdge) this.posX = nextPosition;
+        if (nextPosition < this.leftEdge) this.posX = this.leftEdge;
+        if (nextPosition > this.rightEdge) this.posX = this.rightEdge;
 
         this.draw();
     }
@@ -155,10 +150,10 @@ function handleControls(event) {
     if (event.type === "keydown") {
         switch (event.code) {
             case "ArrowRight":
-                paddle.move("arrow", "right", 0);
+                paddle.move("arrow", 0, "right");
                 break;
             case "ArrowLeft":
-                paddle.move("arrow", "left", 0);
+                paddle.move("arrow", 0, "left");
                 break;
             case "Space":
                 startPong();
@@ -166,7 +161,7 @@ function handleControls(event) {
         }
     } else { //event.type === "mousemove"
         let mouseX = event.clientX - canvas.offsetLeft - CANVAS_BORDER_WIDTH; 
-        paddle.move("mouse", "none", mouseX);
+        paddle.move("mouse", mouseX);
     }
 }
 
