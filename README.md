@@ -8,4 +8,4 @@ Objectif: Réalisation d'un jeu de pong
 
 # série: NoTuto - jeu de Pong
 
-![Design preview for the pong project ](./src/screenshot_pong.png)
+![Design preview for the pong project ](src/screenshot_pong.png)
