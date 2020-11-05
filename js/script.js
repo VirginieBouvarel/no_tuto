@@ -3,10 +3,6 @@
 const CANVAS_WIDTH = 900;
 const CANVAS_HEIGHT = 600;
 const CANVAS_BORDER_WIDTH = 30;
-const SPEED_IN_PIXEL = 80;
-
-const canvasLeftEdge =  0;
-const canvasRightEdge =  CANVAS_WIDTH - this.width;
 
 const score = document.querySelector('#score');
 
@@ -27,6 +23,10 @@ class Paddle {
         this.width = width;
         this.height = height;
         this.color = color;
+
+        this.speedInpixel = 80;
+        this.leftEdge = 0;
+        this.rightEdge = CANVAS_WIDTH - this.width;
     }
 
     draw() {
@@ -41,29 +41,18 @@ class Paddle {
 
         if (control === "arrow") {
             let nextPosition;
-
             if (direction === "right") {
-                nextPosition = this.posX + SPEED_IN_PIXEL;
-                if (nextPosition > canvasRightEdge) {
-                    this.posX = canvasRightEdge; // s'arrête à la limite du bord droit
-                } else {
-                    this.posX += SPEED_IN_PIXEL;
-                }
+                nextPosition = this.posX + this.speedInPixel;
+                this.posX = nextPosition > this.rightEdge ? this.rightEdge : posX + this.speedInpixel;
     
             } else { //direction = "left"
-                nextPosition = this.posX - SPEED_IN_PIXEL;
-                if (nextPosition < canvasLeftEdge) {
-                    this.posX = canvasLeftEdge; // s'arrête à la limite du bord gauche
-                } else {
-                    this.posX -= SPEED_IN_PIXEL;
-                }
+                nextPosition = this.posX - this.speedInPixel;
+                this.posX = nextPosition < this.leftEdge ? this.leftEdge : posX - this.speedInpixel;
             } 
 
         } else { // control === "mouse"
-
             if (mouseX > 0 && mouseX < CANVAS_WIDTH) {
                 this.posX = mouseX - this.width/2;
-                console.log(mouseX, CANVAS_WIDTH, this.width, this.posX);
             }
         }
 
@@ -78,8 +67,14 @@ class Ball {
         this.radius = radius;
         this.color = color;
         this.speed = speed;
+
         this.directionX = - this.speed;
         this.directionY = this.speed;
+
+        this.leftEdge = 0 + this.radius; // x = 10;
+        this.rightEdge = CANVAS_WIDTH - this.radius; // x= 890;
+        this.topEdge = 0 + this.radius; // y = 10;
+        this.bottomEdge = CANVAS_HEIGHT - this.radius; // y = 590;
     }
 
     draw() {
@@ -91,17 +86,12 @@ class Ball {
     }
 
     checkCollision(nextPosX, nextPosY) {
-        // On détermine les coordonnées des zones de contact entre la balle et le bord du canvas en tenant compte du rayon de la balle
-        const leftEdge = 0 + ball.radius; // x = 10;
-        const rightEdge = CANVAS_WIDTH - ball.radius; // x= 890;
-        const topEdge = 0 + ball.radius; // y = 10;
-        const bottomEdge = CANVAS_HEIGHT - ball.radius; // y = 590;
-        const isOnPaddle = nextPosX >= paddle.posX && nextPosX <= paddle.posX + paddle.width && nextPosY >= bottomEdge - paddle.height;
+        const isOnPaddle = nextPosX >= paddle.posX && nextPosX <= paddle.posX + paddle.width && nextPosY >= this.bottomEdge - paddle.height;
 
-        if (nextPosX <= leftEdge) return "left";
-        if (nextPosX >= rightEdge) return "right";
-        if (nextPosY <= topEdge) return "top";
-        if (nextPosY >= bottomEdge) return "bottom";
+        if (nextPosX <= this.leftEdge) return "left";
+        if (nextPosX >= this.rightEdge) return "right";
+        if (nextPosY <= this.topEdge) return "top";
+        if (nextPosY >= this.bottomEdge) return "bottom";
         if (isOnPaddle) return "paddle";
     }
 
@@ -138,16 +128,8 @@ class Ball {
     }
 
     setSpeedToDirection() {
-        if (this.directionX > 0) {
-            this.directionX = this.speed;
-        }else {
-            this.directionX = - this.speed;
-        }
-        if (this.directionY > 0) {
-            this.directionY = this.speed;
-        }else {
-            this.directionY = - this.speed;
-        }
+        this.directionX = this.directionX > 0 ? this.speed : - this.speed;
+        this.directionY = this.directionY > 0 ? this.speed : - this.speed;
     }
 
 }
