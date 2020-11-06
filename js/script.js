@@ -47,7 +47,7 @@ class Paddle {
             nextPosition = event.clientX - canvas.offsetLeft - CANVAS_BORDER_WIDTH - this.width/2;
         }
 
-        if (nextPosition > this.leftEdge && nextPosition < this.rightEdge) this.posX = nextPosition;
+        if (nextPosition >= this.leftEdge && nextPosition <= this.rightEdge) this.posX = nextPosition;
         if (nextPosition < this.leftEdge) this.posX = this.leftEdge;
         if (nextPosition > this.rightEdge) this.posX = this.rightEdge;
 
