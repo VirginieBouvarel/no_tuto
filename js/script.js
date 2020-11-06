@@ -36,15 +36,15 @@ class Paddle {
         ctx.closePath();
     }
 
-    move(control, mouseX = 0, direction = "right") {
+    move(event) {
         ctx.clearRect(this.posX, this.posY, this.width, this.height);
 
         let nextPosition;
-
-        if (control === "arrow") {
-            nextPosition = direction === "right" ? this.posX + this.speedInPixel : this.posX - this.speedInPixel;
-        } else {
-            nextPosition = mouseX - this.width/2;
+        
+        if (event.type === "keydown") {
+            nextPosition = event.code === "ArrowRight" ? this.posX + this.speedInPixel : this.posX - this.speedInPixel;
+        } else {// event.type === "mousemove"
+            nextPosition = event.clientX - canvas.offsetLeft - CANVAS_BORDER_WIDTH - this.width/2;
         }
 
         if (nextPosition > this.leftEdge && nextPosition < this.rightEdge) this.posX = nextPosition;
@@ -147,22 +147,13 @@ function init() {
 }
 
 function handleControls(event) {
-    if (event.type === "keydown") {
-        switch (event.code) {
-            case "ArrowRight":
-                paddle.move("arrow", 0, "right");
-                break;
-            case "ArrowLeft":
-                paddle.move("arrow", 0, "left");
-                break;
-            case "Space":
-                startPong();
-                break;
-        }
-    } else { //event.type === "mousemove"
-        let mouseX = event.clientX - canvas.offsetLeft - CANVAS_BORDER_WIDTH; 
-        paddle.move("mouse", mouseX);
+
+    if (event.code === "ArrowRight" || event.code === "ArrowLeft" || event.type === "mousemove") {
+        paddle.move(event);
     }
+    if (event.code === "Space") {
+        startPong();
+    }     
 }
 
 function startPong() {
