@@ -1,9 +1,5 @@
 "use strict";
 
-const CANVAS_WIDTH = 900;
-const CANVAS_HEIGHT = 600;
-const CANVAS_BORDER_WIDTH = 30;
-
 const score = document.querySelector('#score');
 
 let canvas;
@@ -15,6 +11,25 @@ let animationID = 0;
 let stopped;
 
 
+class Canvas {
+    constructor(width, height, borderWidth) {
+        this.width = width;
+        this.height = height;
+        this.borderWidth = borderWidth;
+        this.display = document.createElement('canvas');
+    }
+
+    draw() {
+        this.display.width = this.width;
+        this.display.height = this.height;
+        this.display.style.border = "30px solid grey";
+        this.display.style.margin = "50px auto";
+        this.display.style.display = "block";
+        this.display.style.backgroundColor = "black";
+        document.body.appendChild(this.display);
+        ctx = this.display.getContext('2d');
+    }
+}
 
 class Paddle {
     constructor(posX, posY, width, height, color) {
@@ -130,16 +145,9 @@ class Ball {
 }
 
 function init() {
-    canvas = document.createElement('canvas');
-    canvas.width = CANVAS_WIDTH;
-    canvas.height = CANVAS_HEIGHT;
-    canvas.style.border = "30px solid grey";
-    canvas.style.margin = "50px auto";
-    canvas.style.display = "block";
-    canvas.style.backgroundColor = "black";
-    document.body.appendChild(canvas);
-    ctx = canvas.getContext('2d');
-
+    canvas = new Canvas(900, 600, 30);
+    canvas.draw();
+    
     window.addEventListener("keydown", handleControls);
     window.addEventListener("mousemove", handleControls);
 
