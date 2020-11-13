@@ -1,92 +1,20 @@
 "use strict";
 
-class Game {
-    constructor() {
+const CANVAS_WIDTH = 900;
+const CANVAS_HEIGHT = 600;
+const CANVAS_BORDER_WIDTH = 30;
 
-    }
-    init() {
-        court = new Canvas(900, 600, 30);
-        court.draw();
-        
-        window.addEventListener("keydown", court.handleControls);
-        window.addEventListener("mousemove", court.handleControls);
-    
-        this.start();
-    }
+const score = document.querySelector('#score');
 
-    start() {
-        numberOfPaddleCollision = 0;
-        score = new Score();
-        score.display();
-        
-        ctx.clearRect(0, 0, court.width, court.height);
+let canvas;
+let ctx;
+let paddle; 
+let ball;
+let numberOfPaddleCollision = 0;
+let animationID = 0;
+let stopped;
 
-        paddle = new Paddle(375, 570, 150, 30, "#fff");
-        paddle.draw();
-        ball = new Ball(450, 10, 10, "#fff", 5);
-        ball.draw();
-    
-        stopped = false;
-        refreshCanvas();
-    }
 
-    gameOver() {
-        console.log("Game Over");
-        ctx.clearRect(0, 0, court.width, court.height);
-        ctx.strokeStyle = "#fff";
-        ctx.font = '6rem Arial';
-        ctx.textAlign = "center";
-        ctx.strokeText('Game Over', 446, 300);
-    
-        if (animationID) {
-            cancelAnimationFrame(animationID);
-        }
-        stopped = true;
-    }
-}
-
-class Score {
-    constructor() {
-        this.tag = document.querySelector('#score');
-    }
-    display() {
-        this.tag.innerHTML = numberOfPaddleCollision; 
-    }
-    update() {
-        numberOfPaddleCollision++;
-        this.display();
-    }
-}
-
-class Canvas {
-    constructor(width, height, borderWidth) {
-        this.width = width;
-        this.height = height;
-        this.borderWidth = borderWidth;
-        this.canvas = document.createElement('canvas');
-    }
-
-    draw() {
-        this.canvas.width = this.width;
-        this.canvas.height = this.height;
-        this.canvas.style.border = "30px solid grey";
-        this.canvas.style.margin = "50px auto";
-        this.canvas.style.display = "block";
-        this.canvas.style.backgroundColor = "black";
-        document.body.appendChild(this.canvas);
-        ctx = this.canvas.getContext('2d');
-    }
-
-    handleControls(event) {
-        if (event.code === "ArrowRight" || event.code === "ArrowLeft" || event.type === "mousemove") {
-            paddle.move(event);
-        }
-        if (event.code === "Space") {
-            game.start();
-        }     
-    }
-
-}
 
 class Paddle {
     constructor(posX, posY, width, height, color) {
@@ -98,7 +26,7 @@ class Paddle {
 
         this.speedInPixel = 80;
         this.leftEdge = 0;
-        this.rightEdge = court.width - this.width;
+        this.rightEdge = CANVAS_WIDTH - this.width;
     }
 
     draw() {
@@ -116,7 +44,7 @@ class Paddle {
         if (event.type === "keydown") {
             nextPosition = event.code === "ArrowRight" ? this.posX + this.speedInPixel : this.posX - this.speedInPixel;
         } else {// event.type === "mousemove"
-            nextPosition = event.clientX - court.canvas.offsetLeft - court.borderWidth - this.width/2;
+            nextPosition = event.clientX - canvas.offsetLeft - CANVAS_BORDER_WIDTH - this.width/2;
         }
 
         if (nextPosition >= this.leftEdge && nextPosition <= this.rightEdge) this.posX = nextPosition;
@@ -139,9 +67,9 @@ class Ball {
         this.directionY = this.speed;
 
         this.leftEdge = 0 + this.radius; // x = 10;
-        this.rightEdge = court.width - this.radius; // x= 890;
+        this.rightEdge = CANVAS_WIDTH - this.radius; // x= 890;
         this.topEdge = 0 + this.radius; // y = 10;
-        this.bottomEdge = court.height - this.radius; // y = 590;
+        this.bottomEdge = CANVAS_HEIGHT - this.radius; // y = 590;
     }
 
     draw() {
@@ -168,8 +96,8 @@ class Ball {
 
         let collision = this.checkCollision(nextPosX, nextPosY);
 
-        if (collision === "bottom") { 
-            game.gameOver();
+        if (collision === "bottom") {
+            gameOver();
         } else {
             // Si la balle dépasse le canvas on inverse le sens pour générer l'effet de rebond
             if (collision === "left" || collision === "right") {
@@ -180,8 +108,8 @@ class Ball {
             }
             if (collision === "paddle") {
                 this.directionY = - this.directionY;
-                score.update();
-                ball.updateSpeed();
+                updateScore();
+                updateSpeed();
             }
 
             this.x += this.directionX;
@@ -199,28 +127,48 @@ class Ball {
         this.directionY = this.directionY > 0 ? this.speed : - this.speed;
     }
 
-    updateSpeed() {
-        if (numberOfPaddleCollision === 5 || numberOfPaddleCollision === 10) {
-            this.speed += 3;
-            this.setSpeedToDirection();
-        }
-    }
-
 }
 
+function init() {
+    canvas = document.createElement('canvas');
+    canvas.width = CANVAS_WIDTH;
+    canvas.height = CANVAS_HEIGHT;
+    canvas.style.border = "30px solid grey";
+    canvas.style.margin = "50px auto";
+    canvas.style.display = "block";
+    canvas.style.backgroundColor = "black";
+    document.body.appendChild(canvas);
+    ctx = canvas.getContext('2d');
 
-/* main.js*/
+    window.addEventListener("keydown", handleControls);
+    window.addEventListener("mousemove", handleControls);
 
-const game = new Game();
+    startPong();
+}
 
-let score;
-let court;
-let paddle; 
-let ball;
-let ctx;
-let numberOfPaddleCollision = 0;
-let animationID = 0;
-let stopped;
+function handleControls(event) {
+
+    if (event.code === "ArrowRight" || event.code === "ArrowLeft" || event.type === "mousemove") {
+        paddle.move(event);
+    }
+    if (event.code === "Space") {
+        startPong();
+    }     
+}
+
+function startPong() {
+    numberOfPaddleCollision = 0;
+    displayScore();
+    
+    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    paddle = new Paddle(375, 570, 150, 30, "#fff");
+    paddle.draw();
+    ball = new Ball(450, 10, 10, "#fff", 5);
+    ball.draw();
+
+    stopped = false;
+    refreshCanvas();
+}
 
 function refreshCanvas() {
     if (!stopped) {
@@ -231,4 +179,34 @@ function refreshCanvas() {
     }
 }
 
-window.addEventListener('load', game.init());   
+function gameOver() {
+    console.log("Game Over");
+    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    ctx.strokeStyle = "#fff";
+    ctx.font = '6rem Arial';
+    ctx.textAlign = "center";
+    ctx.strokeText('Game Over', 446, 300);
+
+    if (animationID) {
+        cancelAnimationFrame(animationID);
+    }
+    stopped = true;
+}
+
+function displayScore() {
+    score.innerHTML = numberOfPaddleCollision;
+}
+
+function updateScore() {
+    numberOfPaddleCollision++;
+    displayScore();
+}
+
+function updateSpeed() {
+    if (numberOfPaddleCollision === 5 || numberOfPaddleCollision === 10) {
+        ball.speed += 3;
+        ball.setSpeedToDirection();
+    }
+}
+
+window.addEventListener('load', init);   
