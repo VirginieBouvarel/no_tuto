@@ -6,7 +6,6 @@ class Game {
     }
     init() {
         court = new Canvas(900, 600, 30);
-        court.draw();
         
         window.addEventListener("keydown", court.handleControls);
         window.addEventListener("mousemove", court.handleControls);
@@ -27,9 +26,17 @@ class Game {
         ball.draw();
     
         stopped = false;
-        refreshCanvas();
-    }
 
+        this.refresh();
+    }
+    refresh() {
+        if (!stopped) {
+            ctx.clearRect(ball.x - ball.radius, ball.y - ball.radius, ball.radius * 2, ball.radius * 2); // On ne rafraîchit que la portion de canvas contenant la balle
+            paddle.draw();
+            ball.move();
+            animationID = requestAnimationFrame(this.refresh.bind(this));
+        }
+    }
     gameOver() {
         console.log("Game Over");
         ctx.clearRect(0, 0, court.width, court.height);
@@ -60,15 +67,10 @@ class Score {
 
 class Canvas {
     constructor(width, height, borderWidth) {
-        this.width = width;
-        this.height = height;
         this.borderWidth = borderWidth;
         this.canvas = document.createElement('canvas');
-    }
-
-    draw() {
-        this.canvas.width = this.width;
-        this.canvas.height = this.height;
+        this.canvas.width = width;
+        this.canvas.height = height;
         this.canvas.style.border = "30px solid grey";
         this.canvas.style.margin = "50px auto";
         this.canvas.style.display = "block";
@@ -98,7 +100,7 @@ class Paddle {
 
         this.speedInPixel = 80;
         this.leftEdge = 0;
-        this.rightEdge = court.width - this.width;
+        this.rightEdge = court.canvas.width - this.width;
     }
 
     draw() {
@@ -139,9 +141,9 @@ class Ball {
         this.directionY = this.speed;
 
         this.leftEdge = 0 + this.radius; // x = 10;
-        this.rightEdge = court.width - this.radius; // x= 890;
+        this.rightEdge = court.canvas.width - this.radius; // x= 890;
         this.topEdge = 0 + this.radius; // y = 10;
-        this.bottomEdge = court.height - this.radius; // y = 590;
+        this.bottomEdge = court.canvas.height - this.radius; // y = 590;
     }
 
     draw() {
@@ -222,13 +224,5 @@ let numberOfPaddleCollision = 0;
 let animationID = 0;
 let stopped;
 
-function refreshCanvas() {
-    if (!stopped) {
-        ctx.clearRect(ball.x - ball.radius, ball.y - ball.radius, ball.radius * 2, ball.radius * 2); // On ne rafraîchit que la portion de canvas contenant la balle
-        paddle.draw();
-        ball.move();
-        animationID = requestAnimationFrame(refreshCanvas);
-    }
-}
 
 window.addEventListener('load', game.init());   
