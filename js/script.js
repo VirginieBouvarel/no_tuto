@@ -2,7 +2,9 @@
 
 class Game {
     constructor() {
-
+        this.score = 0;
+        this.scoreTag = document.querySelector('#score');
+      
     }
     init() {
         court = new Canvas(900, 600, 30);
@@ -14,9 +16,7 @@ class Game {
     }
 
     start() {
-        numberOfPaddleCollision = 0;
-        score = new Score();
-        score.display();
+        this.displayScore();
         
         ctx.clearRect(0, 0, court.width, court.height);
 
@@ -37,6 +37,16 @@ class Game {
             animationID = requestAnimationFrame(this.refresh.bind(this));
         }
     }
+
+    displayScore() {
+        this.scoreTag.innerHTML = this.score; 
+    }
+
+    updateScore() {
+        this.score++;
+        this.displayScore();
+    }
+
     gameOver() {
         console.log("Game Over");
         ctx.clearRect(0, 0, court.width, court.height);
@@ -52,18 +62,6 @@ class Game {
     }
 }
 
-class Score {
-    constructor() {
-        this.tag = document.querySelector('#score');
-    }
-    display() {
-        this.tag.innerHTML = numberOfPaddleCollision; 
-    }
-    update() {
-        numberOfPaddleCollision++;
-        this.display();
-    }
-}
 
 class Canvas {
     constructor(width, height, borderWidth) {
@@ -182,8 +180,8 @@ class Ball {
             }
             if (collision === "paddle") {
                 this.directionY = - this.directionY;
-                score.update();
-                ball.updateSpeed();
+                game.updateScore();
+                this.updateSpeed();
             }
 
             this.x += this.directionX;
@@ -202,7 +200,7 @@ class Ball {
     }
 
     updateSpeed() {
-        if (numberOfPaddleCollision === 5 || numberOfPaddleCollision === 10) {
+        if (game.score === 5 || game.score === 10) {
             this.speed += 3;
             this.setSpeedToDirection();
         }
@@ -220,7 +218,6 @@ let court;
 let paddle; 
 let ball;
 let ctx;
-let numberOfPaddleCollision = 0;
 let animationID = 0;
 let stopped;
 
