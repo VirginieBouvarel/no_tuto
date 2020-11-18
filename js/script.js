@@ -16,9 +16,10 @@ class Game {
     }
 
     start() {
+        this.score = 0;
         this.displayScore();
         
-        ctx.clearRect(0, 0, court.width, court.height);
+        ctx.clearRect(0, 0, court.canvas.width, court.canvas. height);
 
         paddle = new Paddle(375, 570, 150, 30, "#fff");
         paddle.draw();
@@ -61,7 +62,7 @@ class Game {
         stopped = true;
     }
 }
-
+  
 
 class Canvas {
     constructor(width, height, borderWidth) {
@@ -212,11 +213,11 @@ class Ball {
 /* main.js*/
 
 const game = new Game();
-
-let score;
+ 
 let court;
 let paddle; 
 let ball;
+
 let ctx;
 let animationID = 0;
 let stopped;
