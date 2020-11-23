@@ -100,7 +100,9 @@ class Trip {
     }
 
     resetCoordinates(target, event) {
+
         if (target === "paddle") {
+            
             let nextX;
         
             if (event.type === "keydown") {
