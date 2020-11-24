@@ -24,14 +24,14 @@ class Game {
         this.court.draw("ball");
         this.refresh();
     }
+
     reset() {
         this.court.clear("canvas");
         this.score = 0;
         this.paddle.x = 375;
         this.paddle.y = 570;
         this.ball.x = 450;
-        this.ball.y = 10;
-        
+        this.ball.y = 10; 
     }
     
     handleControls(event) {
@@ -44,13 +44,14 @@ class Game {
             this.start();
         }     
     }
+
     refresh() {
         if (!this.stopped) {
             this.court.clear("ball"); 
             let collisionTest = this.trip.resetCoordinates("ball");
     
             if (collisionTest === "bottom") {
-                this.stopped;
+                this.gameOver();
             } else {
                 if (collisionTest === "paddle") {
                     this.updateScore();
@@ -71,6 +72,7 @@ class Game {
         this.score++;
         this.displayScore();
     }
+
     updateSpeed() {
         if (this.score === 5 || this.score === 10) {
             this.ball.speed += 3;
@@ -81,8 +83,8 @@ class Game {
     gameOver() {
         console.log("Game Over");
         this.court.displayGameOver();
-        if (animationID) {
-            cancelAnimationFrame(animationID);
+        if (this.animationID) {
+            cancelAnimationFrame(this.animationID);
         }
         this.stopped = true;
     }
@@ -115,14 +117,26 @@ class Trip {
                           : collisionTest === "right" ? this.paddleRightEdge 
                           : newCoordinates.x;
         }else {
-            //if collision === bottom return collisionTest
-            //sinon 
-                    //set ballxy
-                    // si collision === paddle return collisionTest
-            this.ball.x = newCoordinates.x;
-            this.ball.y = newCoordinates.y;
+            if (collisionTest === "bottom") { 
+                return collisionTest;
+            } else {
+                // Si la balle dépasse le canvas on inverse le sens pour générer l'effet de rebond
+                if (collisionTest === "left" || collisionTest === "right") {
+                    this.ball.directionX = - this.ball.directionX;
+                }
+                if (collisionTest === "top" || collisionTest === "paddle"){
+                    this.ball.directionY = - this.ball.directionY;
+                }
+                
+                this.ball.x = newCoordinates.x;
+                this.ball.y = newCoordinates.y;
+
+                return collisionTest;
+            }
         }
+        
     }
+
     calculateNextPosition(target, event) {
         let nextX;
         let nextY;
@@ -144,11 +158,7 @@ class Trip {
     }
 
     detectCollision(target, newCoordinates) {
-        //BORDS
-        //PADDLE
-        // if (newCoordinates.x >= leftEdge && newCoordinates.x <= rightEdge) this.paddle.x = newCoordinates.x;
-        // if (newCoordinates.x < leftEdge) newCoordinates.x = leftEdge;
-        // if (newCoordinates.x > rightEdge) newCooridnates.x = rightEdge;
+
         if (target === "paddle") {
             if (newCoordinates.x < this.paddleLeftEdge) return "left";
             if (newCoordinates.x > this.paddleRightEdge) return "right";
@@ -163,40 +173,8 @@ class Trip {
         }
         return "ok";
 
-
-        //BALL
-        // let collision = this.detectCollision(nextX, nextY, paddle);
-
-        // if (collision === "bottom") { 
-        //     return "bottom";
-        // } else {
-        //     // Si la balle dépasse le canvas on inverse le sens pour générer l'effet de rebond
-        //     if (collision === "left" || collision === "right") {
-        //         this.directionX = - this.directionX;
-        //     }
-        //     if (collision === "top"){
-        //         this.directionY = - this.directionY;
-        //     }
-        //     if (collision === "paddle") {
-        //         this.directionY = - this.directionY;
-        //         return "paddle";
-        //     }
-            
-
-        //     this.x += this.directionX;
-        //     this.y += this.directionY;
-
-        //+BALL detectCollision(nextX, nextY) {
-
-        // const isOnPaddle = nextX >= paddle.posX && nextX <= paddle.posX + paddle.width && nextY >= this.bottomEdge - paddle.height;
-
-        //     if (nextX <= this.leftEdge) return "left";
-        //     if (nextX >= this.rightEdge) return "right";
-        //     if (nextY <= this.topEdge) return "top";
-        //     if (nextY >= this.bottomEdge) return "bottom";
-        //     if (isOnPaddle) return "paddle";
-    // }
     }
+
 }
 
 class Canvas {
@@ -212,7 +190,6 @@ class Canvas {
         this.canvas.style.margin = "50px auto";
         this.canvas.style.display = "block";
         this.canvas.style.backgroundColor = "black";
-        
         document.body.appendChild(this.canvas);
         this.ctx = this.canvas.getContext('2d');
     }
@@ -230,6 +207,7 @@ class Canvas {
             break;
         }
     }
+
     draw(target) {
         this.ctx.beginPath();
         if (target === "paddle") {
@@ -242,10 +220,7 @@ class Canvas {
         }
         this.ctx.closePath();
     }
-    redraw(target) {
-        this.clear(target);
-        this.draw(target);  
-    }
+
     displayGameOver() {
         this.clear("canvas");
         this.ctx.strokeStyle = "#fff";
@@ -264,15 +239,13 @@ class Paddle {
         this.width = width;
         this.height = height;
         this.color = color;
-        // this.canvasWidth = canvasWidth;
 
         this.type = "paddle";
         this.speedInPixel = 80;
         this.midWidth = this.width/2;
-        // this.leftEdge = 0;
-        // this.rightEdge = canvasWidth - this.width; 
     }
 }
+
 class Ball {
     constructor (x, y, radius, color, speed) {
         this.x = x;
@@ -280,29 +253,19 @@ class Ball {
         this.radius = radius;
         this.color = color;
         this.speed = speed;
-        // this.canvasWidth = canvasWidth;
-        // this.canvasHeight = canvasHeight;
-
+     
         this.type = "ball";
         this.directionX = - this.speed;
         this.directionY = this.speed;
 
-        // this.leftEdge = 0 + this.radius; // x = 10;
-        // this.rightEdge = this.canvasWidth - this.radius; // x= 890;
-        // this.topEdge = 0 + this.radius; // y = 10;
-        // this.bottomEdge = this.canvasHeight - this.radius; // y = 590;
     }
     setSpeedToDirection() {
         this.directionX = this.directionX > 0 ? this.speed : - this.speed;
         this.directionY = this.directionY > 0 ? this.speed : - this.speed;
     }
 
-    
-
 }
 
-
-/* main.js*/
 
 
 window.addEventListener('load', function() {
