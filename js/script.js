@@ -11,9 +11,10 @@ class Game {
         this.ball = new Ball(450, 10, 10, "#fff", 5);
         this.court = new Canvas(900, 600, 30, this.paddle, this.ball);
         this.trip = new Trip(this.paddle, this.ball, this.court);
-        
+      
         window.addEventListener("keydown", this.handleControls.bind(this));
         window.addEventListener("mousemove", this.handleControls.bind(this));
+              
     }
 
     start() {
@@ -32,16 +33,18 @@ class Game {
         this.paddle.y = 570;
         this.ball.x = 450;
         this.ball.y = 10; 
-        this.ball.speed = 5;
-        this.directionX = - this.speed;
-        this.directionY = this.speed;   
+        this.ball.speedInPixel = 5;
+        this.directionX = - this.speedInPixel;
+        this.directionY = this.speedInPixel;   
     }
     
     handleControls(event) {
         if (event.type === "keydown" || event.type === "mousemove") {
-            this.court.clear("paddle");
-            this.trip.resetCoordinates("paddle", event);
-            this.court.draw("paddle");
+            if(!this.stopped) {
+                this.court.clear("paddle");
+                this.trip.resetCoordinates("paddle", event);
+                this.court.draw("paddle");
+            }   
         }
         if (event.code === "Space") {
             this.start();
@@ -78,7 +81,7 @@ class Game {
 
     updateSpeed() {
         if (this.score === 5 || this.score === 10) {
-            this.ball.speed += 3;
+            this.ball.speedInPixel += 3;
             this.ball.setSpeedToDirection();
         }
     }
@@ -110,10 +113,8 @@ class Trip {
 
     resetCoordinates(target, event) {
         let newCoordinates = this.calculateNextPosition(target, event);
-        console.log(newCoordinates);
 
         let collisionTest = this.detectCollision(target, newCoordinates);
-        console.log(collisionTest);
 
         if (target === "paddle") {
             this.paddle.x = collisionTest === "left" ? this.paddleLeftEdge 
@@ -243,7 +244,6 @@ class Paddle {
         this.height = height;
         this.color = color;
 
-        this.type = "paddle";
         this.speedInPixel = 80;
         this.midWidth = this.width/2;
     }
@@ -255,16 +255,15 @@ class Ball {
         this.y = y;
         this.radius = radius;
         this.color = color;
-        this.speed = speed;
+        this.speedInPixel = speed;
      
-        this.type = "ball";
-        this.directionX = - this.speed;
-        this.directionY = this.speed;
+        this.directionX = - this.speedInPixel;
+        this.directionY = this.speedInPixel;
 
     }
     setSpeedToDirection() {
-        this.directionX = this.directionX > 0 ? this.speed : - this.speed;
-        this.directionY = this.directionY > 0 ? this.speed : - this.speed;
+        this.directionX = this.directionX > 0 ? this.speedInPixel : - this.speedInPixel;
+        this.directionY = this.directionY > 0 ? this.speedInPixel : - this.speedInPixel;
     }
 
 }
