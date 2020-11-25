@@ -32,6 +32,9 @@ class Game {
         this.paddle.y = 570;
         this.ball.x = 450;
         this.ball.y = 10; 
+        this.ball.speed = 5;
+        this.directionX = - this.speed;
+        this.directionY = this.speed;   
     }
     
     handleControls(event) {
