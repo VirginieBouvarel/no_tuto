@@ -128,8 +128,8 @@ class Trip {
                     this.ball.directionY = - this.ball.directionY;
                 }
                 
-                this.ball.x = newCoordinates.x;
-                this.ball.y = newCoordinates.y;
+                this.ball.x += this.ball.directionX;
+                this.ball.y += this.ball.directionY;
 
                 return collisionTest;
             }
