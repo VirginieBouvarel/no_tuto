@@ -261,7 +261,7 @@ class Ball {
         this.directionY = this.speedInPixel;
 
     }
-    setSpeedToDirection() {
+    setSpeedToDirection() { 
         this.directionX = this.directionX > 0 ? this.speedInPixel : - this.speedInPixel;
         this.directionY = this.directionY > 0 ? this.speedInPixel : - this.speedInPixel;
     }
