@@ -6,10 +6,12 @@ class Game {
         this.score = 0;
         this.stopped = true;
         this.animationID;
-        
-        this.paddle = new Paddle(375, 570, 150, 30, "#fff");
+
+        this.court = new Canvas(900, 600, 30);
+        this.paddle = new Paddle(375, 570, 150, 30, "#fff", this.court.ctx);
+
         this.ball = new Ball(450, 10, 10, "#fff", 5);
-        this.court = new Canvas(900, 600, 30, this.paddle, this.ball);
+       
         this.trip = new Trip(this.paddle, this.ball, this.court);
       
         window.addEventListener("keydown", this.handleControls.bind(this));
@@ -21,7 +23,7 @@ class Game {
         this.reset();
         this.stopped = false;
         this.displayScore();
-        this.court.draw("paddle");
+        this.paddle.draw();
         this.court.draw("ball");
         this.refresh();
     }
@@ -29,8 +31,7 @@ class Game {
     reset() {
         this.court.clear("canvas");
         this.score = 0;
-        this.paddle.x = 375;
-        this.paddle.y = 570;
+        this.paddle.reset();
         this.ball.x = 450;
         this.ball.y = 10; 
         this.ball.speedInPixel = 5;
@@ -41,9 +42,7 @@ class Game {
     handleControls(event) {
         if (event.type === "keydown" || event.type === "mousemove") {
             if(!this.stopped) {
-                this.court.clear("paddle");
-                this.trip.resetCoordinates("paddle", event);
-                this.court.draw("paddle");
+                this.paddle.move(event);  
             }   
         }
         if (event.code === "Space") {
@@ -210,15 +209,58 @@ class Canvas {
 }
 
 class Paddle {
-    constructor(x, y, width, height, color) {
+    constructor(x, y, width, height, color, ctx) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.color = color;
+        this.ctx = ctx;
 
         this.speedInPixel = 80;
         this.midWidth = this.width/2;
+        this.leftEdge =  0;
+        this.rightEdge = this.ctx.canvas.canvas.width - this.width;//TODO:verifier syntaxe
+
+    }
+
+    clear() {
+        this.ctx.clearRect(this.x, this.y, this.width, this.height);
+    }
+
+    draw() {
+        this.ctx.beginPath();
+        this.ctx.fillStyle = this.color;
+        this.ctx.fillRect(this.x, this.y, this.width, this.height);
+        this.ctx.closePath();
+    }
+
+    resetCoordinates(event) {
+        let nextX;
+        
+        if (event.type === "keydown") {
+            nextX = event.code === "ArrowRight" ? this.x + this.speedInPixel : this.x - this.speedInPixel;
+        } else {// event.type === "mousemove"
+            nextX = event.clientX - this.ctx.canvas.canvas.offsetLeft - this.ctx.canvas.borderWidth - this.midWidth;
+        }
+        
+        if (nextX < this.leftEdge) nextX = this.leftEdge;;
+        if (nextX > this.rightEdge) nextX = this.rightEdge;
+
+        this.x = nextX;
+     
+    }
+
+    move(event) {
+        this.clear();
+        this.resetCoordinates(event);
+        this.draw();
+    }
+
+    reset() {
+        //TODO: voir si on peut ecrire this.x = x; en faisant appel aux paramètres du constructeur en dehors du constructeur pour eviter d'écrire 375 en dur
+        this.x = 375;
+        this.y = 570;
     }
 }
 
