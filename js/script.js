@@ -116,8 +116,7 @@ class Canvas {
 
 class Paddle {
     constructor(x, y, width, height, color, ctx, canvasBorder) {
-        this.x = x;
-        this.y = y;
+        this.init(x, y);
         this.width = width;
         this.height = height;
         this.color = color;
@@ -129,6 +128,11 @@ class Paddle {
         this.leftEdge =  0;
         this.rightEdge = this.ctx.canvas.width - this.width;
 
+    }
+
+    init(x, y) {
+        this.x = x;
+        this.y = y;
     }
 
     clear() {
@@ -165,7 +169,6 @@ class Paddle {
     }
 
     reset() {
-        //TODO: voir si on peut ecrire this.x = x; en faisant appel aux paramètres du constructeur en dehors du constructeur pour eviter d'écrire 375 en dur
         this.x = 375;
         this.y = 570;
     }
@@ -173,21 +176,24 @@ class Paddle {
 
 class Ball {
     constructor (x, y, radius, color, speed, ctx, paddle) {
-        this.x = x;
-        this.y = y;
+        this.init(x, y, speed);
         this.radius = radius;
         this.color = color;
-        this.speedInPixel = speed;
         this.ctx = ctx;
         this.paddle = paddle;
      
-        this.directionX = - this.speedInPixel;
-        this.directionY = this.speedInPixel;
         this.leftEdge = this.radius;
         this.rightEdge = this.ctx.canvas.width - this.radius;
         this.topEdge = this.radius;
         this.bottomEdge = this.ctx.canvas.height - this.radius;
 
+    }
+    init(x, y, speed) {
+        this.x = x;
+        this.y = y;
+        this.speedInPixel = speed;
+        this.directionX = - this.speedInPixel;
+        this.directionY = this.speedInPixel;
     }
     clear() {
         this.ctx.clearRect(this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2);
@@ -254,7 +260,7 @@ class Ball {
         this.y = 10; 
         this.speedInPixel = 5;
         this.directionX = - this.speedInPixel;
-        this.directionY = this.speedInPixel;   
+        this.directionY = this.speedInPixel;     
     }
 
     setSpeedToDirection() { 
