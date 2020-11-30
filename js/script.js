@@ -9,8 +9,7 @@ class Game {
 
         this.court = new Canvas(900, 600, 30);
         this.paddle = new Paddle(375, 570, 150, 30, "#fff", this.court.ctx);
-
-        this.ball = new Ball(450, 10, 10, "#fff", 5);
+        this.ball = new Ball(450, 10, 10, "#fff", 5, this.court.ctx, this.paddle);
        
         this.trip = new Trip(this.paddle, this.ball, this.court);
       
@@ -24,19 +23,16 @@ class Game {
         this.stopped = false;
         this.displayScore();
         this.paddle.draw();
-        this.court.draw("ball");
+        this.ball.draw();
         this.refresh();
     }
 
     reset() {
-        this.court.clear("canvas");
-        this.score = 0;
+        this.court.clear();
         this.paddle.reset();
-        this.ball.x = 450;
-        this.ball.y = 10; 
-        this.ball.speedInPixel = 5;
-        this.directionX = - this.speedInPixel;
-        this.directionY = this.speedInPixel;   
+        this.ball.reset();
+        this.score = 0;
+       
     }
     
     handleControls(event) {
@@ -52,8 +48,7 @@ class Game {
 
     refresh() {
         if (!this.stopped) {
-            this.court.clear("ball"); 
-            let collisionTest = this.trip.resetCoordinates("ball");
+            let collisionTest = this.ball.move();
     
             if (collisionTest === "bottom") {
                 this.gameOver();
@@ -62,8 +57,6 @@ class Game {
                     this.updateScore();
                     this.updateSpeed();
                 }
-
-                this.court.draw("ball");
             }
             this.animationID = requestAnimationFrame(this.refresh.bind(this));
         }
@@ -265,17 +258,91 @@ class Paddle {
 }
 
 class Ball {
-    constructor (x, y, radius, color, speed) {
+    constructor (x, y, radius, color, speed, ctx, paddle) {
         this.x = x;
         this.y = y;
         this.radius = radius;
         this.color = color;
         this.speedInPixel = speed;
+        this.ctx = ctx;
+        this.paddle = paddle;
      
         this.directionX = - this.speedInPixel;
         this.directionY = this.speedInPixel;
+        this.leftEdge = this.radius;
+        this.rightEdge = this.ctx.canvas.canvas.width - this.radius;
+        this.topEdge = this.radius;;
+        this.bottomEdge = this.ctx.canvas.canvas.height - this.radius;
 
     }
+    clear() {
+        this.ctx.clearRect(this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2);
+    }
+
+    draw() {
+        this.ctx.beginPath();
+        this.ctx.fillStyle = this.ball.color;
+        this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2);
+        this.ctx.fill();
+        this.ctx.closePath();
+    }
+
+    resetCoordinates() {
+        let newCoordinates = this.calculateNextPosition();
+
+        let collisionTest = this.detectCollision(newCoordinates);
+
+        
+        if (collisionTest === "bottom") { 
+            return collisionTest;
+        } else {
+            // Si la balle dépasse le canvas on inverse le sens pour générer l'effet de rebond
+            if (collisionTest === "left" || collisionTest === "right") {
+                this.directionX = - this.directionX;
+            }
+            if (collisionTest === "top" || collisionTest === "paddle"){
+                this.directionY = - this.directionY;
+            }
+            
+            this.x += this.directionX;
+            this.y += this.directionY;
+
+            return collisionTest;
+        }
+        
+    }
+
+    calculateNextPosition() {
+        return {x: this.x + this.directionX, y: this.y + this.directionY};
+    }
+
+    detectCollision(newCoordinates) {
+       
+        const isOnPaddle = newCoordinates.x >= this.paddle.x && newCoordinates.x <= this.paddle.x + this.paddle.width && newCoordinates.y >= this.bottomEdge - this.paddle.height;
+            
+        if (newCoordinates.x <= this.leftEdge) return "left";
+        if (newCoordinates.x >= this.rightEdge) return "right";
+        if (newCoordinates.y <= this.topEdge) return "top";
+        if (newCoordinates.y >= this.bottomEdge) return "bottom";
+        if (isOnPaddle) return "paddle";
+        return "ok";
+    }
+
+    move() {
+        this.clear();
+        let collisionTest = this.resetCoordinates();
+        this.draw();
+        return collisionTest;
+    }
+
+    reset() {
+        this.x = 450;
+        this.y = 10; 
+        this.speedInPixel = 5;
+        this.directionX = - this.speedInPixel;
+        this.directionY = this.speedInPixel;   
+    }
+
     setSpeedToDirection() { 
         this.directionX = this.directionX > 0 ? this.speedInPixel : - this.speedInPixel;
         this.directionY = this.directionY > 0 ? this.speedInPixel : - this.speedInPixel;
