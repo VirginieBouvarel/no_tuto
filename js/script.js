@@ -46,12 +46,12 @@ class Game {
 
     refresh() {
         if (!this.stopped) {
-            let collisionTest = this.ball.move();
+            let collision = this.ball.move();
     
-            if (collisionTest === "bottom") {
+            if (collision.bottom) {
                 this.gameOver();
             } else {
-                if (collisionTest === "paddle") {
+                if (collision.paddle) {
                     this.updateScore();
                     this.updateSpeed();
                 }
@@ -210,24 +210,23 @@ class Ball {
     resetCoordinates() {
         let newCoordinates = this.calculateNextPosition();
 
-        let collisionTest = this.detectCollision(newCoordinates);
+        let collision = this.detectCollision(newCoordinates);
 
-        
-        if (collisionTest === "bottom") { 
-            return collisionTest;
+        if (collision.bottom) { 
+            return collision;
         } else {
             // Si la balle dépasse le canvas on inverse le sens pour générer l'effet de rebond
-            if (collisionTest === "left" || collisionTest === "right") {
+            if (collision.left || collision.right) {
                 this.directionX = - this.directionX;
             }
-            if (collisionTest === "top" || collisionTest === "paddle"){
+            if (collision.top || collision.paddle){
                 this.directionY = - this.directionY;
             }
             
             this.x += this.directionX;
             this.y += this.directionY;
 
-            return collisionTest;
+            return collision;
         }
         
     }
@@ -237,22 +236,22 @@ class Ball {
     }
 
     detectCollision(newCoordinates) {
-       
-        const isOnPaddle = newCoordinates.x >= this.paddle.x && newCoordinates.x <= this.paddle.x + this.paddle.width && newCoordinates.y >= this.bottomEdge - this.paddle.height;
-            
-        if (newCoordinates.x <= this.leftEdge) return "left";
-        if (newCoordinates.x >= this.rightEdge) return "right";
-        if (newCoordinates.y <= this.topEdge) return "top";
-        if (newCoordinates.y >= this.bottomEdge) return "bottom";
-        if (isOnPaddle) return "paddle";
-        return "ok";
+        const collision = {
+            left: newCoordinates.x <= this.leftEdge,
+            right: newCoordinates.x >= this.rightEdge,
+            top: newCoordinates.y <= this.topEdge,
+            bottom: newCoordinates.y >= this.bottomEdge,
+            paddle: newCoordinates.x >= this.paddle.x && newCoordinates.x <= this.paddle.x + this.paddle.width && newCoordinates.y >= this.bottomEdge - this.paddle.height
+        }
+
+        return collision;
     }
 
     move() {
         this.clear();
-        let collisionTest = this.resetCoordinates();
+        let collision = this.resetCoordinates();
         this.draw();
-        return collisionTest;
+        return collision;
     }
 
     reset() {
