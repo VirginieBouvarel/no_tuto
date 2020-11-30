@@ -10,8 +10,6 @@ class Game {
         this.court = new Canvas(900, 600, 30);
         this.paddle = new Paddle(375, 570, 150, 30, "#fff", this.court.ctx);
         this.ball = new Ball(450, 10, 10, "#fff", 5, this.court.ctx, this.paddle);
-       
-        this.trip = new Trip(this.paddle, this.ball, this.court);
       
         window.addEventListener("keydown", this.handleControls.bind(this));
         window.addEventListener("mousemove", this.handleControls.bind(this));
@@ -88,91 +86,6 @@ class Game {
     }
 }
   
-class Trip {
-    constructor(paddle, ball, canvas) {
-        this.paddle = paddle;
-        this.ball = ball;
-        this.canvas = canvas;
-
-        this.paddleLeftEdge =  0;
-        this.paddleRightEdge = this.canvas.canvas.width - this.paddle.width;
-
-        this.ballLeftEdge = this.ball.radius;
-        this.ballRightEdge = this.canvas.canvas.width - this.ball.radius;
-        this.ballTopEdge = this.ball.radius;;
-        this.ballBottomEdge = this.canvas.canvas.height - this.ball.radius;
-    }
-
-    resetCoordinates(target, event) {
-        let newCoordinates = this.calculateNextPosition(target, event);
-
-        let collisionTest = this.detectCollision(target, newCoordinates);
-
-        if (target === "paddle") {
-            this.paddle.x = collisionTest === "left" ? this.paddleLeftEdge 
-                          : collisionTest === "right" ? this.paddleRightEdge 
-                          : newCoordinates.x;
-        }else {
-            if (collisionTest === "bottom") { 
-                return collisionTest;
-            } else {
-                // Si la balle dépasse le canvas on inverse le sens pour générer l'effet de rebond
-                if (collisionTest === "left" || collisionTest === "right") {
-                    this.ball.directionX = - this.ball.directionX;
-                }
-                if (collisionTest === "top" || collisionTest === "paddle"){
-                    this.ball.directionY = - this.ball.directionY;
-                }
-                
-                this.ball.x += this.ball.directionX;
-                this.ball.y += this.ball.directionY;
-
-                return collisionTest;
-            }
-        }
-        
-    }
-
-    calculateNextPosition(target, event) {
-        let nextX;
-        let nextY;
-        
-        if (target === "paddle") {
-            if (event.type === "keydown") {
-                nextX = event.code === "ArrowRight" ? this.paddle.x + this.paddle.speedInPixel : this.paddle.x - this.paddle.speedInPixel;
-            } else {// event.type === "mousemove"
-                nextX = event.clientX - this.canvas.canvas.offsetLeft - this.canvas.borderWidth - this.paddle.midWidth;
-            }
-            nextY = this.paddle.y;
-           
-        } else { //target === "ball"
-            nextX = this.ball.x + this.ball.directionX;
-            nextY = this.ball.y + this.ball.directionY;  
-        } 
-
-        return {x: nextX, y: nextY};
-    }
-
-    detectCollision(target, newCoordinates) {
-
-        if (target === "paddle") {
-            if (newCoordinates.x < this.paddleLeftEdge) return "left";
-            if (newCoordinates.x > this.paddleRightEdge) return "right";
-        } else {
-            const isOnPaddle = newCoordinates.x >= this.paddle.x && newCoordinates.x <= this.paddle.x + this.paddle.width && newCoordinates.y >= this.ballBottomEdge - this.paddle.height;
-            
-            if (newCoordinates.x <= this.ballLeftEdge) return "left";
-            if (newCoordinates.x >= this.ballRightEdge) return "right";
-            if (newCoordinates.y <= this.ballTopEdge) return "top";
-            if (newCoordinates.y >= this.ballBottomEdge) return "bottom";
-            if (isOnPaddle) return "paddle";
-        }
-        return "ok";
-
-    }
-
-}
-
 class Canvas {
     constructor(width, height, borderWidth) {
         this.borderWidth = borderWidth;
