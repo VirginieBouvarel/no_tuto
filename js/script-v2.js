@@ -182,7 +182,9 @@ class Trip {
 }
 
 class Canvas {
-    constructor(width, height, borderWidth) {
+    constructor(width, height, borderWidth, paddle, ball) {
+        this.paddle = paddle;
+        this.ball = ball;
         this.borderWidth = borderWidth;
 
         this.canvas = document.createElement('canvas');
@@ -196,17 +198,42 @@ class Canvas {
         this.ctx = this.canvas.getContext('2d');
     }
 
-    clear() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);  
+    clear(target) {
+        switch(target) {
+            case "paddle":
+                this.ctx.clearRect(this.paddle.x, this.paddle.y, this.paddle.width, this.paddle.height);
+            break;
+            case "ball":
+                this.ctx.clearRect(this.ball.x - this.ball.radius, this.ball.y - this.ball.radius, this.ball.radius * 2, this.ball.radius * 2);
+            break;
+            default:
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            break;
+        }
+    }
+
+    draw(target) {
+        this.ctx.beginPath();
+        if (target === "paddle") {
+            this.ctx.fillStyle = this.paddle.color;
+            this.ctx.fillRect(this.paddle.x, this.paddle.y, this.paddle.width, this.paddle.height);
+        } else {
+            this.ctx.fillStyle = this.ball.color;
+            this.ctx.arc(this.ball.x, this.ball.y, this.ball.radius, 0, Math.PI*2);
+            this.ctx.fill();
+        }
+        this.ctx.closePath();
     }
 
     displayGameOver() {
-        this.clear();
+        this.clear("canvas");
         this.ctx.strokeStyle = "#fff";
         this.ctx.font = '6rem Arial';
         this.ctx.textAlign = "center";
         this.ctx.strokeText('Game Over', 446, 300);
     }
+    
+
 }
 
 class Paddle {
