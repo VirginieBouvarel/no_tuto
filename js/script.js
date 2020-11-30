@@ -7,8 +7,8 @@ class Game {
         this.stopped = true;
         this.animationID;
 
-        this.court = new Canvas(900, 600, 30);
-        this.paddle = new Paddle(375, 570, 150, 30, "#fff", this.court.ctx);
+        this.court = new Canvas(900, 600, 50);
+        this.paddle = new Paddle(375, 570, 150, 30, "#fff", this.court.ctx, this.court.borderWidth);
         this.ball = new Ball(450, 10, 10, "#fff", 5, this.court.ctx, this.paddle);
       
         window.addEventListener("keydown", this.handleControls.bind(this));
@@ -115,18 +115,19 @@ class Canvas {
 }
 
 class Paddle {
-    constructor(x, y, width, height, color, ctx) {
+    constructor(x, y, width, height, color, ctx, canvasBorder) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.color = color;
         this.ctx = ctx;
+        this.canvasBorder = canvasBorder;
 
         this.speedInPixel = 80;
         this.midWidth = this.width/2;
         this.leftEdge =  0;
-        this.rightEdge = this.ctx.canvas.canvas.width - this.width;//TODO:verifier syntaxe
+        this.rightEdge = this.ctx.canvas.width - this.width;
 
     }
 
@@ -147,7 +148,7 @@ class Paddle {
         if (event.type === "keydown") {
             nextX = event.code === "ArrowRight" ? this.x + this.speedInPixel : this.x - this.speedInPixel;
         } else {// event.type === "mousemove"
-            nextX = event.clientX - this.ctx.canvas.canvas.offsetLeft - this.ctx.canvas.borderWidth - this.midWidth;
+            nextX = event.clientX - this.ctx.canvas.offsetLeft - this.canvasBorder - this.midWidth;
         }
         
         if (nextX < this.leftEdge) nextX = this.leftEdge;;
@@ -183,9 +184,9 @@ class Ball {
         this.directionX = - this.speedInPixel;
         this.directionY = this.speedInPixel;
         this.leftEdge = this.radius;
-        this.rightEdge = this.ctx.canvas.canvas.width - this.radius;
-        this.topEdge = this.radius;;
-        this.bottomEdge = this.ctx.canvas.canvas.height - this.radius;
+        this.rightEdge = this.ctx.canvas.width - this.radius;
+        this.topEdge = this.radius;
+        this.bottomEdge = this.ctx.canvas.height - this.radius;
 
     }
     clear() {
@@ -194,7 +195,7 @@ class Ball {
 
     draw() {
         this.ctx.beginPath();
-        this.ctx.fillStyle = this.ball.color;
+        this.ctx.fillStyle = this.color;
         this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2);
         this.ctx.fill();
         this.ctx.closePath();
