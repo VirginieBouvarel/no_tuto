@@ -1,17 +1,20 @@
 "use strict";
 
 class Game {
-    constructor() {
+    constructor(bricksNumber) {
         this.startMsg = document.querySelector('.start-msg');
         this.scoreTag = document.querySelector('#score');
         this.score = 0;
+        this.bricksNumber = 21;
         this.stopped = true;
         this.animationID;
 
         this.court = new Canvas(900, 600, 50);
         this.paddle = new Paddle(375, 570, 150, 30, "#fff", this.court.ctx, this.court.borderWidth);
-        this.ball = new Ball(450, 560, 10, "#fff", 5, this.court.ctx, this.paddle); 
-      
+        this.ball = new Ball(450, 560, 10, "#fff", 5, this.court.ctx, this.paddle);
+
+        this.buildBricksArray();
+
         window.addEventListener("keydown", this.handleControls.bind(this));
         window.addEventListener("mousemove", this.handleControls.bind(this));
               
@@ -96,6 +99,31 @@ class Game {
             cancelAnimationFrame(this.animationID);
         }
         this.stopped = true;
+    }
+
+    buildBricksArray() {
+        const colors = ["#FF1493", "#FF8C00", "#9ACD32", "00CED1", "BA55D3"];
+        const colorIndex = Math.floor(Math.random() * colors.length);
+
+        const bricks = [];
+        const columns = 7;
+        const rows = 3;
+        const margin = 30;
+        const width = 150;
+        const height = 30;
+        const marginRight
+        let x = 0;
+        let y = 0;
+
+        for(let i = 0; i < rows; i ++) {
+            y += margin;
+
+            for (let i = 0; i < columns; i++) {
+                x = margin + ((width + marginRight) * i);
+                bricks.push(new Brick(x, y, width, height, colors[colorIndex], this.court));
+            }  
+        }
+        console.log(bricks);
     }
 }
   
@@ -276,9 +304,31 @@ class Ball {
 
 }
 
+class Brick {
+    constructor(x, y, width, height, color, court) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.color = color;
+        this.court = court;
+    }
 
+    clear() {
+        this.ctx.clearRect(this.x, this.y, this.width, this.height);
+    }
+
+    draw() {
+        this.ctx.beginPath();
+        this.ctx.fillStyle = this.color;
+        this.ctx.fillRect(this.x, this.y, this.width, this.height);
+        this.ctx.closePath();
+    }
+}
 
 window.addEventListener('load', function() {
     const game = new Game();
     game.init();
-});   
+
+    
+}); 
