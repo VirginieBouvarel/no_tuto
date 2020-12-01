@@ -9,3 +9,12 @@
     font-family:Arial;
     text-align:center;
 }
+
+.start-msg {
+    text-align:center;
+    color:#aaa9a9;
+}
+
+.hidden {
+    color:#fff;
+}
