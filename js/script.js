@@ -9,7 +9,7 @@ class Game {
 
         this.court = new Canvas(900, 600, 50);
         this.paddle = new Paddle(375, 570, 150, 30, "#fff", this.court.ctx, this.court.borderWidth);
-        this.ball = new Ball(450, 560, 10, "#fff", 5, this.court.ctx, this.paddle);
+        this.ball = new Ball(450, 560, 10, "#fff", 5, this.court.ctx, this.paddle); 
       
         window.addEventListener("keydown", this.handleControls.bind(this));
         window.addEventListener("mousemove", this.handleControls.bind(this));
