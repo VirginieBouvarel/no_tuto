@@ -9,7 +9,7 @@ class Game {
 
         this.court = new Canvas(900, 600, 50);
         this.paddle = new Paddle(375, 570, 150, 30, "#fff", this.court.ctx, this.court.borderWidth);
-        this.ball = new Ball(450, 10, 10, "#fff", 5, this.court.ctx, this.paddle);
+        this.ball = new Ball(450, 560, 10, "#fff", 5, this.court.ctx, this.paddle);
       
         window.addEventListener("keydown", this.handleControls.bind(this));
         window.addEventListener("mousemove", this.handleControls.bind(this));
@@ -116,7 +116,10 @@ class Canvas {
 
 class Paddle {
     constructor(x, y, width, height, color, ctx, canvasBorder) {
-        this.init(x, y);
+        this.x = x;
+        this.y = y;
+        this.xInitial = x;
+        this.yInitial = y;
         this.width = width;
         this.height = height;
         this.color = color;
@@ -128,11 +131,6 @@ class Paddle {
         this.leftEdge =  0;
         this.rightEdge = this.ctx.canvas.width - this.width;
 
-    }
-
-    init(x, y) {
-        this.x = x;
-        this.y = y;
     }
 
     clear() {
@@ -169,32 +167,34 @@ class Paddle {
     }
 
     reset() {
-        this.x = 375;
-        this.y = 570;
+        this.x = this.xInitial;
+        this.y = this.yInitial;
     }
 }
 
 class Ball {
     constructor (x, y, radius, color, speed, ctx, paddle) {
-        this.init(x, y, speed);
+        this.x = x;
+        this.y = y;
+        this.xInitial = x;
+        this.yInitial = y;
+        this.speedInPixel = speed;
+        this.speedInPixelInitial = speed;
         this.radius = radius;
         this.color = color;
         this.ctx = ctx;
         this.paddle = paddle;
-     
+
+
+        this.directionX = - this.speedInPixel;
+        this.directionY = this.speedInPixel;
         this.leftEdge = this.radius;
         this.rightEdge = this.ctx.canvas.width - this.radius;
         this.topEdge = this.radius;
         this.bottomEdge = this.ctx.canvas.height - this.radius;
 
     }
-    init(x, y, speed) {
-        this.x = x;
-        this.y = y;
-        this.speedInPixel = speed;
-        this.directionX = - this.speedInPixel;
-        this.directionY = this.speedInPixel;
-    }
+
     clear() {
         this.ctx.clearRect(this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2);
     }
@@ -212,9 +212,7 @@ class Ball {
 
         let collision = this.detectCollision(newCoordinates);
 
-        if (collision.bottom) { 
-            return collision;
-        } else {
+        if (!collision.bottom) { 
             // Si la balle dépasse le canvas on inverse le sens pour générer l'effet de rebond
             if (collision.left || collision.right) {
                 this.directionX = - this.directionX;
@@ -225,10 +223,8 @@ class Ball {
             
             this.x += this.directionX;
             this.y += this.directionY;
-
-            return collision;
         }
-        
+        return collision;
     }
 
     calculateNextPosition() {
@@ -236,15 +232,13 @@ class Ball {
     }
 
     detectCollision(newCoordinates) {
-        const collision = {
+        return {
             left: newCoordinates.x <= this.leftEdge,
             right: newCoordinates.x >= this.rightEdge,
             top: newCoordinates.y <= this.topEdge,
             bottom: newCoordinates.y >= this.bottomEdge,
             paddle: newCoordinates.x >= this.paddle.x && newCoordinates.x <= this.paddle.x + this.paddle.width && newCoordinates.y >= this.bottomEdge - this.paddle.height
         }
-
-        return collision;
     }
 
     move() {
@@ -255,9 +249,9 @@ class Ball {
     }
 
     reset() {
-        this.x = 450;
-        this.y = 10; 
-        this.speedInPixel = 5;
+        this.x = this.xInitial;
+        this.y = this.yInitial; 
+        this.speedInPixel = this.speedInPixelInitial;
         this.directionX = - this.speedInPixel;
         this.directionY = this.speedInPixel;     
     }
