@@ -2,12 +2,14 @@
     box-sizing:border-box;
 }
 
+
 .display {
     color:fuchsia;
     font-size:2rem;
     font-weight:bold;
     font-family:Arial;
     text-align:center;
+    margin-top:7rem;
 }
 
 .start-msg {

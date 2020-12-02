@@ -1,7 +1,7 @@
 "use strict";
 
 class Game {
-    constructor(bricksNumber) {
+    constructor() {
         this.startMsg = document.querySelector('.start-msg');
         this.scoreTag = document.querySelector('#score');
         this.score = 0;
@@ -12,8 +12,8 @@ class Game {
         this.court = new Canvas(900, 600, 50);
         this.paddle = new Paddle(375, 570, 150, 30, "#fff", this.court.ctx, this.court.borderWidth);
         this.ball = new Ball(450, 560, 10, "#fff", 5, this.court.ctx, this.paddle);
-
-        this.buildBricksArray();
+ 
+        
 
         window.addEventListener("keydown", this.handleControls.bind(this));
         window.addEventListener("mousemove", this.handleControls.bind(this));
@@ -21,27 +21,30 @@ class Game {
     }
 
     init() {
+        this.bricks = this.buildBricksArray(); 
         this.displayScore();
+        this.displayBricks();  
         this.paddle.draw();
         this.ball.draw();
     }
 
     start() {
-        this.reset();
         this.stopped = false;
-        this.displayScore();
-        this.toggleStartMsg();
-        this.paddle.draw();
-        this.ball.draw();
+        this.toggleStartMsg(); 
         this.refresh();
     }
 
     reset() {
-        this.court.clear();
+        this.court.clear();  
+        this.score = 0; 
         this.paddle.reset();
         this.ball.reset();
-        this.score = 0;
-       
+        this.bricks = this.buildBricksArray();
+
+        this.displayScore();
+        this.displayBricks();
+        this.paddle.draw();
+        this.ball.draw(); 
     }
     
     handleControls(event) {
@@ -50,7 +53,10 @@ class Game {
                 this.paddle.move(event);  
             }   
         }
-        if (event.code === "Space") {
+        if (event.code === "Space") { 
+            if (this.score > 0) {
+                this.reset();
+            }
             this.start();
         }     
     }
@@ -102,9 +108,9 @@ class Game {
     }
 
     buildBricksArray() {
-        const colors = ["#FF1493", "#FF8C00", "#9ACD32", "00CED1", "BA55D3"];
-
+        const colors = ["#FF1493", "#FF8C00", "#9ACD32", "#00CED1", "#BA55D3", "#FFD700", "#FF4500"];
         const bricks = [];
+
         const columns = 7;
         const rows = 3;
         const rowMarginLeft = 72;
@@ -126,6 +132,13 @@ class Game {
             y += marginBetweenRows;
         }
         console.log(bricks);
+        return bricks;
+    }
+
+    displayBricks() {
+        for (let i = 0; i < this.bricks.length; i++) {
+            this.bricks[i].draw();
+        }
     }
 }
   
@@ -229,8 +242,8 @@ class Ball {
         this.paddle = paddle;
 
 
-        this.directionX = - this.speedInPixel;
-        this.directionY = this.speedInPixel;
+        this.directionX = this.speedInPixel;
+        this.directionY = - this.speedInPixel;
         this.leftEdge = this.radius;
         this.rightEdge = this.ctx.canvas.width - this.radius;
         this.topEdge = this.radius;
@@ -295,8 +308,8 @@ class Ball {
         this.x = this.xInitial;
         this.y = this.yInitial; 
         this.speedInPixel = this.speedInPixelInitial;
-        this.directionX = - this.speedInPixel;
-        this.directionY = this.speedInPixel;     
+        this.directionX = this.speedInPixel;
+        this.directionY = - this.speedInPixel;     
     }
 
     setSpeedToDirection() { 
@@ -315,7 +328,6 @@ class Brick {
         this.color = color;
         this.ctx = ctx;
 
-        this.draw();
     }
 
     clear() {
@@ -336,3 +348,13 @@ window.addEventListener('load', function() {
 
     
 }); 
+
+/*
+"#FF1493" rose
+"#FF8C00" orange
+"#9ACD32" vert
+"#00CED1" cyan
+"#BA55D3" violet
+"#FFD700" jaune
+"#FF4500" bleu
+*/
