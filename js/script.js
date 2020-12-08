@@ -249,10 +249,11 @@ class Ball {
 
         this.directionX = - this.speedInPixel;
         this.directionY = - this.speedInPixel;
-        this.leftEdge = this.radius;
-        this.rightEdge = this.ctx.canvas.width - this.radius;
-        this.topEdge = this.radius;
-        this.bottomEdge = this.ctx.canvas.height - this.radius;
+
+        this.canvasLeftEdge = this.radius;
+        this.canvasRightEdge = this.ctx.canvas.width - this.radius;
+        this.canvasTopEdge = this.radius;
+        this.canvasBottomEdge = this.ctx.canvas.height - this.radius;
 
     }
 
@@ -294,46 +295,54 @@ class Ball {
 
     detectCollision(newCoordinates, bricks) {
         return {
-            left: newCoordinates.x <= this.leftEdge,
-            right: newCoordinates.x >= this.rightEdge,
-            top: newCoordinates.y <= this.topEdge,
-            bottom: newCoordinates.y >= this.bottomEdge,
-            paddle: newCoordinates.x >= this.paddle.x && newCoordinates.x <= this.paddle.x + this.paddle.width && newCoordinates.y >= this.bottomEdge - this.paddle.height,
+            left: newCoordinates.x <= this.canvasLeftEdge,
+            right: newCoordinates.x >= this.canvasRightEdge,
+            top: newCoordinates.y <= this.canvasTopEdge,
+            bottom: newCoordinates.y >= this.canvasBottomEdge,
+            paddle: newCoordinates.x >= this.paddle.x && newCoordinates.x <= this.paddle.x + this.paddle.width && newCoordinates.y >= this.canvasBottomEdge - this.paddle.height,
             brick: this.detectBrickCollision(newCoordinates, bricks)
         }
     }
 
     detectBrickCollision(newCoordinates, bricks) {
-          //on initialise un objet impact: {brick: index = -1, top: false, right: false, bottom: false, left: true, impact:true}, les valeurs par défaut indiquent une absence d'impact
+
+        const currentBall = {
+            left: newCoordinates.x - this.radius,
+            right: newCoordinates.x + this.radius,
+            top: newCoordinates.y - this.radius,
+            bottom: newCoordinates.y + this.radius
+        }
+
         const impact = {
-            index: -1, //en-dehors de bricks
+            index: -1, //en-dehors du tableau bricks
             top:false,
             right:false,
             bottom:false,
             left:false
         }
-        //Parcours le tableau de briques
+
         for (let i = 0; i < bricks.length; i++) {
-             //Pour chaque brique on verifie si elle remplie les conditions d'une collision avec un des bords, si oui on modifie impact 
-            if (newCoordinates.y + this.radius === bricks[i].y && newCoordinates.x >= bricks[i].x && newCoordinates.x <= bricks[i].x + bricks[i].width) {
-                impact.top = true;
-            }
-            if (newCoordinates.y - this.radius === bricks[i].y + bricks[i].height && newCoordinates.x >= bricks[i].x && newCoordinates.x <= bricks[i].x + bricks[i].width) {
-                impact.bottom = true;
-            }
-            if (newCoordinates.x - this.radius === bricks[i].x + bricks[i].width & newCoordinates.y >= bricks[i].y && newCoordinates.y <= bricks[i].y + bricks[i].height) {
-                impact.right = true;
-            }
-            if (newCoordinates.x + this.radius === bricks[i].x && newCoordinates.y >= bricks[i].y && newCoordinates.y <= bricks[i].y + bricks[i].height) {
-                impact.left = true;
-            }
+            
+            const currentBrick = bricks[i];
+
+            const ballWithinBrickHorizontally = currentBall.right >= currentBrick.left && currentBall.right <= currentBrick.right || 
+            currentBall.left <= currentBrick.right && currentBall.left >= currentBrick.left;
+
+            const ballWithinBrickVertically = currentBall.bottom >= currentBrick.top && currentBall.bottom <= currentBrick.bottom || 
+            currentBall.top <= currentBrick.bottom && currentBall.top >= currentBrick.top;
+
+            impact.top = (currentBall.bottom === currentBrick.top && ballWithinBrickHorizontally);
+            impact.bottom = (currentBall.top === currentBrick.bottom && ballWithinBrickHorizontally);
+            impact.right = (currentBall.left === currentBrick.right && ballWithinBrickVertically);
+            impact.left = (currentBall.right === currentBrick.left && ballWithinBrickVertically);
+
             if(impact.top || impact.right || impact.bottom || impact.left) {
                 impact.index = i;
                 break; //une seule collision possible à chaque mouvement de ball
             }
         }
 
-        //Dans tous les cas on retourne l'objet
+        
         return impact;
     }
 
@@ -367,9 +376,11 @@ class Brick {
         this.height = height;
         this.color = color;
         this.ctx = ctx;
-        this.edges = []
 
-
+        this.top = this.y;
+        this.right = this.x + this.width;
+        this.bottom = this.y + this.height;
+        this.left = this.x;
     }
 
     clear() {
