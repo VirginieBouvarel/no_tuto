@@ -130,7 +130,7 @@ class Game {
                 bricks.push(new Brick(x, y, width, height, colors[Math.floor(Math.random() * colors.length)], this.court.ctx));
             }  
 
-            y += marginBetweenRows;
+            y += height + marginBetweenRows;
         }
         console.log(bricks);
         return bricks;
