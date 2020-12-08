@@ -143,7 +143,10 @@ class Game {
     }
 
     deleteBrick(index) {
+       console.log(this.bricks[index]);
+       this.bricks[index].clear();
        this.bricks.splice(index, 1);
+       console.log(this.bricks); 
     }
 }
   
