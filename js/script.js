@@ -92,8 +92,8 @@ class Game {
     }
 
     updateSpeed() {
-        if (this.score === 5 || this.score === 10) {
-            this.ball.speedInPixel += 3;
+        if (this.score === 10 || this.score === 15) {
+            this.ball.speedInPixel += 2;
             this.ball.setSpeedToDirection();
         }
     }
