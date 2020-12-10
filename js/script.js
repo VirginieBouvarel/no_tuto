@@ -11,7 +11,7 @@ class Game {
         this.court = new Canvas(900, 600, 50);
         this.paddle = new Paddle(375, 570, 150, 30, "#fff", this.court.ctx, this.court.borderWidth);
         
-        this.ball = new Ball(450, 560, 10, "#fff", 5, this.court.ctx, this.paddle, this.bricks);
+        this.ball = new Ball(450, 560, 10, "#fff", 4, this.court.ctx, this.paddle, this.bricks);
  
         
 
@@ -66,7 +66,7 @@ class Game {
             let collision = this.ball.move(this.bricks);
     
             if (collision.bottom) {
-                this.gameOver();
+                this.stop();
             } else {
                 if (collision.brick.index > -1) {
                     this.deleteBrick(collision.brick.index);
@@ -89,18 +89,27 @@ class Game {
     updateScore() {
         this.score++;
         this.displayScore();
+        if (this.score === 21) {
+            this.stop();
+        }
     }
 
     updateSpeed() {
-        if (this.score === 10 || this.score === 15) {
+        if (this.score === 5 || this.score === 10 || this.score === 15) {
             this.ball.speedInPixel += 2;
             this.ball.setSpeedToDirection();
         }
     }
 
-    gameOver() {
-        console.log("Game Over");
-        this.court.displayGameOver();
+    stop() {
+        if (this.score < 21) {
+            console.log("Game Over");
+            this.court.displayText('Game Over');
+        } else {
+            console.log("Victory");
+            this.court.displayText('You win !!!', '#ff00ff');
+        }
+        
         this.toggleStartMsg();  
         if (this.animationID) {
             cancelAnimationFrame(this.animationID);
@@ -115,7 +124,7 @@ class Game {
         const columns = 7;
         const rows = 3;
         const rowMarginLeft = 72;
-        const marginBetweenRows = 60;
+        const marginBetweenRows = 30;
         const marginBetweenBricks = 10;
         const width = 98;
         const height = 30;
@@ -169,13 +178,14 @@ class Canvas {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);  
     }
 
-    displayGameOver() {
+    displayText(text, color = '#fff') {
         this.clear();
-        this.ctx.strokeStyle = "#fff";
+        this.ctx.strokeStyle = color;
         this.ctx.font = '6rem Arial';
         this.ctx.textAlign = "center";
-        this.ctx.strokeText('Game Over', 446, 300);
+        this.ctx.strokeText(text, 446, 300);
     }
+
 }
 
 class Paddle {
