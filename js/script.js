@@ -334,10 +334,16 @@ class Ball {
             const ballWithinBrickVertically = currentBall.bottom >= currentBrick.top && currentBall.bottom <= currentBrick.bottom || 
             currentBall.top <= currentBrick.bottom && currentBall.top >= currentBrick.top;
 
-            impact.top = (currentBall.bottom === currentBrick.top && ballWithinBrickHorizontally);
-            impact.bottom = (currentBall.top === currentBrick.bottom && ballWithinBrickHorizontally);
-            impact.right = (currentBall.left === currentBrick.right && ballWithinBrickVertically);
-            impact.left = (currentBall.right === currentBrick.left && ballWithinBrickVertically);
+            const ballEntryFromBrickBottom = currentBall.top <= currentBrick.bottom && currentBall.top >= currentBrick.top;
+            const ballEntryFromBrickTop = currentBall.bottom >= currentBrick.top && currentBall.bottom <= currentBrick.bottom;
+            const ballEntryFromBrickLeft = currentBall.right >= currentBrick.left && currentBall.right <= currentBrick.right;
+            const ballEntryFromBrickRight = currentBall.left <= currentBrick.right && currentBall.left >= currentBrick.left;
+
+
+            impact.top = (ballEntryFromBrickTop && ballWithinBrickHorizontally);
+            impact.bottom = (ballEntryFromBrickBottom && ballWithinBrickHorizontally);
+            impact.right = (ballEntryFromBrickRight && ballWithinBrickVertically);
+            impact.left = (ballEntryFromBrickLeft && ballWithinBrickVertically);
 
             if(impact.top || impact.right || impact.bottom || impact.left) {
                 impact.index = i;
