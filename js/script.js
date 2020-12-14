@@ -122,7 +122,7 @@ class Game {
             this.court.displayText('Game Over');
         } else {
             console.log("Victory");
-            this.court.displayText('You win !!!', '#ff00ff');
+            this.court.displayText('You win !!!', '#EC2B2C');
         }
         
         this.toggleStartMsg();  
@@ -173,7 +173,7 @@ class Canvas {
         this.canvas.width = width;
         this.canvas.height = height;
         this.canvas.style.border = "15px solid #015CE9";
-        // this.canvas.style.margin = "50px auto";
+        this.canvas.style.margin = "330px auto 0";
         this.canvas.style.display = "block";
         this.canvas.style.backgroundColor = "black";
         document.querySelector('.container').appendChild(this.canvas);
@@ -207,6 +207,7 @@ class Paddle {
         this.canvasBorder = canvasBorder;
 
         this.speedInPixel = 80;
+        this.midWidth = this.width / 2;
         this.leftEdge =  0;
         this.rightEdge = this.ctx.canvas.width - this.width;
 
@@ -229,7 +230,7 @@ class Paddle {
         if (event.type === "keydown") {
             nextX = event.code === "ArrowRight" ? this.x + this.speedInPixel : this.x - this.speedInPixel;
         } else {// event.type === "mousemove"
-            nextX = event.clientX - this.ctx.canvas.offsetLeft - this.canvasBorder - this.width / 2;
+            nextX = event.clientX - this.ctx.canvas.offsetLeft - this.canvasBorder - this.midWidth;
         }
         
         if (nextX < this.leftEdge) nextX = this.leftEdge;;
