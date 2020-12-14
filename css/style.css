@@ -2,22 +2,50 @@
     box-sizing:border-box;
 }
 
+body {
+    background: black;
+}
+.container {
+    background: url('../img/genius-pinball-arcade.jpg') no-repeat, black;
+    background-size:contain;
+    width:720px;
+    height: 100vh;
+    margin:0 auto;
+    position:relative;
+}
 
+canvas {
+    position:absolute;
+    bottom:0;
+    right:calc(50% - 283px - 15px);
+}
+.text-container {
+    position:absolute;
+    top:39%;
+    left: calc(50% - 103px);
+}
 .display {
-    color:#ff00ff;
-    font-size:2rem;
+    color:#EC2B2C;
+    font-size:1.8rem;
     font-weight:bold;
     font-family:Arial;
     text-align:center;
-    margin-top:7rem;
+    margin-bottom:0;
 }
 
 .start-msg {
-    text-align:center;
     color:#aaa9a9;
-    font-size:1.3rem;
+    font-size:1.2rem;
+    text-align:center;
+    margin:0.5rem;
 }
 
 .hidden {
     color:#fff;
 }
+
+
+
+
+
+

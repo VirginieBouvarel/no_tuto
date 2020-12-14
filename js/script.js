@@ -9,20 +9,21 @@ class Game {
         this.animationID;
 
         this.spec = {
-            bricksNumber: 21,
-            colors: ["#FF1493", "#FF8C00", "#9ACD32", "#00CED1", "#BA55D3", "#FFD700", "#FF4500"],
-            columns: 7,
+            bricksNumber: 15,
+            // colors: ["#FF1493", "#FF8C00", "#9ACD32", "#00CED1", "#BA55D3", "#FFD700", "#FF4500"],
+            colors: ["#015CE9", "#015CE9", "#015CE9"],
+            columns: 5,
             rows: 3,
-            rowMarginLeft: 72,
-            marginBetweenRows: 30,
+            rowMarginLeft: 10,
+            marginBetweenRows: 20,
             marginBetweenBricks: 10,
-            brickWidth: 98,
-            brickHeight: 30
+            brickWidth: 100,
+            brickHeight: 20
         }
 
-        this.court = new Canvas(900, 600, 50);
-        this.paddle = new Paddle(375, 570, 150, 30, "#fff", this.court.ctx, this.court.borderWidth);
-        this.ball = new Ball(450, 560, 10, "#fff", 4, this.court.ctx, this.paddle, this.bricks);
+        this.court = new Canvas(566, 430, 15);
+        this.paddle = new Paddle(233, 410, 100, 20, "#015CE9", this.court.ctx, this.court.borderWidth);
+        this.ball = new Ball(283, 400, 10, "#015CE9", 4, this.court.ctx, this.paddle, this.bricks);
         // this.ball = new Ball(169, 185, 10, "#fff", 4, this.court.ctx, this.paddle, this.bricks);
  
         window.addEventListener("keydown", this.handleControls.bind(this));
@@ -103,20 +104,20 @@ class Game {
     updateScore() {
         this.score++;
         this.displayScore();
-        if (this.score === 21) {
+        if (this.score === this.spec.bricksNumber) {
             this.stop();
         }
     }
 
     updateSpeed() {
-        if (this.score === 5 || this.score === 10 || this.score === 15) {
+        if (this.score === this.spec.bricksNumber/3 || this.score === this.spec.bricksNumber/1.5) {
             this.ball.speedInPixel += 2;
             this.ball.setSpeedToDirection();
         }
     }
 
     stop() {
-        if (this.score < 21) {
+        if (this.score < this.spec.bricksNumber) {
             console.log("Game Over");
             this.court.displayText('Game Over');
         } else {
@@ -171,11 +172,11 @@ class Canvas {
         this.canvas = document.createElement('canvas');
         this.canvas.width = width;
         this.canvas.height = height;
-        this.canvas.style.border = "30px solid grey";
-        this.canvas.style.margin = "50px auto";
+        this.canvas.style.border = "15px solid #015CE9";
+        // this.canvas.style.margin = "50px auto";
         this.canvas.style.display = "block";
         this.canvas.style.backgroundColor = "black";
-        document.body.appendChild(this.canvas);
+        document.querySelector('.container').appendChild(this.canvas);
         this.ctx = this.canvas.getContext('2d');
     }
 
@@ -186,9 +187,9 @@ class Canvas {
     displayText(text, color = '#fff') {
         this.clear();
         this.ctx.strokeStyle = color;
-        this.ctx.font = '6rem Arial';
+        this.ctx.font = '3rem Arial';
         this.ctx.textAlign = "center";
-        this.ctx.strokeText(text, 446, 300);
+        this.ctx.strokeText(text, this.canvas.width/2, this.canvas.height/2);
     }
 
 }
@@ -206,7 +207,6 @@ class Paddle {
         this.canvasBorder = canvasBorder;
 
         this.speedInPixel = 80;
-        this.midWidth = this.width/2;
         this.leftEdge =  0;
         this.rightEdge = this.ctx.canvas.width - this.width;
 
@@ -229,7 +229,7 @@ class Paddle {
         if (event.type === "keydown") {
             nextX = event.code === "ArrowRight" ? this.x + this.speedInPixel : this.x - this.speedInPixel;
         } else {// event.type === "mousemove"
-            nextX = event.clientX - this.ctx.canvas.offsetLeft - this.canvasBorder - this.midWidth;
+            nextX = event.clientX - this.ctx.canvas.offsetLeft - this.canvasBorder - this.width / 2;
         }
         
         if (nextX < this.leftEdge) nextX = this.leftEdge;;
@@ -335,9 +335,7 @@ class Ball {
         for (let i = 0; i < bricks.length; i++) {
             
             const currentBrick = bricks[i];
-
-            // const ballWithinCurrentBrick = newCoordinates.x > currentBrick.left && newCoordinates.x < currentBrick.right && newCoordinates.y > currentBrick.top && newCoordinates.y < currentBrick.bottom;
-            
+         
             const ballWithinBrickHorizontally = currentBall.right >= currentBrick.left && currentBall.right <= currentBrick.right || 
             currentBall.left <= currentBrick.right && currentBall.left >= currentBrick.left;
 
@@ -410,11 +408,20 @@ window.addEventListener('load', function() {
 }); 
 
 /*
-"#FF1493" rose
+"ec2b2c" rouge
 "#FF8C00" orange
 "#9ACD32" vert
 "#00CED1" cyan
 "#BA55D3" violet
 "#FFD700" jaune
 "#FF4500" bleu
+*/
+
+/*
+rouge #EC2B2C
+bleu clair #11B3F5
+bleu #015CE9
+jaune #FBDF3C
+orange #E39215
+
 */
