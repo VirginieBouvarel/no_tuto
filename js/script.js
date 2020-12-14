@@ -323,16 +323,28 @@ class Ball {
 
     detectBrickCollision(newCoordinates, bricks) {
 
+        const currentBall = {
+            left: newCoordinates.x - this.radius,
+            right: newCoordinates.x + this.radius,
+            top: newCoordinates.y - this.radius,
+            bottom: newCoordinates.y + this.radius
+        } 
+
         let impactIndex = -1; //par défaut, pas d'impact = index d'impact en-dehors de bricks
         
         for (let i = 0; i < bricks.length; i++) {
             
             const currentBrick = bricks[i];
 
-            const ballWithinCurrentBrick = newCoordinates.x >= currentBrick.left && newCoordinates.x <= currentBrick.right && newCoordinates.y >= currentBrick.top && newCoordinates.y <= currentBrick.bottom;
+            // const ballWithinCurrentBrick = newCoordinates.x > currentBrick.left && newCoordinates.x < currentBrick.right && newCoordinates.y > currentBrick.top && newCoordinates.y < currentBrick.bottom;
+            
+            const ballWithinBrickHorizontally = currentBall.right >= currentBrick.left && currentBall.right <= currentBrick.right || 
+            currentBall.left <= currentBrick.right && currentBall.left >= currentBrick.left;
 
+            const ballWithinBrickVertically = currentBall.bottom >= currentBrick.top && currentBall.bottom <= currentBrick.bottom || 
+            currentBall.top <= currentBrick.bottom && currentBall.top >= currentBrick.top;
            
-            if(ballWithinCurrentBrick) {
+            if(ballWithinBrickHorizontally && ballWithinBrickVertically) {
                 impactIndex = i;
                 break; //une seule collision possible à chaque mouvement de ball
             }
