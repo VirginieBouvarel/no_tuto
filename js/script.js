@@ -8,13 +8,22 @@ class Game {
         this.stopped = true;
         this.animationID;
 
+        this.spec = {
+            bricksNumber: 21,
+            colors: ["#FF1493", "#FF8C00", "#9ACD32", "#00CED1", "#BA55D3", "#FFD700", "#FF4500"],
+            columns: 7,
+            rows: 3,
+            rowMarginLeft: 72,
+            marginBetweenRows: 30,
+            marginBetweenBricks: 10,
+            brickWidth: 98,
+            brickHeight: 30
+        }
+
         this.court = new Canvas(900, 600, 50);
         this.paddle = new Paddle(375, 570, 150, 30, "#fff", this.court.ctx, this.court.borderWidth);
-        
         this.ball = new Ball(450, 560, 10, "#fff", 4, this.court.ctx, this.paddle, this.bricks);
  
-        
-
         window.addEventListener("keydown", this.handleControls.bind(this));
         window.addEventListener("mousemove", this.handleControls.bind(this));
               
@@ -118,28 +127,19 @@ class Game {
     }
 
     buildBricksArray() {
-        const colors = ["#FF1493", "#FF8C00", "#9ACD32", "#00CED1", "#BA55D3", "#FFD700", "#FF4500"];
         const bricks = [];
-
-        const columns = 7;
-        const rows = 3;
-        const rowMarginLeft = 72;
-        const marginBetweenRows = 30;
-        const marginBetweenBricks = 10;
-        const width = 98;
-        const height = 30;
         
         let x = 0;
-        let y = 30;
+        let y = this.spec.marginBetweenRows;
 
-        for(let i = 0; i < rows; i ++) {
+        for(let i = 0; i < this.spec.rows; i ++) {
 
-            for (let i = 0; i < columns; i++) {
-                x = rowMarginLeft + ((width + marginBetweenBricks) * i);
-                bricks.push(new Brick(x, y, width, height, colors[Math.floor(Math.random() * colors.length)], this.court.ctx));
+            for (let i = 0; i < this.spec.columns; i++) {
+                x = this.spec.rowMarginLeft + ((this.spec.brickWidth + this.spec.marginBetweenBricks) * i);
+                bricks.push(new Brick(x, y, this.spec.brickWidth, this.spec.brickHeight, this.spec.colors[Math.floor(Math.random() * this.spec.colors.length)], this.court.ctx));
             }  
 
-            y += height + marginBetweenRows;
+            y += this.spec.brickHeight + this.spec.marginBetweenRows;
         }
         console.log(bricks);
         return bricks;
