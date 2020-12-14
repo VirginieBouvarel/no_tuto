@@ -23,10 +23,12 @@ class Game {
         this.court = new Canvas(900, 600, 50);
         this.paddle = new Paddle(375, 570, 150, 30, "#fff", this.court.ctx, this.court.borderWidth);
         this.ball = new Ball(450, 560, 10, "#fff", 4, this.court.ctx, this.paddle, this.bricks);
+        // this.ball = new Ball(169, 185, 10, "#fff", 4, this.court.ctx, this.paddle, this.bricks);
  
         window.addEventListener("keydown", this.handleControls.bind(this));
         window.addEventListener("mousemove", this.handleControls.bind(this));
-              
+            
+        
     }
 
     init() {
@@ -35,6 +37,9 @@ class Game {
         this.displayBricks();  
         this.paddle.draw();
         this.ball.draw();
+
+        // console.log(this.ball.detectBrickCollision({x:169, y:180}, this.bricks));
+
     }
 
     start() {
@@ -77,8 +82,8 @@ class Game {
             if (collision.bottom) {
                 this.stop();
             } else {
-                if (collision.brick.index > -1) {
-                    this.deleteBrick(collision.brick.index);
+                if (collision.brick > -1) {
+                    this.deleteBrick(collision.brick);
                     this.updateScore();
                     this.updateSpeed();
                 }
@@ -288,11 +293,10 @@ class Ball {
         let collision = this.detectCollision(newCoordinates, bricks);
 
         if (!collision.bottom) { 
-            // Si la balle dépasse le canvas on inverse le sens pour générer l'effet de rebond
-            if (collision.left || collision.right ||collision.brick.left ||collision.brick.right) {
+            if (collision.left || collision.right) {
                 this.directionX = - this.directionX;
             }
-            if (collision.top || collision.paddle || collision.brick.top ||collision.brick.bottom){
+            if (collision.top || collision.paddle || collision.brick > -1){
                 this.directionY = - this.directionY;
             }
             
@@ -319,50 +323,22 @@ class Ball {
 
     detectBrickCollision(newCoordinates, bricks) {
 
-        const currentBall = {
-            left: newCoordinates.x - this.radius,
-            right: newCoordinates.x + this.radius,
-            top: newCoordinates.y - this.radius,
-            bottom: newCoordinates.y + this.radius
-        }
-
-        const impact = {
-            index: -1, //en-dehors du tableau bricks
-            top:false,
-            right:false,
-            bottom:false,
-            left:false
-        }
-
+        let impactIndex = -1; //par défaut, pas d'impact = index d'impact en-dehors de bricks
+        
         for (let i = 0; i < bricks.length; i++) {
             
             const currentBrick = bricks[i];
 
-            const ballWithinBrickHorizontally = currentBall.right >= currentBrick.left && currentBall.right <= currentBrick.right || 
-            currentBall.left <= currentBrick.right && currentBall.left >= currentBrick.left;
+            const ballWithinCurrentBrick = newCoordinates.x >= currentBrick.left && newCoordinates.x <= currentBrick.right && newCoordinates.y >= currentBrick.top && newCoordinates.y <= currentBrick.bottom;
 
-            const ballWithinBrickVertically = currentBall.bottom >= currentBrick.top && currentBall.bottom <= currentBrick.bottom || 
-            currentBall.top <= currentBrick.bottom && currentBall.top >= currentBrick.top;
-
-            const ballEntryFromBrickBottom = currentBall.top <= currentBrick.bottom && currentBall.top >= currentBrick.top;
-            const ballEntryFromBrickTop = currentBall.bottom >= currentBrick.top && currentBall.bottom <= currentBrick.bottom;
-            const ballEntryFromBrickLeft = currentBall.right >= currentBrick.left && currentBall.right <= currentBrick.right;
-            const ballEntryFromBrickRight = currentBall.left <= currentBrick.right && currentBall.left >= currentBrick.left;
-
-
-            impact.top = (ballEntryFromBrickTop && ballWithinBrickHorizontally);
-            impact.bottom = (ballEntryFromBrickBottom && ballWithinBrickHorizontally);
-            impact.right = (ballEntryFromBrickRight && ballWithinBrickVertically);
-            impact.left = (ballEntryFromBrickLeft && ballWithinBrickVertically);
-
-            if(impact.top || impact.right || impact.bottom || impact.left) {
-                impact.index = i;
+           
+            if(ballWithinCurrentBrick) {
+                impactIndex = i;
                 break; //une seule collision possible à chaque mouvement de ball
             }
         }
 
-        
-        return impact;
+        return impactIndex;
     }
 
     move(bricks) {
