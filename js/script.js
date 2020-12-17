@@ -7,7 +7,13 @@ class Game {
         this.score = 0;
         this.stopped = true;
         this.animationID;
-
+        this.sound = {
+            start: new Audio("../sounds/start.wav"),
+            bounce: new Audio("../sounds/impact.ogg"),
+            explosion: new Audio("../sounds/brick.wav"),
+            gameover: new Audio("../sounds/game-over.wav"),
+            victory: new Audio("../sounds/victory.mp3")
+        }
         this.spec = {
             bricksNumber: 15,
             color: "#015CE9",
@@ -17,13 +23,12 @@ class Game {
             marginBetweenRows: 20,
             marginBetweenBricks: 10,
             brickWidth: 100,
-            brickHeight: 20
+            brickHeight: 20,
         }
 
         this.court = new Canvas(566, 430, 15);
         this.paddle = new Paddle(233, 410, 100, 20, "#015CE9", this.court.ctx, this.court.borderWidth);
         this.ball = new Ball(283, 400, 10, "#015CE9", 4, this.court.ctx, this.paddle, this.bricks);
-        // this.ball = new Ball(169, 185, 10, "#fff", 4, this.court.ctx, this.paddle, this.bricks);
  
         window.addEventListener("keydown", this.handleControls.bind(this));
         window.addEventListener("mousemove", this.handleControls.bind(this));
@@ -37,15 +42,13 @@ class Game {
         this.displayBricks();  
         this.paddle.draw();
         this.ball.draw();
-
-        // console.log(this.ball.detectBrickCollision({x:169, y:180}, this.bricks));
-
     }
 
     start() {
+        this.playSound(this.sound.start);
         this.stopped = false;
         this.toggleStartMsg(); 
-        this.refresh();
+        this.refresh();  
     }
 
     reset() {
@@ -76,7 +79,7 @@ class Game {
         }
     }
     
- 
+
     refresh() {
         if (!this.stopped) {
             let collision = this.ball.move(this.bricks);
@@ -86,8 +89,13 @@ class Game {
             } else {
                 if (collision.brick > -1) {
                     this.deleteBrick(collision.brick);
+                    this.playSound(this.sound.explosion);
+                    console.log(this.sound.explosion);
                     this.updateScore();
                     this.updateSpeed();
+                }
+                if (collision.paddle || collision.left || collision.right || collision.top) {
+                    this.playSound(this.sound.bounce);
                 }
             }
             this.animationID = requestAnimationFrame(this.refresh.bind(this));
@@ -121,9 +129,11 @@ class Game {
         if (this.score < this.spec.bricksNumber) {
             console.log("Game Over");
             this.court.displayText('Game Over');
+            this.playSound(this.sound.gameover);
         } else {
             console.log("Victory");
             this.court.displayText('You win !!!', '#EC2B2C');
+            this.playSound(this.sound.victory);
         }
         
         this.toggleStartMsg();  
@@ -163,6 +173,10 @@ class Game {
        this.bricks[index].clear();
        this.bricks.splice(index, 1);
        console.log(this.bricks); 
+    }
+
+    playSound(sound) {
+        sound.play();
     }
 }
   
@@ -266,7 +280,6 @@ class Ball {
         this.color = color;
         this.ctx = ctx;
         this.paddle = paddle;
-
 
         this.directionX = - this.speedInPixel;
         this.directionY = - this.speedInPixel;
