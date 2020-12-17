@@ -62,22 +62,21 @@ class Game {
     }
     
     handleControls(event) {
+        if (event.code === "Space") { 
+            if (!this.stopped) return;
+            if (this.score > 0) {
+                this.reset();
+            }
+            this.start();
+        } 
         if (event.type === "keydown" || event.type === "mousemove") {
             if(!this.stopped) {
                 this.paddle.move(event);  
             }   
         }
-        if (event.code === "Space") { 
-            if (this.stopped) {
-                if (this.score > 0) {
-                    this.reset();
-                }
-                this.start();
-            }
-            
-        }     
     }
-
+    
+ 
     refresh() {
         if (!this.stopped) {
             let collision = this.ball.move(this.bricks);
