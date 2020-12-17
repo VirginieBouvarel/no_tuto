@@ -68,10 +68,13 @@ class Game {
             }   
         }
         if (event.code === "Space") { 
-            if (this.score > 0) {
-                this.reset();
+            if (this.stopped) {
+                if (this.score > 0) {
+                    this.reset();
+                }
+                this.start();
             }
-            this.start();
+            
         }     
     }
 
