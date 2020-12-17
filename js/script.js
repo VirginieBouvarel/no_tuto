@@ -8,14 +8,16 @@ class Game {
         this.stopped = true;
         this.animationID;
         this.sound = {
-            start: new Audio("../sounds/start.wav"),
-            bounce: new Audio("../sounds/bounce.wav"),
-            explosion: new Audio("../sounds/explosion4.wav"),
-            gameover: new Audio("../sounds/game-over.wav"),
-            victory: new Audio("../sounds/victory.mp3")
+            init: new Audio("../sounds/start.wav"),
+            start: new Audio("../sounds/start2.mp3"),
+            bounce: new Audio("../sounds/flap2.wav"),
+            explosion: new Audio("../sounds/brick.mp3"),
+            gameover: new Audio("../sounds/game-over.wav"), 
+            youwin: new Audio("../sounds/youwin.mp3"),
+            victory: new Audio("../sounds/victory.mp3"),
         }
         this.spec = {
-            bricksNumber: 15,
+            bricksNumber: 15, 
             color: "#015CE9",
             columns: 5,
             rows: 3,
@@ -37,6 +39,7 @@ class Game {
     }
 
     init() {
+        this.playSound(this.sound.init);
         this.bricks = this.buildBricksArray();    
         this.displayScore();
         this.displayBricks();  
@@ -133,6 +136,7 @@ class Game {
         } else {
             console.log("Victory");
             this.court.displayText('You win !!!', '#EC2B2C');
+            this.playSound(this.sound.youwin);
             this.playSound(this.sound.victory);
         }
         
