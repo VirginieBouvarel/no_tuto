@@ -8,12 +8,12 @@ class Game {
         this.stopped = true;
         this.animationID;
         this.sound = {
-            init: new Audio("../sounds/start.wav"),
-            start: new Audio("../sounds/start2.mp3"),
-            bounce: new Audio("../sounds/flap2.wav"),
+            init: new Audio("../sounds/init.wav"),
+            start: new Audio("../sounds/voice-start.mp3"),
+            bounce: new Audio("../sounds/bounce.wav"),
             explosion: new Audio("../sounds/brick.mp3"),
-            gameover: new Audio("../sounds/game-over.wav"), 
-            youwin: new Audio("../sounds/youwin.mp3"),
+            gameover: new Audio("../sounds/voice-gameover.wav"), 
+            youwin: new Audio("../sounds/voice-youwin.mp3"),
             victory: new Audio("../sounds/victory.mp3"),
         }
         this.spec = {
