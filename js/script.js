@@ -176,6 +176,9 @@ class Game {
     }
 
     playSound(sound) {
+        if (window.chrome) {
+            sound.load();
+        } 
         sound.play();
     }
 }
