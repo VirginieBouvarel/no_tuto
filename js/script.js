@@ -8,7 +8,7 @@ class Game {
         this.stopped = true;
         this.animationID;
         this.sound = {
-            init: new Audio("../sounds/init.wav"),
+            // init: new Audio("../sounds/init.wav"),
             start: new Audio("../sounds/voice-start.mp3"),
             bounce: new Audio("../sounds/bounce.wav"),
             explosion: new Audio("../sounds/brick.mp3"),
@@ -39,7 +39,7 @@ class Game {
     }
 
     init() {
-        this.playSound(this.sound.init);
+        // this.playSound(this.sound.init);
         this.bricks = this.buildBricksArray();    
         this.displayScore();
         this.displayBricks();  
