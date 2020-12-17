@@ -10,8 +10,7 @@ class Game {
 
         this.spec = {
             bricksNumber: 15,
-            // colors: ["#FF1493", "#FF8C00", "#9ACD32", "#00CED1", "#BA55D3", "#FFD700", "#FF4500"],
-            colors: ["#015CE9", "#015CE9", "#015CE9"],
+            color: "#015CE9",
             columns: 5,
             rows: 3,
             rowMarginLeft: 10,
@@ -142,7 +141,7 @@ class Game {
 
             for (let i = 0; i < this.spec.columns; i++) {
                 x = this.spec.rowMarginLeft + ((this.spec.brickWidth + this.spec.marginBetweenBricks) * i);
-                bricks.push(new Brick(x, y, this.spec.brickWidth, this.spec.brickHeight, this.spec.colors[Math.floor(Math.random() * this.spec.colors.length)], this.court.ctx));
+                bricks.push(new Brick(x, y, this.spec.brickWidth, this.spec.brickHeight, this.spec.color, this.court.ctx));
             }  
 
             y += this.spec.brickHeight + this.spec.marginBetweenRows;
@@ -173,10 +172,11 @@ class Canvas {
         this.canvas.width = width;
         this.canvas.height = height;
         this.canvas.style.border = "15px solid #015CE9";
-        this.canvas.style.margin = "330px auto 0";
+        this.canvas.style.margin = "60px auto 0";
         this.canvas.style.display = "block";
         this.canvas.style.backgroundColor = "black";
-        document.querySelector('.container').appendChild(this.canvas);
+        document.body.appendChild(this.canvas);
+      
         this.ctx = this.canvas.getContext('2d');
     }
 

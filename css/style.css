@@ -9,7 +9,7 @@ body {
     background: url('../img/genius-pinball-arcade.jpg') no-repeat, black;
     background-size:contain;
     width:720px;
-    height: 920px;
+    height: 405px;
     margin:0 auto;
     position:relative;
     padding-top:125px;
@@ -17,7 +17,7 @@ body {
 
 .text-container {
     position:absolute;
-    top:38%;
+    top:88%;
     left: calc(50% - 103px);
 }
 .display {
