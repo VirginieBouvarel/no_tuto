@@ -9,8 +9,8 @@ class Game {
         this.animationID;
         this.sound = {
             start: new Audio("../sounds/start.wav"),
-            bounce: new Audio("../sounds/impact.ogg"),
-            explosion: new Audio("../sounds/brick.wav"),
+            bounce: new Audio("../sounds/bounce.wav"),
+            explosion: new Audio("../sounds/explosion4.wav"),
             gameover: new Audio("../sounds/game-over.wav"),
             victory: new Audio("../sounds/victory.mp3")
         }
