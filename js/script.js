@@ -123,7 +123,7 @@ class Game {
 
     updateSpeed() {
         if (this.score === this.spec.bricksNumber/3 || this.score === this.spec.bricksNumber/1.5) {
-            this.ball.speedInPixel += 2;
+            this.ball.speedInPixel += 1;
             this.ball.setSpeedToDirection();
         }
     }
@@ -229,7 +229,7 @@ class Paddle {
         this.ctx = ctx;
         this.canvasBorder = canvasBorder;
 
-        this.speedInPixel = 80;
+        this.speedInPixel = 55  ;
         this.midWidth = this.width / 2;
         this.leftEdge =  0;
         this.rightEdge = this.ctx.canvas.width - this.width;
