@@ -1,11 +1,13 @@
-# Pong
+# Pinball-breakout
 
-Objectif: Réalisation d'un jeu de pong
+Objectif: Réalisation d'un jeu de casse-briques
 
 > Technos: HTML/CSS/JAVASCRIPT
 
+> Outils: mixkit.co
 
 
-# Série: NoTuto - Projet 3: jeu de Pong
 
-![Design preview for the pong project ](./src/preview.png)
+# Série: NoTuto - Projet 4: jeu de casse-briques
+
+![Design preview for this project ](./src/preview.png)
