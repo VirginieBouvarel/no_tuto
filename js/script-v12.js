@@ -1,56 +1,61 @@
+/*Récupération des éléments du DOM*/
 const display = document.querySelector('#display');
 const allkeys = document.querySelector('#all-keys');
+const keys = Array.from(document.querySelectorAll('.key'));
+const [ac,one, two, three,four,five,six,seven,eight,nine,zero,dot,plus,minus,multiply,divide,percent,erase,equal] = keys;
+
 
 const operatorsList = ["%", "÷", "x", "-", "+"];
-const strictOperatorsList = ["÷", "x", "-", "+"];
+const strictOperatorsList = ["÷", "x", "-", "+"];//sans les %
 
-const ERROR_MESSAGE = "error"; 
+/*Affichage des caractères sur l'écran en fonction des touches cliquées*/
+allkeys.addEventListener('click', event => {
+    display.textContent += formatDisplay(event);
+});
 
-allkeys.addEventListener('click', handleKey);
+/*Suppression du dernier caractère affiché*/
+erase.addEventListener('click', event => {
+    event.stopPropagation();
+    //Si le dernier caractère est un espace, alors la dernière touche saisie était un opérateur, 
+    //on enlève donc espace + operateur + espace
+    if (display.textContent[display.textContent.length -1] === " "){
+        display.textContent = display.textContent.slice(0,-3);
+    }else{
+        display.textContent = display.textContent.slice(0,-1);
+    }
+    
+});
+
+/*Reset complet de l'affichage*/
+ac.addEventListener('click', event => {
+    event.stopPropagation();
+    display.textContent = "";
+} )
+
+/*Execution du calcul au clic sur la touche égal*/
+equal.addEventListener('click', event => {
+    event.stopPropagation();
+    display.textContent = calculate();
+});
 
 
-
-function handleKey(event) {
+function formatDisplay(event) {
+    //Récupération du contenu des touches cliquées
     const currentKey = event.target.textContent;
     const ultimateKey = display.textContent[display.textContent.length -1];
     const penultimateKey = display.textContent[display.textContent.length -2];
 
-    if (event.target === allkeys) return;//fix bug multiselection
-    if (display.textContent === ERROR_MESSAGE) display.textContent = "";
-
-    switch(currentKey) {
-        case "AC":
-            display.textContent = "";
-            break;
-        case "❮":
-            erase();
-            break;
-        case "=":
-            const zeroOrEquivalent = /÷ 0( |$|\.0+ |\.0+$)/;
-            if (display.textContent.search(zeroOrEquivalent) > -1) {  // Cas d'une division par zéro
-            display.textContent = ERROR_MESSAGE;
-            }else {
-                display.textContent = calculate();
-            } 
-            break;
-        case "-":
-            if (penultimateKey === "+" || penultimateKey === "-") {
-                invertSign(penultimateKey);
-                break;
-            } 
-            //On omet le break pour effectuer l'affichage par défaut du moins qui est maintenant un simple operateur
-        default:
-            display.textContent += formatDisplay(currentKey, ultimateKey, penultimateKey);
+    //Identification du type des touches cliquées
+    const isANumber = key => {
+        if (key === undefined) return false;
+        return key.search(/[0-9]/) > -1;
     }
-}
-
-function formatDisplay(currentKey, ultimateKey, penultimateKey) {
-
-    const isANumber = key => !isNaN(key);
     const isADot = key => key === ".";
     const isAPercent = key => key === "%";
+    const isNotAPercent = key => key !== "%";
     const isAnOperator = key => strictOperatorsList.includes(key);   
     
+    //Gestion conditionnel de l'affichage
     /**
      * Si la clé a afficher est :
      * un nombre qui suit tout sauf un pourcent OU
@@ -58,7 +63,7 @@ function formatDisplay(currentKey, ultimateKey, penultimateKey) {
      * un signe négatif (c'est-à-dire un "-" qui suit un "x" ou un "÷", ou qui débute la saisie)
      * on affiche la clé
      */
-        if ((isANumber(currentKey) && !isAPercent(ultimateKey)) ||
+        if ((isANumber(currentKey) && isNotAPercent(ultimateKey)) ||
             (isADot(currentKey) && isANumber(ultimateKey)) ||
             (currentKey === "-" && (ultimateKey === undefined || penultimateKey === "x" || penultimateKey ==="÷"))
         ) {
@@ -107,11 +112,33 @@ function formatDisplay(currentKey, ultimateKey, penultimateKey) {
         }
 
     /**
+     * Si la clé a afficher est un "-" qui suit un "+", 
+     * on supprime la dernière saisie: " + " et
+     * on la remplace par " - "
+    */
+        if (currentKey === "-" && penultimateKey === "+") {
+            displaySign(" - ");
+            return "";
+        }   
+
+    /**
+     * Si la clé a afficher est un "-" qui suit un "-", 
+     * on supprime la dernière saisie: " - " et
+     * on la remplace par " + "
+    */
+        if (currentKey === "-" && penultimateKey === "-") {
+            displaySign(" + ");
+            return "";
+        }
+
+    /**
      * Dans tous les autres cas la saisie n'est pas autorisée et
      * on affiche rien de plus
     */
         return "";
 }
+ 
+
 
 function calculate() {
     const elementsToCalculate = display.textContent.split(" ").map(item => {
@@ -137,69 +164,42 @@ function getOperatorIndex(operator, elementsToCalculate) {
 }
 
 function calculateByOperator(operator, operatorIndex, elementsToCalculate) {
-    const operand1 = elementsToCalculate[operatorIndex - 1];
-    const operand2 = elementsToCalculate[operatorIndex + 1];
     let calc;
-    let numberOfCharsToDelete = 3;//Par défaut: nombre avant opérateur, opérateur, nombre après opérateur
+    let numberToDelete = 3;//nombre avant opérateur, opérateur, nombre après opérateur
 
     switch(operator) {
         case "%":
-            const previousOperator = elementsToCalculate[operatorIndex - 2];
-            switch (previousOperator) {
+            switch (elementsToCalculate[operatorIndex - 2]) {
                 case undefined:
                 case "x":
                 case "÷":
-                    calc = operand1 / 100;
-                    numberOfCharsToDelete = 2;//symbole % et nombre avant symbole
+                    calc = elementsToCalculate[operatorIndex - 1] / 100;
+                    numberToDelete = 2;//symbole % et nombre avant symbole
                     break;
                 case "+":
                 case "-":
-                    const valueToIncreaseOrDecrease = elementsToCalculate[operatorIndex - 3]
-                    calc = (operand1 / 100) * valueToIncreaseOrDecrease;
-                    numberOfCharsToDelete = 2;
+                    calc = elementsToCalculate[operatorIndex - 3] * (elementsToCalculate[operatorIndex - 1] / 100);
+                    numberToDelete = 2;
                     break;
             }
             break;
         case "÷":
-            calc = operand1 / operand2; 
+            calc = elementsToCalculate[operatorIndex - 1] / elementsToCalculate[operatorIndex + 1]; 
             break;
         case "x":
-            calc = operand1 * operand2;
+            calc = elementsToCalculate[operatorIndex - 1] * elementsToCalculate[operatorIndex + 1];
             break;
         case "-":
-            calc = operand1 - operand2;
+            calc = elementsToCalculate[operatorIndex - 1] - elementsToCalculate[operatorIndex + 1];
             break;
         case "+":
-            calc = operand1 + operand2;
+            calc = elementsToCalculate[operatorIndex - 1] + elementsToCalculate[operatorIndex + 1];
             break;
     }
-    elementsToCalculate.splice((operatorIndex - 1), numberOfCharsToDelete, calc);
+    elementsToCalculate.splice((operatorIndex - 1), numberToDelete, calc);
 }
 
-function invertSign(sign) {
+function displaySign(sign) {
     display.textContent = display.textContent.slice(0,-3);//-3 --> espace + opérateur précédent + espace
-    if (sign === "+") {
-        sign= "-";
-    }else {
-        sign= "+";
-    }
-    display.textContent += ` ${sign} `;
-}
-
-function erase() {
-    const lastCharacter = display.textContent[display.textContent.length - 1];
-
-    if (display.textContent === ERROR_MESSAGE) display.textContent = "";
-
-    switch(lastCharacter) {
-        case " ": //alors la dernière touche saisie était un opérateur, on enlève "esp+operateur+esp "
-            display.textContent = display.textContent.slice(0,-3);
-            break;
-        case "%"://on enlève "esp+%"
-            display.textContent = display.textContent.slice(0,-2);
-            break;
-        default:
-            display.textContent = display.textContent.slice(0,-1);
-            break;
-    }
+    display.textContent += sign;
 }

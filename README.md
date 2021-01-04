@@ -1,6 +1,6 @@
-# Réalisation d'une calculatrice
+# Calculatrice 
 
-Objectif:  Réaliser un programme simulant l'utilisation d'une calculatrice de type smartphone Android, sans tuto ni consignes.
+Objectif:  Réaliser une calculatrice de type smartphone Android exécutant les opérations courantes.
 
 > Technos: HTML/CSS/JS 
 
