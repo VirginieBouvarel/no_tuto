@@ -23,7 +23,8 @@ Gestion des opérations successives | ✔️
 Gestion de la précédence des opérateurs | ✔️
 Gestion de la division par zéro | ✔️
 Gestion des nombres relatifs | ✔️
-Majorations et minorations en pourcentages | ✔️  <br><br>
+Majorations et minorations en pourcentages | ✔️  
+<br><br><br>
 
 ### Design preview
 
