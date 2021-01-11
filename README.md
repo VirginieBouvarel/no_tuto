@@ -12,6 +12,4 @@
 
 
 
-# Design preview
-
 ![Design preview for this project ](./src/preview.png)
