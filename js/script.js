@@ -65,7 +65,7 @@ function formatDisplay(currentKey, ultimateKey, penultimateKey) {
 
     if (isADot(currentKey) && isAnOperator(penultimateKey)) { //une virgule suit directement un operateur
         return `0${currentKey}`;
-    }
+    }//TODO: ne fonctionne pas
  
     if (isAnOperator(currentKey) && isADot(ultimateKey)) { // un operateur suit directement une virgule
         return `0 ${currentKey} `;
