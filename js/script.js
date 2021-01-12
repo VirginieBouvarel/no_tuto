@@ -25,7 +25,7 @@ function handleKey(event) {
             break;
         case "=":
             const zeroOrEquivalent = /÷ 0( |$|\.0+ |\.0+$)/;
-            if (display.textContent.search(zeroOrEquivalent) > -1 || isNan(display.textContent)) {  // Cas d'une division par zéro OU d'une opération ayant généré une valeur NaN (ex pas de 2nd opérande: 2 + = --> NaN )
+            if (display.textContent.search(zeroOrEquivalent) > -1) {  // Cas d'une division par zéro
             display.textContent = ERROR_MESSAGE;
             }else {
                 display.textContent = calculate();
@@ -47,12 +47,7 @@ function getCharByIndex(position) {
 }
 
 function formatDisplay(currentKey, ultimateKey, penultimateKey) {
-    // const isANumber = key => !isNaN(key);      //-> !isNaN(" "); = true car isNaN() convertit d'abord en nombre et " " = 0 qui est un nombre, donc ligne 66 validée et ligne 67 éxecutée
-    const isANumber = key => {
-        if (key === undefined) return false;
-        return key.search(/[0-9]/) > -1;
-    }//TODO: refacto possible sans casser ligne 66-67 et 72-73?
-    
+    const isANumber = key => !Number.isNaN(Number.parseInt(key));
     const isADot = key => key === ".";
     const isAPercent = key => key === "%";
     const isAnOperator = key => strictOperatorsList.includes(key);   
