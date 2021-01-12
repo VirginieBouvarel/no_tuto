@@ -22,9 +22,12 @@ Remise à zéro de l'affichage | ✔️
 Gestion des opérations successives | ✔️
 Gestion de la précédence des opérateurs | ✔️
 Gestion de la division par zéro | ✔️
+Gestion des opérations incomplètes | ✔️
 Gestion des nombres relatifs | ✔️
 Majorations et minorations en pourcentages | ✔️  
+
 <br><br><br>
+
 
 
 ### Design preview
