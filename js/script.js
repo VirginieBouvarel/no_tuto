@@ -63,7 +63,6 @@ function formatDisplay(currentKey, ultimateKey, penultimateKey) {
         return ` ${currentKey} `;
     }
 
-
     if (isADot(currentKey) && isAnOperator(penultimateKey)) { //une virgule suit directement un operateur
         return `0${currentKey}`;
     }
@@ -88,6 +87,7 @@ function calculate() {
         if (operatorsList.includes(item)) return item;
         return parseFloat(item);
     });
+    if (elementsToCalculate.includes(NaN)) return ERROR_MESSAGE;
     while(elementsToCalculate.length > 1){
         operatorsList.forEach(operator => {
             while(hasOperator(operator, elementsToCalculate)) {
