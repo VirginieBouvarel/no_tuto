@@ -47,7 +47,12 @@ function getCharByIndex(position) {
 }
 
 function formatDisplay(currentKey, ultimateKey, penultimateKey) {
-    const isANumber = key => !isNaN(key);
+    // const isANumber = key => !isNaN(key);      //-> !isNaN(" "); = true donc ligne 66 validée et ligne 67 éxecutée
+    const isANumber = key => {
+        if (key === undefined) return false;
+        return key.search(/[0-9]/) > -1;
+    }//TODO: refacto possible sans casser ligne 66-67 et 72-73?
+    
     const isADot = key => key === ".";
     const isAPercent = key => key === "%";
     const isAnOperator = key => strictOperatorsList.includes(key);   
@@ -63,9 +68,10 @@ function formatDisplay(currentKey, ultimateKey, penultimateKey) {
         return ` ${currentKey} `;
     }
 
+
     if (isADot(currentKey) && isAnOperator(penultimateKey)) { //une virgule suit directement un operateur
         return `0${currentKey}`;
-    }//TODO: ne fonctionne pas
+    }
  
     if (isAnOperator(currentKey) && isADot(ultimateKey)) { // un operateur suit directement une virgule
         return `0 ${currentKey} `;
