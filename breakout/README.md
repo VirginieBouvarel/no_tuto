@@ -1,6 +1,6 @@
 # Pinball breakout
 
-[Voir la démo](https://virginiebouvarel.github.io/breakout/)
+[Voir la démo](https://virginiebouvarel.github.io/projets_perso/tree/master/breakout/)
 
 Pour ce projet mon objectif était de réaliser un jeu de casse-briques from scratch sans suivre de tuto ou de consignes. 
 A partir du projet pong réalisé en amont j'ai complètement repris la structure du code afin de tout implémenter en classes ES6 et ajouté les fonctionnalités nécessaires à la gestion des briques.
