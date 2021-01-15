@@ -1,0 +1,34 @@
+<section class="presentation">
+    <h2>Questionnaire de J.Holland</h2>
+    <div>
+        <h3>PARTIE 3: Aptitudes</h3>
+        <img src="img/questionnaires/questions3-skills.png" alt="Rouages du cerveau">
+        <p>Voici une liste d’aptitudes, d’habiletés, de talents qui sont en rapport avec des occupations.<br>Évaluez-vous le plus objectivement possible. Ne vous sous-estimez pas ou ne vous surestimez pas.<br>Soyez honnête envers vous-même et évaluez votre capacité réelle.<br> Cochez le chiffre qui correspond au niveau d’aptitude que vous pensez posséder :<br> 1 = Faible, 2 = Moyen, 3 = Fort.</p>  
+    </div>
+</section>
+        
+<form class="questionnaire" data-mode="radio" method="post" action="#">
+    <?php foreach($questionsAptitudes as $questionsArray):?>
+        <section class="section-radio">
+            <div class="profile-letter"></div>
+            <div class="container">
+                <?php foreach($questionsArray as $question): ?>
+                    <div class="<?= $question["class"] ?> groupRadio">
+                        <label for="Q<?= $question["number"] ?>-1">1</label><input type="radio" id="Q<?= $question["number"] ?>-1" name="Q<?= $question["number"] ?>" value="1" checked>
+                        <label for="Q<?= $question["number"] ?>-2">2</label><input type="radio" id="Q<?= $question["number"] ?>-2" name="Q<?= $question["number"] ?>" value="2" >
+                        <label for="Q<?= $question["number"] ?>-3">3</label><input type="radio" id="Q<?= $question["number"] ?>-3" name="Q<?= $question["number"] ?>" value="3" >
+                        <p><?= $question["question"] ?></p>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </section>
+    <?php endforeach;?>
+
+    <div class="validation-block">
+        <div>
+            <input type="checkbox" class="confirmation confirm-next"><label >J'ai bien relu mes réponses et je confirme mes choix</label>
+        </div>
+    </div> 
+    <a id="next" class="disabled btn_link nextButton" href="questions4-personnality.php" >Suivant</a> 
+    <p class="alert">Merci de confirmer vos réponses pour passer aux questions suivantes</p>
+</form>    

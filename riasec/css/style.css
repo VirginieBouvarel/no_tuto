@@ -1,0 +1,577 @@
+/*NORMALIZE CSS*/ 
+
+/*GLOBAL*/
+:root{
+    /*font-family:*/
+    --open:'Open Sans', sans-serif;
+    /*color:*/
+    --white:#FFF;
+    --lightGrey:#D3D3D3;
+    --mediumGrey:#A9A9A9;
+    --darkGrey:#41454e;
+    --green:#00a933;/*green riasec*/
+}
+
+html{
+	font-size:62.5%;
+    box-sizing:border-box;
+}
+
+*, *:before, *:after{
+    box-sizing:inherit;
+    /*margin:0;*/
+    padding:0;
+}
+
+body{
+	font-family: var(--open);
+	color:var(--mediumGrey);
+    font-size: 1.6rem;
+}
+h2, h3, .code span{
+    color:var(--green);
+}
+h2{
+    text-align:center;
+    font-size:3rem;
+    margin:8rem 0;
+}
+h3{
+    font-size:2rem;
+    margin:2rem 0;
+}
+p{
+    font-size:1.4rem;
+    margin:2rem 0;
+    text-align:justify;
+    line-height:1.5;
+}
+img{
+	max-width:100%;
+}
+a{
+	text-decoration:none;
+}
+.flex{
+    display:flex;
+	flex-wrap:wrap;
+	/*tailler les enfants*/
+}
+.container{
+    max-width:90%;
+    margin:0 auto;
+}
+.btn_link{
+    background-color:var(--green);
+    border:2px solid var(--green);
+    padding:2rem;
+    border-radius:0.6rem;
+    color:var(--white);
+    font-weight:bold;
+}
+.btn_link:hover{
+    background-color:var(--white);
+    color:var(--green); 
+}
+a.disabled, button.disabled{
+    pointer-events:none;
+    cursor:default;
+    background-color:var(--mediumGrey);
+    border:2px solid var(--mediumGrey);
+}
+.alert{
+    color:var(--green);
+    text-align:center;
+}
+.hidden{
+    visibility:hidden;
+}
+.white{
+    color:var(--white);
+}
+/*HEADER*/
+header div{
+    padding:2rem 1rem;
+}
+header div>a{
+    width:8%;
+    float:left;
+    margin-bottom:1rem;
+}
+header div>img{
+    width:10%;
+    float:right;
+}
+header section{
+    clear:both;
+    background-color:var(--green);
+    color:var(--white);
+    text-align:center;
+    padding:2rem 0;
+}
+header h1{
+    font-size:4.5rem;  
+}
+header p{
+    font-size:3rem;
+    margin-bottom:2rem;
+    text-align:center;
+}
+
+/*MAIN*/
+/*HOME*/
+.home{
+    text-align:center;
+}
+.home img:nth-child(1){
+    margin:10rem 0;
+}
+.home div{
+    transition:all .3s;
+}
+.about_btn{
+    margin-right:1rem;
+}
+.test_btn{
+    padding: 2rem 5rem;
+}
+.home img:nth-child(3){
+    width:60%;
+    margin:10rem 0;
+}
+
+/*ABOUT*/
+.about, .results{
+    padding:4rem;
+    margin-bottom:5rem;
+    text-align:left;
+}
+.about section{
+    padding:1rem;
+}
+
+.origins img{
+    float:left;
+    margin-right: 2rem;
+    margin-bottom:2rem;
+}
+.theorie{
+    clear:both;
+}
+.summaries{
+    margin-bottom:5rem;
+}
+.summaries article{
+    width:50%;
+    margin:0 auto;
+    padding:2rem 0;
+    overflow:hidden;
+}
+.summaries article h4{
+    color:var(--darkGrey);
+    font-size:1.6rem;
+    margin-bottom:2rem;
+}
+.summaries article:nth-child(odd){
+    text-align:right;
+}
+.summaries article img{
+    width:25%;
+}
+.summaries article:nth-child(odd) img{
+    float:right;
+    margin: 1rem 0 1rem 2rem;
+}
+.summaries article:nth-child(even) img{
+    float:left;
+    margin:1rem 2rem 1rem 0;
+}
+.summaries article p{
+    margin-top:2.5rem;
+}
+.about .btn_bottom{
+    display:block;
+    margin:0 auto;
+    width:23%;
+    text-align:center;
+}
+/*QUESTIONNAIRE*/
+
+.presentation{
+    padding:0 15%;
+}
+.presentation h2{
+    margin-bottom:3rem;
+}
+.presentation h3{
+    margin:5rem auto;
+    text-align:center;
+    position:relative;
+}
+.presentation img{
+    display:block;
+    margin:0 auto;
+}
+.presentation section p{
+    padding-right:12rem;
+    margin:5rem 0;
+}
+.questionnaire section{
+    font-size:1.4rem;
+    padding:5rem;
+    text-align:left;
+    line-height:2.2;
+    position:relative;
+}
+.questionnaire section:first-child{
+    margin-top:5rem;
+}
+.questionnaire section:nth-child(odd){
+    background-color:var(--green);
+    color:var(--white);
+}
+.profile-letter{
+    width:5rem;
+    height:5rem;
+    position:absolute;
+    top:50%;
+    bottom:50%;
+    right:10%;
+}
+.profile-letter:before{
+    font-size:860%;
+    font-family:arial;
+    position: absolute;
+    line-height:0;
+}
+.questionnaire section:nth-child(odd) .profile-letter:before{
+    color:var(--white);
+}
+.questionnaire section:nth-child(even) .profile-letter:before{
+    color:var(--green);
+}
+.questionnaire section:nth-child(1) .profile-letter:before{
+    content:"R";
+}
+.questionnaire section:nth-child(2) .profile-letter:before{
+    content:"I";
+}
+.questionnaire section:nth-child(3) .profile-letter:before{
+    content:"A";
+}
+.questionnaire section:nth-child(4) .profile-letter:before{
+    content:"S";
+}
+.questionnaire section:nth-child(5) .profile-letter:before{
+    content:"E";
+}
+.questionnaire section:nth-child(6) .profile-letter:before{
+    content:"C";
+}
+.questionnaire input[type="checkbox"]{
+    margin-right:1rem;
+}
+.groupRadio label{
+    margin-right:0.5rem;
+}
+.groupRadio input[type="radio"]{
+    margin-right:1rem;
+}
+.groupRadio p {
+    display:inline;
+    margin-left:1rem;
+}
+.questionnaire div.validation-block{
+    background-color:var(--white);
+    color:var(--mediumGrey);
+    text-align:center;
+    margin:10rem auto 5rem;
+}
+.validation{
+    margin-top:2rem;
+}
+.validation + label{
+    color:var(--green);
+    font-size:2rem;
+    font-weight:bold;
+}
+.nextButton{
+    padding:2rem 5rem;
+    display:block;
+    width:20rem;
+    margin:0 auto;
+    text-align:center;
+}
+
+/*RESULTS*/
+.results div{
+    margin-bottom:3rem;
+    overflow:hidden;
+}
+.results div p{
+    font-size:3rem;
+    margin-top:5rem;
+    text-transform:uppercase;
+}
+.mixte-title{
+    text-align:center;
+}
+.toggle-profile{
+    text-align:center;
+    margin-top:2rem;
+}
+#profil-1{
+margin-left:auto;
+}
+#profil-1, #profil-2{
+    padding:1rem 2rem;
+}
+#profil-1:focus, #profil-2:focus{
+    outline:none;
+}
+.hidden{
+    display:none;
+}
+.major{
+    clear:both;
+}
+.results p.strongPoints{
+    margin-left:4rem;
+}
+.results .fas{
+    margin-right:2rem;
+    font-size:3rem;
+}
+.results h3{
+    margin-top:4rem;
+}
+.minors article{
+    margin-left:4rem;
+}
+.minors span{
+    text-decoration:underline;
+}
+.jobs ul {
+    list-style-type:none;
+    line-height:1.5;
+    text-align:left;
+    font-size:1.4rem;
+}
+.jobs ul li{
+    margin-left:4rem;
+}
+
+/*FOOTER*/
+
+footer{
+    background-color:var(--green);
+    color:var(--white);
+    text-align:center;
+    padding:5rem;
+    margin-top:15rem;
+    text-align:center;
+}
+
+footer a i{
+    color:var(--white);
+}
+
+footer p{
+    margin-top:8rem;
+    text-align:center;
+}
+
+/*VERSION LAPTOP*/
+@media screen and (max-width:1025px){
+    header div>a, header div>img{
+        width:12%;
+    }
+    .questionnaire section{
+        padding:5rem 28rem 5rem 5rem;
+    }
+    .profile-letter:before{
+        font-size:700%;
+    }
+    .questionnaire .section-radio{
+        padding:7rem 20rem 7rem 2rem;
+    }
+    .summaries article{
+        width:100%;
+    }
+    .about .btn_bottom{
+        width:25%;
+        text-align:center;
+    }
+    
+}
+/*VERSION TABLETTE*/
+@media screen and (max-width:770px){
+    header div>a, header div>img{
+        width:15%;
+    }
+    .home img:nth-child(3){
+        width:80%;
+        margin:10rem 0;
+    }
+    .about .btn_bottom{
+        width:35%;
+        text-align:center;
+    }
+    .questionnaire section{
+       padding:10rem 10rem 5rem 5rem;
+    }
+    .profile-letter{
+        position:relative;
+        top:0;
+        left:0;
+        margin-bottom:2rem;
+    }
+    .questionnaire section .profile-letter:before{
+        font-size:600%;
+        left:51%;
+        top:15%;
+    }
+    .questionnaire .section-radio{
+        padding:7rem 2rem 7rem 2rem;
+    }
+    .questionnaire .section-radio .profile-letter:before{
+         font-size:600%;
+         left:58%;
+         top:14%;
+    }
+    .toggle-profile{
+        margin-top:3rem;
+    }
+    .results h2{
+        margin-top:5rem;
+    }
+}
+/*VERSION MOBILE*/
+@media screen and (max-width:578px){
+    body, .presentation p, label, groupRadio label, p{
+        font-size:1.2rem;
+    } 
+    header div>a, header div>img{
+        width:25%;
+    }
+    header p{
+        font-size:2rem; 
+        padding:2rem; 
+    }  
+    .home img:nth-child(1){
+        width:80%;
+        margin:6rem 0;
+    }
+    .about_btn, .test_btn{
+        display:block;
+        width:80%;
+        margin:2rem auto;
+    }
+    .home div{
+        margin-bottom:10rem;
+    }
+    .home img:nth-child(3){
+        display:none;
+    }
+    /*ABOUT*/
+    .about{
+        padding:0;
+    }
+    .origins img{
+        width:100%;
+    }
+    .summaries article:nth-child(odd){
+        text-align:left;
+    }
+    .summaries article img{
+        width:100%;
+    }
+    .about .btn_bottom{
+        width:85%;
+    }
+    /*QUESTIONNAIRE*/
+    .confirmation + label:after{
+        top:23rem;
+    }
+    .presentation{
+        padding:7%;
+    }
+    .presentation img{
+        width:80%;
+    }
+    .questionnaire section{
+        padding:3rem 1rem 5rem;
+        font-size:1.2rem;
+    }
+    .questionnaire section .profile-letter:before{
+        font-size:500%;
+        left:26%;
+        top:53%;
+    }
+    .questionnaire .section-radio .profile-letter:before{
+        font-size:500%;
+        left:28%;
+        top:14%;
+    } 
+    .groupRadio label{
+        margin-right:0.2rem;
+    }
+    .groupRadio{
+        margin-bottom:0.7rem;
+    }
+    .groupRadio input[type="radio"]{
+        margin-right:0;
+        position: relative;
+        top:0.2rem;
+    }
+    .groupRadio p {
+        display:inline;
+        margin-left:0.4rem;
+    }
+    .validation-block{
+        padding:3rem;
+    }
+    .validation-block div+div label{
+        font-size:1.6rem;
+    }
+    /*RESULTS*/
+    
+    .results{
+        padding:0;
+    }
+    .results h2{
+        font-size:2.5rem;
+        margin:4rem 0;
+    }
+    .results div p{
+        font-size:2rem;
+    }
+    .results .fas{
+        font-size:2rem;
+    }
+    .jobs ul{
+        font-size:1.2rem;
+    }
+    /*FOOTER*/
+    footer nav{
+        flex-direction:column;
+        width:100%;
+    }
+    footer p{
+        font-size:1.2rem;
+    }
+}
+
+/*VERSION MINI MOBILES*/
+@media screen and (max-width:330px){
+    .profil-letter{
+        width:10%;
+        height:auto;
+    }
+    .questionnaire .section-radio .profile-letter:before{
+        top:11%;
+    }
+    .results h3, .results .fas{
+        font-size:1.6rem;
+    }
+}

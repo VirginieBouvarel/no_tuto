@@ -1,0 +1,36 @@
+<section class="presentation">
+    <h2>Questionnaire de J.Holland</h2>
+    <div>
+        <h3>PARTIE 4: Personnalité</h3>
+        <img src="img/questionnaires/questions4-bigfive.png" alt="Les 5 axes du test de personnalité Big Five">
+        <p>Voici une liste de traits de caractère, d’attitudes, de tendances personnelles.<br> Faites une croix dans la case correspondant aux énoncés qui s’appliquent à vous, qui décrivent le plus honnêtement possible votre façon d’agir.</p>  
+    </div>
+</section>
+        
+<form class="questionnaire" data-mode="checkbox" method="post" action="results.php">
+    <?php foreach($questionsPersonality as $questionsArray):?>
+        <section>
+            <div class="profile-letter"></div>
+            <div class="container">
+                <?php foreach($questionsArray as $question): ?>
+                    <input type="checkbox" class="<?= $question["class"] ?>" id="Q<?= $question["number"] ?>" name="Q<?= $question["number"] ?>"><label for="Q<?= $question["number"] ?>"><?= $question["question"] ?></label><br> 
+                <?php endforeach; ?>
+            </div>
+        </section>
+    <?php endforeach;?>
+
+    <div class="validation-block">
+        <div>
+            <input type="checkbox" class="confirmation confirm-results"><label >J'ai bien relu mes réponses et je confirme mes choix</label>
+        </div>
+        <div id="valid-form" class="hidden">
+            <input type="checkbox" class="validation"><label >Je valide mon questionnaire</label>
+        </div>
+        <input type="hidden" id="major" name="major" value="0">
+        <input type="hidden" id="minor1" name="minor1" value="0">
+        <input type="hidden" id="minor2" name="minor2" value="0">
+        <input type="hidden" id="double" name="double" value= false>
+    </div>
+    <button id="results" class="disabled btn_link nextButton" type="submit" >Résultats</button>
+    <p class="alert">Merci de confirmer vos réponses pour continuer</p>
+</form>  

@@ -1,0 +1,33 @@
+<!--Affichage des mineures -->
+
+<section class="list">
+    <?php //var_dump($minors);?>
+
+    <a href="minorAdd.php" class="add-button">Ajouter une mineure</a>
+        <table>
+            <caption>Liste des mineures</caption>
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Nom</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!--On crée dynamiquement le tableau-->
+                <!--FOREACH ligne récupérée de la bdd  on écrit une tr -->   
+                <?php foreach($minors as $minor): ?>
+                    
+                    <tr>
+                        <td><?= $minor["code"] ?></td>
+                        <td><?= $minor["name"] ?></td> 
+                        <td>
+                            <a href="minorUpdate.php?id=<?=$minor["id"];?>"><span class="fas fa-pencil-alt"></span></a>
+                            <a href="minorDelete.php?id=<?=$minor["id"];?>"><span class="fa fa-trash"></span></a>
+                        </td>    
+                    </tr>
+
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+</section>        

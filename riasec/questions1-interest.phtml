@@ -1,0 +1,36 @@
+
+    <section class="presentation">
+        
+            <h2>Questionnaire de J.Holland</h2>
+            <p>Ce questionnaire de personnalité est constitué de 300 affirmations/propositions. Elles sont réparties en 4 thèmes: Intérêts, Activités, Aptitudes et Personnalité. Pour chaque thème les affirmations sont divisées en 6 groupes, un par profil RIASEC. Cochez celles qui vous concernent ou vous correspondent le plus. Le temps de passation moyen est de 20 minutes, mais vous pouvez prendre tout le temps nécessaire pour vos réponses, le questionnaire n'est pas chronométré.</p>
+            <div>
+                <h3>PARTIE 1: Intérêts et Occupations</h3>
+                <img src="img/questionnaires/questions1-astronaute.png" alt="Aspirations personnelles : un astronaute">
+                <p>Voici une liste d'occupations ou d'activités diverses.<br>Faites une croix dans les cases qui se rapportent aux activités que vous aimez ou que vous aimeriez pratiquer.<br>Il est important de ne pas faire de croix si l’activité vous déplaît ou vous laisse indifférent(e).<br>Pour remplir cette partie, considérez que vous avez les capacités, les connaissances et la formation nécessaires pour effectuer ces activités.<br>Tenez compte uniquement de vos goûts.</p>  
+            </div>
+       
+    </section>
+
+    <form class="questionnaire" data-mode="checkbox" method="post" action="#">
+
+        <?php foreach($questionsInterest as $questionsArray):?>
+            <section>
+                <div class="profile-letter"></div>
+                <div class="container">
+                    <?php foreach($questionsArray as $question): ?>
+                        <input type="checkbox" class="<?= $question["class"] ?>" id="Q<?= $question["number"] ?>" name="Q<?= $question["number"] ?>"><label for="Q<?= $question["number"] ?>"><?= $question["question"] ?></label><br> 
+                    <?php endforeach; ?>
+                </div>
+            </section>
+        <?php endforeach;?> 
+
+        <div class="validation-block">
+            <div>
+                <input type="checkbox" class="confirmation confirm-next"><label >J'ai bien relu mes réponses et je confirme mes choix</label>
+            </div>
+        </div>          
+        <a id="next" class="disabled btn_link nextButton" href="questions2-activities.php" >Suivant</a>
+        <p class="alert">Merci de confirmer vos réponses pour passer aux questions suivantes</p>
+    </form> 
+
+   
