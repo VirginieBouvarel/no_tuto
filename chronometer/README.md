@@ -1,6 +1,6 @@
 # Chronomètre
 
-[Voir la démo](https://virginiebouvarel.github.io/chronometer/)
+[Voir la démo](https://virginiebouvarel.github.io/projets_perso/chronometer/)
 
 > Série: No Tuto
 

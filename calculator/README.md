@@ -1,6 +1,6 @@
 # Calculatrice avancée
 
-[Voir la démo](https://virginiebouvarel.github.io/calculator/)
+[Voir la démo](https://virginiebouvarel.github.io/projets_perso/calculator/)
 
 > Série: No Tuto
 
