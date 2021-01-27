@@ -9,7 +9,7 @@
 > Technos utilisées : HTML/CSS/JS
 
 Pour ce projet mon objectif était de réaliser une calculatrice, en allant un peu plus loin que les exemples habituels ne gérant que les opérations basiques. Je voulais rendre le projet plus intéressant en essayant de me rapprocher le plus possible des fonctionnalités proposées par les calculettes de nos téléphones portables.
-Les points techniques qui m'ont demandé le plus de réflexion concernent l'organisation du code: comment concilier d'une part l'affichage pour un oeil humain et la logique de calcul par ailleurs, parvenir également à concevoir suffisemment clairement le déroulé d'une opération pour en faire une implémentation correcte, et parvenir à intégrer la gestion des nombres négatifs (auxquels je n'avais pas du tout pensé au départ! merci à mes crashtesteurs ;)) sans casser le reste de la logique.<br><br>
+Les points techniques qui m'ont demandé le plus de réflexion concernent l'organisation du code: comment concilier d'une part l'affichage pour un oeil humain et la logique de calcul par ailleurs, parvenir également à concevoir suffisemment clairement le déroulé d'une opération pour en faire une implémentation correcte, et parvenir à intégrer la gestion des nombres négatifs (auxquels je n'avais pas du tout pensé au départ! merci à mes crashtesteurs 😉) sans casser le reste de la logique.<br><br>
 
 Fonctionnalités | Done
 ----------------|------
@@ -25,8 +25,7 @@ Gestion de la division par zéro | ✔️
 Gestion des opérations incomplètes | ✔️
 Gestion des nombres relatifs | ✔️
 Majorations et minorations en pourcentages | ✔️  
-
-<br><br><br>
+<br><br>
 
 Avec ce challenge j'ai appris...
 - qu'il était important de penser à tout au début (du moins d'essayer 😉)
