@@ -1,8 +1,8 @@
-### Live version [here](https://virginiebouvarel.github.io/projets_perso/breakout).
+### Live version [here](http://breakout.virginiebouvarel.fr ).
 
 # Pinball Breakout
 
-![Design preview for this coding challenge](./src/preview.jpg)<br><br>
+![Design preview for this coding challenge](./src/preview.png)<br><br>
 
 ## Détails
 
