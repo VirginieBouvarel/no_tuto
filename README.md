@@ -11,7 +11,4 @@ En sortant de bootcamp mon objectif était de tester mes compétences en réalis
 - [**Calculator**](https://virginiebouvarel.github.io/projets_perso/calculator) : Une calculatrice avancée
    
 
-# Projet rendu pour l'obtention du titre RNCP
-
-- [**Calculator**](http://riasec.virginiebouvarel.fr) : Une calculatrice avancée
 
