@@ -6,8 +6,7 @@
 
 ## Détails
 
-> Technos utilisées : HTML/CSS/JS
-> Outils : mixkit.co pour les sons
+> Technos utilisées : HTML/CSS/JS et le site [mixkit.co](https://mixkit.co/) pour les sons
 
 Pour ce projet mon objectif était de réaliser un jeu de casse-briques complet.
 A partir du projet pong réalisé en amont j'ai complètement repris la structure du code afin de tout implémenter en classes ES6 et ajouté les fonctionnalités nécessaires à la gestion des briques.
