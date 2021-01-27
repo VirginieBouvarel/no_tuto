@@ -1,14 +1,34 @@
-# riasec
+### Live version [here](http://riasec.virginiebouvarel.fr).
 
-[Voir la démo ](http://riasec.virginiebouvarel.fr)
+# RIASEC
 
-Projet personnel 
+![Design preview for this project ](./src/preview-home.png)
 
-Le R.I.A.S.E.C est un test de personnalité professionnelle que j'utilisais lors de bilans de compétences.
+
+## Détails
+
+> Technos utilisées : HTML5/CSS3/JS/PHP/MySQL
+
+Le R.I.A.S.E.C est un test de personnalité professionnelle que j'utilisais avant ma reconversion lors de bilans de compétences.
 Mes collègues et moi n'avions qu'une version papier fastidieuse à expliquer à nos bénéficiaires. 
 J'ai dans un premier temps réalisé une version excel avec macros automatiques sur mon lieu de travail.
 Puis, lors de ma reconversion vers le métier de développeuse j'ai réalisé une version web, de manière à ce que mes collègues puissent s'en servir au quotidien.
 
-Cette version a été réalisée sans aucun framework afin de respecter une consigne imposée lors de ma première formation à la 3WA.
+Cette version a été réalisée sans aucun framework afin de respecter une consigne imposée dans le cadre de l'obtention du titre RNCP de développeur web et intégrateur.<br><br>
 
-Langages utilisés: HTML5/CSS3/JS/PHP/MySQL
+Avec ce challenge j'ai appris...
+- à concevoir et réaliser mon tout premier site web complet et fonctionnel
+- à faire travailler javascript et php ensemble
+- à gérer la sécurisation des saisies utilisateurs 
+- à interroger (et réinterroger 😉) les besoins métiers pour concevoir un produit adéquate
+- à penser moi-même le design d'un site
+<br><br>
+## Quelques exemples de page
+<br>
+<img style="vertical-align:top" alt="questionnaire" width=300 src="./src/preview-questionnaire.png"/> <img style="vertical-align:top" alt="result" width=300 src="./src/preview-results.png"/> <img style="vertical-align:top" alt="about" width=300 src="./src/preview-about.png"/>
+<br>
+
+
+
+
+
