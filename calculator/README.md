@@ -27,7 +27,7 @@ Gestion des nombres relatifs | ✔️
 Majorations et minorations en pourcentages | ✔️  
 <br><br>
 
-Avec ce challenge j'ai appris...
+Avec ce projet j'ai appris...
 - qu'il était important de penser à tout au début (du moins d'essayer 😉)
 - que certaines fonctions dépréciées ne doivent vraiment plus etre utilisées, comme eval()
 - que le débogueur est mon ami

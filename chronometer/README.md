@@ -18,7 +18,7 @@ Fonctionnalités:
 - SPLIT: Affichage du temps courant et calcul de l'écart avec le temps précédent
 - RESET: Remise à zéro de l'affichage et du compteur <br><br>
 
-Avec ce challenge j'ai appris...
+Avec ce projet j'ai appris...
 - que mes 2 bootcamps m'avaient seulement fait survoler beaucoup de choses
 - à passer le cap du from scratch et à me faire confiance pour réaliser un projet selon mon idée
 

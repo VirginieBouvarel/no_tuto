@@ -15,7 +15,7 @@ A l'époque j'ai réalisé une version excel avec macros automatiques sur mon te
 
 Cette version a été réalisée sans aucun framework afin de respecter une consigne imposée dans le cadre de l'obtention du titre RNCP de développeur web et intégrateur.<br><br>
 
-Avec ce challenge j'ai appris...
+Avec ce projet j'ai appris...
 - à concevoir et réaliser mon tout premier site web complet et fonctionnel
 - à faire travailler javascript et php ensemble
 - à gérer la sécurisation des saisies utilisateurs 
@@ -25,9 +25,8 @@ Avec ce challenge j'ai appris...
 
 ## Quelques exemples de page
 <br>
-<img style="vertical-align:top" alt="questionnaire" width=250 src="./src/preview-questionnaire.png"/> <img style="vertical-align:top" alt="result" width=250 src="./src/preview-results.png"/> <img style="vertical-align:top" alt="about" width=250 src="./src/preview-about.png"/>
+<img align="left" style="margin-right:20px" alt="questionnaire" width=250 src="./src/preview-questionnaire.png"/> <img align="left" style="margin-right:20px"  alt="result" width=250 src="./src/preview-results.png"/> <img align="left" alt="about" width=250 src="./src/preview-about.png"/>
 <br>
-
 
 
 
