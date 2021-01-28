@@ -25,7 +25,7 @@ Avec ce challenge j'ai appris...
 
 ## Quelques exemples de page
 <br>
-<img style="vertical-align:top" alt="questionnaire" width=300 src="./src/preview-questionnaire.png"/> <img style="vertical-align:top" alt="result" width=300 src="./src/preview-results.png"/> <img style="vertical-align:top" alt="about" width=300 src="./src/preview-about.png"/>
+<img style="vertical-align:top" alt="questionnaire" width=250 src="./src/preview-questionnaire.png"/> <img style="vertical-align:top" alt="result" width=250 src="./src/preview-results.png"/> <img style="vertical-align:top" alt="about" width=250 src="./src/preview-about.png"/>
 <br>
 
 
