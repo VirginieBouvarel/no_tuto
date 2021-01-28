@@ -25,8 +25,9 @@ Avec ce projet j'ai appris...
 
 ## Quelques exemples de page
 <br>
-<img align="left" style="margin-right:20px" alt="questionnaire" width=250 src="./src/preview-questionnaire.png"/> <img align="left" style="margin-right:20px"  alt="result" width=250 src="./src/preview-results.png"/> <img align="left" alt="about" width=250 src="./src/preview-about.png"/>
-<br>
+
+<img align="left" style="margin-right:20px" alt="questionnaire" src="./src/preview-questionnaire.png" width="250"/> <img align="left" style="margin-right:20px"  alt="result" src="./src/preview-results.png" width="250"/> <img align="left" alt="about" src="./src/preview-about.png" width="250"/>
+
 
 
 
