@@ -29,7 +29,7 @@ Avec ce projet j'ai appris...
 <img align="left" style="margin-right:20px" alt="questionnaire" src="./src/preview-questionnaire.png" width="324"/> <img align="left" style="margin-right:20px"  alt="result" src="./src/preview-results.png" width="324"/> <img align="left" alt="about" src="./src/preview-about.png" width="324"/>\
 <br><br>
 
-<div style="clear:both"></div>
+<div style="width:1000px; height:2px; background-color:transparent"></div>
 <br><br>
 
 ## Et pour le fun les copies d'écrans de la version calc 😉
