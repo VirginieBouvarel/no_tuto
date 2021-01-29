@@ -26,7 +26,7 @@ Avec ce projet j'ai appris...
 ## Quelques exemples de page
 <br>
 
-<img align="top" style="vertical-align:top;" alt="questionnaire" src="./src/preview-questionnaire.png" width="30%"/> <img align="top" style="vertical-align:top;" alt="result" src="./src/preview-results.png" width="30%"/> <img align="top" style="vertical-align:top;" alt="about" src="./src/preview-about.png" width="30%"/>
+<img align="top" alt="questionnaire" src="./src/preview-questionnaire.png" width="30%"/> <img align="top" alt="result" src="./src/preview-results.png" width="30%"/> <img align="top" alt="about" src="./src/preview-about.png" width="30%"/>
 
 <br><br>
 ## Et pour le fun les copies d'écrans de la version calc 😉
