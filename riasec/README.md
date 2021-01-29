@@ -26,11 +26,8 @@ Avec ce projet j'ai appris...
 ## Quelques exemples de page
 <br>
 
-<img align="left" style="margin-right:20px" alt="questionnaire" src="./src/preview-questionnaire.png" width="324"/> <img align="left" style="margin-right:20px"  alt="result" src="./src/preview-results.png" width="324"/> <img align="left" alt="about" src="./src/preview-about.png" width="324"/>\
-<br><br>
+<img alt="questionnaire" src="./src/preview-questionnaire.png" width="30%"/> <img style="vertical-align:top" alt="result" src="./src/preview-results.png" width="30%"/> <img style="vertical-align:top" alt="about" src="./src/preview-about.png" width="30%"/> <br><br>
 
-<div style="width:1000px; height:2px; background-color:transparent"></div>
-<br><br>
 
 ## Et pour le fun les copies d'écrans de la version calc 😉
 <br>
