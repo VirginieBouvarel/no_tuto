@@ -1,4 +1,4 @@
-### Live version [here](http://breakout.virginiebouvarel.fr ).
+### Live version [here](http://breakout.virginiebouvarel.fr).
 
 # Pinball Breakout
 
