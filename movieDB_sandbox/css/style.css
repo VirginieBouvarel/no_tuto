@@ -1,0 +1,89 @@
+/* GLOBALS */
+
+:root {
+    /* Background Colors */
+	--bg-violet: hsl(260, 71%, 62%);
+
+	/* Fonts Colors */
+	--c-gray: hsl(260, 10%, 29%);
+    --c-white:hsl(0, 0%, 100%);
+
+	/* Fonts */
+	--f-main:'Raleway', sans-serif;
+	--f-title:'Oswald', sans-serif;
+}
+
+html {
+	font-size:62.5%;/*1rem = 10px*/
+	box-sizing:border-box;
+}
+
+*, *:before, *:after {
+	box-sizing:inherit;
+	margin:0;
+	padding:0;
+}
+
+body {
+	font-family: var(--f-main);
+	font-size:1.4rem;
+}
+
+h1, h2, h3 {
+	margin:0;
+}
+
+img {
+	max-width:100%;
+	height:auto;
+}
+
+a {
+	text-decoration:none;
+}
+
+ul li {
+	list-style-type: none;
+}
+
+/* CUSTOMS STYLES */
+
+
+header {
+    display:flex;
+    align-items:center;
+    background-color:var(--bg-violet);
+}
+.logo {
+    width:5rem;
+    margin:1rem;
+}
+h1 {
+    font-family:var(--f-main);
+    font-size:2rem;
+    color:#fff;
+}
+
+/* search bar */
+.search_form {
+    padding:2rem;
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+    /* background-color: red; */
+}
+.search_input {
+    border:none;
+    border:1px solid silver;
+    border-radius:3px;
+    padding:0.5rem;
+    width:75%;
+}
+.search_btn {
+    border:none;
+    background-color: var(--bg-violet);
+    color: var(--c-white);
+    padding:1rem;
+    border-radius:3px;
+    margin-top:1rem;
+}
