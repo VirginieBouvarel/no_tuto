@@ -30,7 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
         results.forEach(result => {
             let title = result.original_title || result.original_name || result.name || result.title
             console.log(title);
-            //TODO: remplacer le console.log par la création/insertion d'une liste dans le html
+            //TODO: Créer en dur une liste de cards dans le html pour définir les styles
+            //TODO: remplacer le console.log par la création/insertion d'une liste de cards dans le html
         });
     }
     
