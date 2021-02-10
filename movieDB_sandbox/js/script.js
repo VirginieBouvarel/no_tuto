@@ -25,7 +25,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function showResults(results) {
+        //results = un tableau de 20 objets
         console.log(results);
+        results.forEach(result => {
+            let title = result.original_title || result.original_name || result.name || result.title
+            console.log(title);
+            //TODO: remplacer le console.log par la création/insertion d'une liste dans le html
+        });
     }
     
 });
