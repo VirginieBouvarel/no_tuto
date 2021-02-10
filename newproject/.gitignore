@@ -1,0 +1,34 @@
+/dist/
+/cache/
+/.vscode/ 
+node-modules
+
+.DS_Store
+.prettierignore
+
+*.map
+*.log
+*.sketch
+*.xd
+*.fig
+
+
+
+### Exemples 
+# Pour ignorer un fichier précis
+# 'fichier.ext'
+# Pour ignorer un dossier complet
+# dossier/
+# Pour ignorer un type de fichier précis
+# *.ext
+# Pour exclure un fichier précis d'un type de fichiers ignorés en masse 
+# *.ext
+# !fichier.ext (ce fichier là ne sera pas ignoré)
+# Pour ignorer des fichiers uniquement s'ils sont situés à la racine
+# /fichier.ext
+# Pour ignorer les mêmes fichiers dans tout le repo
+#fichier.ext
+
+# Pour ajouter au .gitignore un fichier déjà suivi par git
+# Ce fichier apparaîtra toujours dans les précédents commit mais plus dans les suivants
+# git rm --cached fichier.ext

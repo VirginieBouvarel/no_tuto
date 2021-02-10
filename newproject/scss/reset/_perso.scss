@@ -1,0 +1,27 @@
+html {
+	font-size:62.5%;/*1rem = 10px*/
+	box-sizing:border-box;
+}
+
+*, *:before, *:after {
+	box-sizing:inherit;
+	margin:0;
+	padding:0;
+}
+
+img {
+	max-width:100%;
+	height:auto;
+}
+
+h1, h2, h3, p {
+	margin:0;
+}
+
+a {
+	text-decoration:none;
+}
+
+ul li {
+	list-style-type: none;
+}

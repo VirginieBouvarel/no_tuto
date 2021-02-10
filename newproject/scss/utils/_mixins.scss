@@ -1,0 +1,12 @@
+@mixin container($width, $max) {
+    width: $width + "%";
+    max-width: $max + "px";
+    padding:2rem;
+    margin:0 auto;
+}
+
+@mixin flexcenter {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
