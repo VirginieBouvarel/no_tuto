@@ -21,7 +21,11 @@ document.addEventListener('DOMContentLoaded', () => {
         let url = `https://api.themoviedb.org/3/search/multi?api_key=69a59336843cba77936e73fc3e3e5a69&language=fr-FR&query=${search}&page=1&include_adult=false`;
         let promise = fetch(url)
         .then(response => response.json())
-        .then(response => console.log(response.results));
+        .then(response => showResults(response.results));
+    }
+
+    function showResults(results) {
+        console.log(results);
     }
     
 });
