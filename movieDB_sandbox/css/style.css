@@ -79,6 +79,7 @@ h1 {
 section {
     max-width:800px;
     margin:0 auto;
+    padding:2rem 1rem;
 }
 
 /* search bar */
@@ -142,4 +143,47 @@ section {
 .card img {
     width:172.5px;
     height:268.75px;
+}
+
+
+/* page details */
+
+.back {
+    padding:2rem 0 0;
+}
+.back_btn {
+    background-color:var(--bg-violet);
+    border-radius:3px;
+    padding:1rem;
+    margin:2rem 1rem;
+    color:var(--c-white);
+}
+.movie {
+    color:var(--c-light-grey);
+
+}
+.movie_infos {
+    display:flex;
+    justify-content: flex-start;
+    margin-bottom:1rem;
+}
+.movie_infos p { 
+    margin:0 0.5rem;
+    font-size:1.2rem;
+    color:var(--c-light-grey);
+
+}
+.movie img, .movie h2, .movie p {
+    margin-bottom:1rem;
+}
+.movie h2 {
+    font-size: 1.6rem;
+    color: var(--c-grey);
+    word-wrap: break-word;
+    padding-left: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+.movie_summary {
+    padding:0 0.5rem;
+    font-size:1.4rem;
 }
