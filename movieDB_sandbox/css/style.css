@@ -160,7 +160,8 @@ section {
 }
 .movie {
     color:var(--c-light-grey);
-
+    /* max-width:461px; */
+    /*TODO: Régler problème image */
 }
 .movie_infos {
     display:flex;
