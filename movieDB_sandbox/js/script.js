@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const input = document.querySelector("#search_input");
     const submitBtn = document.querySelector("#search_btn");
-
+    const resultSection = document.querySelector('.result');
     
     submitBtn.addEventListener('click', searchKeywords);
     
@@ -24,15 +24,25 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => showResults(response.results));
     }
 
-    function showResults(results) {
-        //results = un tableau de 20 objets
-        console.log(results);
-        results.forEach(result => {
-            let title = result.original_title || result.original_name || result.name || result.title
-            console.log(title);
-            //TODO: Créer en dur une liste de cards dans le html pour définir les styles
-            //TODO: remplacer le console.log par la création/insertion d'une liste de cards dans le html
+    function showResults(movies) {
+        //movies = un tableau de 20 objets
+        const ul = document.createElement('ul');
+        ul.classList.add('cards');
+
+        movies.forEach(movie => {
+            const posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w92/${movie.poster_path}` : `img/tmdb.png` ;
+            const li = document.createElement('li');
+            li.classList.add('card');
+            li.innerHTML = `
+            <a href="details.html?id=${movie.id}">
+                <img src=${posterUrl} alt="Poster">
+                <h3>${movie.original_title || movie.original_name || movie.name || movie.title}</h3>
+                <p>${movie.release_date}</p>
+            </a>`;
+            ul.append(li);
         });
+
+        resultSection.append(ul);
     }
     
 });

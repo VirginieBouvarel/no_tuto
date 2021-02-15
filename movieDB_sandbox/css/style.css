@@ -102,7 +102,7 @@ h1 {
 }
 
 /* section results */
-.results {
+.result {
     padding:2rem 1rem;
 }
 h2 {
@@ -144,4 +144,8 @@ h2 {
     font-size:1rem;
     color:var(--c-light-grey);
     padding-left: 0.5rem;
+}
+.card img {
+    width:172.5px;
+    height:268.75px;
 }
