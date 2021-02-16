@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ul.classList.add('cards');
 
         movies.forEach(movie => {
-            const posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}` : `img/tmdb.png` ;
+            const posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}` : `img/poster-tmdb.png` ;
             const li = document.createElement('li');
             li.classList.add('card');
             li.innerHTML = `
