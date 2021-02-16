@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const li = document.createElement('li');
             li.classList.add('card');
             li.innerHTML = `
-            <a href="details.html?id=${movie.id}" target="_blank">
+            <a href="details.html?id=${movie.id}">
                 <img src=${posterUrl} alt="Poster">
                 <h3>${movie.original_title || movie.original_name || movie.name || movie.title}</h3>
                 <p>${movie.release_date}</p>
