@@ -11,12 +11,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const input = document.querySelector("#search_input");
     const submitBtn = document.querySelector("#search_btn");
     const resultSection = document.querySelector('.result');
-    
-    submitBtn.addEventListener('click', searchKeywords);
+
+   
+    if (input.value) searchKeywords();
+    submitBtn.addEventListener('click', sendSearch);
     
 
-    function searchKeywords(event) {
+    function sendSearch(event) {
         event.preventDefault();
+        searchKeywords();
+    }
+    
+    function searchKeywords() {
         let search = input.value;
         let url = `https://api.themoviedb.org/3/search/multi?api_key=69a59336843cba77936e73fc3e3e5a69&language=fr-FR&query=${search}&page=1&include_adult=false`;
         let promise = fetch(url)
