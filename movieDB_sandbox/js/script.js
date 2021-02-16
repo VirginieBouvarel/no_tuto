@@ -25,7 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function showResults(movies) {
-        //movies = un tableau de 20 objets
         const ul = document.querySelector('.cards');
         ul.innerHTML = "";
         

@@ -42,6 +42,7 @@ img {
 
 a {
 	text-decoration:none;
+    cursor:pointer;
 }
 
 ul li {
@@ -79,7 +80,7 @@ h1 {
 section {
     max-width:800px;
     margin:0 auto;
-    padding:2rem 1rem;
+    padding:1rem;
 }
 
 /* search bar */
@@ -149,19 +150,19 @@ section {
 /* page details */
 
 .back {
-    padding:2rem 0 0;
+    padding:1rem 0 0;
 }
 .back_btn {
     background-color:var(--bg-violet);
     border-radius:3px;
     padding:1rem;
-    margin:2rem 1rem;
+    margin:0 1rem;
     color:var(--c-white);
+    border:none;
+    cursor:pointer;
 }
 .movie {
     color:var(--c-light-grey);
-    /* max-width:461px; */
-    /*TODO: Régler problème image */
 }
 .movie_infos {
     display:flex;
