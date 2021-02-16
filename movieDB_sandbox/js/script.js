@@ -26,9 +26,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function showResults(movies) {
         //movies = un tableau de 20 objets
-        const ul = document.createElement('ul');
-        ul.classList.add('cards');
-
+        const ul = document.querySelector('.cards');
+        ul.innerHTML = "";
+        
         movies.forEach(movie => {
             const posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}` : `img/poster-tmdb.png` ;
             const li = document.createElement('li');
