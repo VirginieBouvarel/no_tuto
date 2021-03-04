@@ -25,7 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function searchKeywords() {
         let search = input.value;
         let url = `https://api.themoviedb.org/3/search/multi?api_key=69a59336843cba77936e73fc3e3e5a69&language=fr-FR&query=${search}&page=1&include_adult=false`;
-        let promise = fetch(url)
+        
+        fetch(url)
         .then(response => response.json())
         .then(response => showResults(response.results));
     }

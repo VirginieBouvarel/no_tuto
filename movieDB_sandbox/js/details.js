@@ -21,7 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function getMovieData(id) {
         let url = `https://api.themoviedb.org/3/movie/${id}?api_key=69a59336843cba77936e73fc3e3e5a69&language=fr-FR`;
-        let promise = fetch(url)
+        
+        fetch(url)
         .then(response => response.json())
         .then(response => showMovieDetails(response));
     }
