@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const resultSection = document.querySelector('.result');
 
    
-    if (input.value) searchKeywords();
+    // if (input.value) searchKeywords();//TODO: à enlever car gérer dans le get?
     submitBtn.addEventListener('click', sendSearch);
     
 
@@ -23,8 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function searchKeywords() {
-        let search = input.value;
-        let url = `https://api.themoviedb.org/3/search/multi?api_key=69a59336843cba77936e73fc3e3e5a69&language=fr-FR&query=${search}&page=1&include_adult=false`;
+        const search = input.value;
+        const url = `https://api.themoviedb.org/3/search/multi?api_key=69a59336843cba77936e73fc3e3e5a69&language=fr-FR&query=${search}&page=1&include_adult=false`;
         
         fetch(url)
         .then(response => response.json())
@@ -34,21 +34,46 @@ document.addEventListener('DOMContentLoaded', () => {
     function showResults(movies) {
         const ul = document.querySelector('.cards');
         ul.innerHTML = "";
-        
-        movies.forEach(movie => {
-            const posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}` : `img/poster-tmdb.png` ;
-            const li = document.createElement('li');
-            li.classList.add('card');
-            li.innerHTML = `
-            <a href="details.html?id=${movie.id}">
-                <img src=${posterUrl} alt="Poster">
-                <h3>${movie.original_title || movie.original_name || movie.name || movie.title}</h3>
-                <p>${movie.release_date}</p>
-            </a>`;
-            ul.append(li);
-        });
+
+        fillResultsList(ul,movies);
 
         resultSection.append(ul);
+    }
+
+    function fillResultsList(ul, movies) {
+        movies.forEach(movie => {
+            ul.append(createItem(movie));
+        });
+    }
+
+    function createItem(movie) {
+        const li = document.createElement('li');
+        li.classList.add('card');
+
+        li.append(createItemContent(movie));
+
+        return li;
+    }
+
+    function createItemContent(movie) {
+        const posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}` : `img/poster-tmdb.png` ;
+
+        const link = document.createElement('a');
+        link.setAttribute('href', `details.html?id=${movie.id}`);
+
+        const image = document.createElement('img');
+        image.setAttribute('src', `${posterUrl}`);
+        image.setAttribute('alt', 'Poster');
+
+        const title = document.createElement('h3');
+        title.textContent = `${movie.original_title || movie.original_name || movie.name || movie.title}`;
+
+        const date = document.createElement('p');
+        date.textContent = `${movie.release_date}`;
+
+        link.append(image, title, date);
+
+        return link;
     }
     
 });
