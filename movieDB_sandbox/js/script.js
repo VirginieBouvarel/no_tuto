@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function createItemContent(movie) {
-        const posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}` : `img/poster-tmdb.png` ;
+        const posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : `img/poster-tmdb.png`;
 
         const link = document.createElement('a');
         link.setAttribute('href', `details.html?id=${movie.id}`);
