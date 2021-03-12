@@ -12,12 +12,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const submitBtn = document.querySelector("#search_btn");
     const resultSection = document.querySelector('.result');
 
-   
-    // if (input.value) searchKeywords();//TODO
-    submitBtn.addEventListener('click', sendSearch);
+    reloadPreviousSearch();
+    submitBtn.addEventListener('click', sendNewSearch);
     
 
-    function sendSearch(event) {
+    function reloadPreviousSearch() {
+        const params = (new URL(document.location)).searchParams;
+        const keywords = params.get('keywords');
+    
+        if (keywords) {
+            input.value = keywords;
+            searchKeywords(keywords);
+        }
+    }
+
+    function sendNewSearch(event) {
         event.preventDefault();
         searchKeywords(input.value);
     }
@@ -58,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : `img/poster-tmdb.png`;
 
         const link = document.createElement('a');
-        link.setAttribute('href', `details.html?id=${movie.id}`);
+        link.setAttribute('href', `details.html?id=${movie.id}&keywords=${input.value}`);
 
         const image = document.createElement('img');
         image.setAttribute('src', `${posterUrl}`);

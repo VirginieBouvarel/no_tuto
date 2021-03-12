@@ -8,9 +8,12 @@ https://api.themoviedb.org/3/movie/19985?api_key=69a59336843cba77936e73fc3e3e5a6
 document.addEventListener('DOMContentLoaded', () => {
 
     const backBtn = document.querySelector('#back');  
-
     backBtn.addEventListener('click', goBack);
     
+    const testUrl = (new URL(document.location)).searchParams;
+    const keywords = testUrl.get('keywords');
+    console.log(keywords);
+
     getMovieData(getMovieId());
 
 
@@ -49,7 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
 
     function goBack() {
-        window.history.back();
+        backBtn.setAttribute('href', `index.html?keywords=${keywords}`);
+
     }
 
 });
