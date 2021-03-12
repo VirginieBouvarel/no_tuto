@@ -7,7 +7,8 @@ https://api.themoviedb.org/3/movie/19985?api_key=69a59336843cba77936e73fc3e3e5a6
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    const backBtn = document.querySelector('#back');
+    const backBtn = document.querySelector('#back');  
+
     backBtn.addEventListener('click', goBack);
     
     getMovieData(getMovieId());
@@ -28,25 +29,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function showMovieDetails(movie) {
-        console.log(movie);
-        const main = document.querySelector('main');
+        const display = {
+            image: document.querySelector('#image'),
+            title: document.querySelector('#title'),
+            release: document.querySelector('#release'),
+            average: document.querySelector('#average'),
+            summary: document.querySelector('#summary')
+        }
 
-        const posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/original/${movie.poster_path}` : `img/poster-tmdb-big.svg` ;
-
-        const section = document.createElement('section');
-        section.classList.add('movie');
-        section.innerHTML = `
-            <img src=${posterUrl} alt="poster">
-            <h2>${movie.original_title || movie.original_name || movie.name || movie.title}</h2>
-            <div class="movie_infos">
-                <p class="movie_release">${movie.release_date}</p>
-                <p class="movie_average">${movie.vote_average}</p>
-            </div>
-            <p class="movie_summary">${movie.overview}</p>
-        `;
-
-        main.append(section);
+        const posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/original/${movie.poster_path}` : `img/poster-tmdb-big.svg`;
+        
+        display.image.setAttribute('src', `${posterUrl}`);
+        display.title.innerHTML = `${movie.original_title || movie.original_name || movie.display.name || movie.title}`;
+        display.release.innerHTML = `${movie.release_date}`;
+        display.average.innerHTML = `${movie.vote_average}`;
+        display.summary.innerHTML = `${movie.overview}`;
     }
+
+    
 
     function goBack() {
         window.history.back();
