@@ -13,18 +13,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const resultSection = document.querySelector('.result');
 
    
-    // if (input.value) searchKeywords();//TODO: à enlever car gérer dans le get?
+    // if (input.value) searchKeywords();//TODO
     submitBtn.addEventListener('click', sendSearch);
     
 
     function sendSearch(event) {
         event.preventDefault();
-        searchKeywords();
+        searchKeywords(input.value);
     }
     
-    function searchKeywords() {
-        const search = input.value;
-        const url = `https://api.themoviedb.org/3/search/multi?api_key=69a59336843cba77936e73fc3e3e5a69&language=fr-FR&query=${search}&page=1&include_adult=false`;
+    function searchKeywords(keywords) {
+        const url = `https://api.themoviedb.org/3/search/multi?api_key=69a59336843cba77936e73fc3e3e5a69&language=fr-FR&query=${keywords}&page=1&include_adult=false`;
         
         fetch(url)
         .then(response => response.json())
