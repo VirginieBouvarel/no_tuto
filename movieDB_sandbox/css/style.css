@@ -196,3 +196,9 @@ section {
     padding:0 0.5rem;
     font-size:1.4rem;
 }
+
+@media screen and (max-width:375px) {
+    .card {
+        width:155px;
+    }
+}
