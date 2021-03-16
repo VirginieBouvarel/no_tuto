@@ -1,9 +1,5 @@
 "use strict";
 
-/* 
-Adresse API :
-https://api.themoviedb.org/3/search/keyword?api_key=69a59336843cba77936e73fc3e3e5a69&query=avatar&page=1
-*/
 
 
 document.addEventListener('DOMContentLoaded', () => {
