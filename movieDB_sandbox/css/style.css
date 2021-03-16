@@ -158,13 +158,15 @@ section {
     padding:1rem 0 0;
 }
 .back_btn {
-    background-color:var(--bg-violet);
-    border-radius:3px;
-    padding:1rem;
-    margin:0 1rem;
-    color:var(--c-white);
-    border:none;
-    cursor:pointer;
+    background-color: var(--bg-violet);
+    border-radius: 3px;
+    padding: 1rem;
+    margin: 0 1rem;
+    color: var(--c-white);
+    border: none;
+    cursor: pointer;
+    display: block;
+    width: 85px;
 }
 .movie {
     color:var(--c-light-grey);
