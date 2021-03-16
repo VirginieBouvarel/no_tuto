@@ -1,7 +1,5 @@
 "use strict";
 
-
-
 document.addEventListener('DOMContentLoaded', () => {
 
     const input = document.querySelector("#search_input");

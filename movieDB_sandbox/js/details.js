@@ -1,30 +1,19 @@
 "use strict";
 
-/* 
-Adresse API :
-https://api.themoviedb.org/3/movie/19985?api_key=69a59336843cba77936e73fc3e3e5a69&language=fr-FR
-*/
-
 document.addEventListener('DOMContentLoaded', () => {
 
     const backBtn = document.querySelector('#back');  
     backBtn.addEventListener('click', goBack);
     
-    const testUrl = (new URL(document.location)).searchParams;
-    const keywords = testUrl.get('keywords');
-    console.log(keywords);
-
     getMovieData(getMovieId());
 
 
     function getMovieId() {
-        const params = (new URL(document.location)).searchParams;
-        const movieId = params.get('id');
-        return movieId;
+        return (new URL(document.location)).searchParams.get('id');
     }
 
     function getMovieData(id) {
-        let url = `https://api.themoviedb.org/3/movie/${id}?api_key=69a59336843cba77936e73fc3e3e5a69&language=fr-FR`;
+        const url = `https://api.themoviedb.org/3/movie/${id}?api_key=69a59336843cba77936e73fc3e3e5a69&language=fr-FR`;
         
         fetch(url)
         .then(response => response.json())
@@ -49,11 +38,12 @@ document.addEventListener('DOMContentLoaded', () => {
         display.summary.innerHTML = `${movie.overview}`;
     }
 
-    
+    function getSearchKeywords() {
+        return (new URL(document.location)).searchParams.get('keywords');
+    }
 
     function goBack() {
-        backBtn.setAttribute('href', `index.html?keywords=${keywords}`);
-
+        backBtn.setAttribute('href', `index.html?keywords=${getSearchKeywords()}`);
     }
 
 });
