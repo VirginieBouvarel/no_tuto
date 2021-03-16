@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const input = document.querySelector("#search_input");
     const submitBtn = document.querySelector("#search_btn");
+    const moviesList = document.querySelector('.cards');
     const resultSection = document.querySelector('.result');
 
     reloadPreviousSearch();
@@ -34,17 +35,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function showResults(movies) {
-        const ul = document.querySelector('.cards');
-        ul.innerHTML = "";
+        moviesList.innerHTML = "";
 
-        fillResultsList(ul,movies);
+        fillResultsList(moviesList,movies);
 
-        resultSection.append(ul);
+        resultSection.append(moviesList);
     }
 
-    function fillResultsList(ul, movies) {
+    function fillResultsList(movies) {
         movies.forEach(movie => {
-            ul.append(createItem(movie));
+            moviesList.append(createItem(movie));
         });
     }
 

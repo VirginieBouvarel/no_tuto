@@ -3,7 +3,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     const backBtn = document.querySelector('#back');  
-    backBtn.addEventListener('click', goBack);
+    backBtn.setAttribute('href', `index.html?keywords=${getSearchKeywords()}`);
     
     getMovieData(getMovieId());
 
@@ -40,10 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function getSearchKeywords() {
         return (new URL(document.location)).searchParams.get('keywords');
-    }
-
-    function goBack() {
-        backBtn.setAttribute('href', `index.html?keywords=${getSearchKeywords()}`);
     }
 
 });
