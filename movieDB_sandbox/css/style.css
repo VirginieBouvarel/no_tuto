@@ -197,6 +197,23 @@ section {
     font-size:1.4rem;
 }
 
+/* FOOTER */
+
+footer {
+    background-color:var(--c-violet);
+    position:fixed;
+    bottom:0;
+    width:100%;
+    min-height:10rem;
+    color:var(--c-white);
+    text-align:center;
+}
+
+.copyright {
+    margin:3rem;
+    font-size:1.3rem;
+}
+
 @media screen and (max-width:375px) {
     .card {
         width:155px;
