@@ -14,20 +14,19 @@
 <body>
     <header>
         <a href="index.html" class="logo">
-            <img src="img/logo.svg" alt="logo">
+            <img src="img/logo.svg" alt="Lien vers la page d'accueil">
         </a>
-        <h1>My Movies</h1>
+        <h1>Mes films</h1>
     </header>
 
     <main>
 
         <div class="back">
-            <!-- <button class="back_btn" id="back"><i class="fas fa-arrow-left"></i> Retour</button> -->
             <a href="index.html?id=${movie.id}&keywords=${input.value}" id="back" class="back_btn"><i class="fas fa-arrow-left"></i> Retour</a>
         </div>
 
         <section class="movie">
-            <img id="image" src="#" alt="poster">
+            <img id="image" src="#" alt="Affiche du film">
             <h2 id="title"></h2>
             <div class="movie_infos">
                 <p id="release" class="movie_release"></p>
@@ -38,7 +37,9 @@
 
     </main>
 
-    <footer></footer>
+    <footer>
+        <p class="copyright">Réalisé par VirginieBouvarel©2021 </p>
+    </footer>
 
     <script src="js/details.js"></script>
 </body>

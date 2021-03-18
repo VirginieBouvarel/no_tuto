@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function showResults(movies) {
         moviesList.innerHTML = "";
 
-        fillResultsList(moviesList,movies);
+        fillResultsList(movies);
 
         resultSection.append(moviesList);
     }
