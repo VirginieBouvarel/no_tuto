@@ -6,6 +6,8 @@ En sortant de bootcamp mon objectif était de tester mes compétences en réalis
 
 ## Les démo de mes derniers projets :
 
+- [**MovieDB Sandbox**](https://virginiebouvarel.github.io/projets_perso/movieDB_sandbox) : Une mini interface de recherche de film sur l'API MovieDB
+
 - [**Pinball Breakout**](http://breakout.virginiebouvarel.fr) : Un jeu de casse briques ambiance flipper avec ajouts de sons pour animer la partie
 
 - [**Calculator**](https://virginiebouvarel.github.io/projets_perso/calculator) : Une calculatrice avancée
